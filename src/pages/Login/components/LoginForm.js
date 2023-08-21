@@ -56,20 +56,6 @@ export default function LoginForm() {
   return (
     <Box as={'form'} rounded={'lg'} shadow={'2xl'} p={8} w={{ base: 'full', md: 'md' }} onSubmit={handleLogin}>
       <Stack spacing={4}>
-        {/*<FormControl id="username">*/}
-        {/*  <FormLabel color="#204E78">Username or Email</FormLabel>*/}
-        {/*  <Input color="gray.700" value={username} onChange={(e) => setUsername(e.target.value)} required />*/}
-        {/*</FormControl>*/}
-        {/*<FormControl id="password">*/}
-        {/*  <FormLabel color="#204E78">Password</FormLabel>*/}
-        {/*  <Input*/}
-        {/*    value={password}*/}
-        {/*    color="gray.700"*/}
-        {/*    onChange={(e) => setPassword(e.target.value)}*/}
-        {/*    type="password"*/}
-        {/*    required*/}
-        {/*  />*/}
-        {/*</FormControl>*/}
         <Stack spacing={10}>
           {/*<Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'end'}>*/}
           {/*  <Link to="/reset-password">*/}

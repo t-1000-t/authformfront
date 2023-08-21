@@ -28,7 +28,7 @@ import { FaUserAlt, FaLock, FaUserPlus } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
 const MotionButton = motion(Button)
 
-function SignupForm({ avatar, username }) {
+function SignupForm({ avatar }) {
   const CFaUserAlt = chakra(FaUserAlt)
   const CFaUserPlus = chakra(FaUserPlus)
   const CFaLock = chakra(FaLock)
@@ -36,7 +36,7 @@ function SignupForm({ avatar, username }) {
 
   const signup = useAuthStore((state) => state.signup)
 
-  const [firstName, setFirstName] = useState('')
+  const [username, setUserName] = useState('')
   const [surname, setSurname] = useState('')
   const [email, setEmail] = useState()
   const [password, setPassword] = useState('')
@@ -61,11 +61,9 @@ function SignupForm({ avatar, username }) {
     try {
       await signup({
         username,
-        firstName,
         surname,
         email,
         password: password.trim(),
-        // isChild: isKid,
       })
       setIsLoading(false)
     } catch (err) {
@@ -96,10 +94,10 @@ function SignupForm({ avatar, username }) {
             <InputLeftElement pointerEvents="none" children={<CFaUserAlt color="gray.300" />} />
             <Input
               color="gray.700"
-              value={firstName}
+              value={username}
               placeholder="First name"
-              onChange={(e) => setFirstName(e.target.value)}
-              onBlur={(e) => setFirstName(e.target.value.trim())}
+              onChange={(e) => setUserName(e.target.value)}
+              onBlur={(e) => setUserName(e.target.value.trim())}
               required
             />
           </InputGroup>

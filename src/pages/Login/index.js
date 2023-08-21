@@ -21,14 +21,6 @@ export default function Login() {
               </Box>
             </Link>
           </Text>
-          {/*<Text fontSize="sm" color="#204E78" textAlign="center">*/}
-          {/*  New User?{" "}*/}
-          {/*  <Link to="/signup">*/}
-          {/*    <Box as="span" textColor="white" bg="green.400" px={2} py={1} rounded="md">*/}
-          {/*      Sign up*/}
-          {/*    </Box>*/}
-          {/*  </Link>*/}
-          {/*</Text>*/}
         </Stack>
         <LoginForm />
         <FormControl display="flex" alignItems="center">

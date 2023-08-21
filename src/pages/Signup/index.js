@@ -6,12 +6,11 @@ import SignupForm from './components/SignupForm'
 
 export default function Signup() {
   const [accountType] = useState('')
-  const [username] = useState('')
   const [avatar, setAvatar] = useState('')
 
   const cancelSignup = () => setAvatar('')
   const renderContent = () => {
-    return <SignupForm username={username} avatar={avatar} onCancel={cancelSignup} isKid={accountType === 'kid'} />
+    return <SignupForm avatar={avatar} onCancel={cancelSignup} isKid={accountType === 'kid'} />
   }
 
   return (

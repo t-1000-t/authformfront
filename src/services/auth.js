@@ -33,9 +33,9 @@ export const signin = async (name, password) => {
     password: password,
   })
 
-  console.log('response', response)
+  console.log('response LOGIN', response.data)
 
-  const { token, username, userId, userRole, currentScore } = response.data
+  const { token, userData, userId } = response.data
 
   setSession(token)
 
@@ -43,14 +43,14 @@ export const signin = async (name, password) => {
 
   const user = {
     userId,
-    username,
-    score: Math.round(currentScore * 2000) || 300,
+    username: userData.role,
+    score: Math.round(2000) || 300,
   }
 
-  if (userRole === 'admin') {
+  if (userData.role === 'admin') {
     user.isAdmin = true
     user.status = 'admin'
-  } else if (user.isUser) {
+  } else if (userData.role === 'user') {
     user.status = 'user'
   } else {
     user.status = 'guest'
@@ -62,33 +62,33 @@ export const signin = async (name, password) => {
   }
 }
 
-export const signup = async ({ username, firstName, surname, email, password, avatar, isChild, promoCode }) => {
+export const signup = async ({ username, surname, email, password, role, avatar, message }) => {
   const response = await axios.post('/api/auth/signup', {
     username: username,
-    firstName: firstName,
     surname: surname,
     email: email,
     password: password,
+    message: message,
+    role: role,
     avatar: avatar,
-    isChild: isChild,
-    code: promoCode,
   })
 
-  const { user, token } = response.data
+  console.log('response DATA', response.data)
+
+  const { userData, token } = response.data
 
   setSession(token)
 
-  if (user.role === 'admin') {
-    user.isAdmin = true
-    user.status = 'admin'
-  } else if (user.isChild) {
-    user.status = 'child'
+  if (userData.role === 'admin') {
+    userData.isAdmin = true
+  } else if (userData.role === 'user') {
+    userData.status = 'user'
   } else {
-    user.status = 'guardian'
+    userData.status = 'guest'
   }
 
   return {
-    user,
+    user: userData,
     accessToken: token,
   }
 }

@@ -6,7 +6,6 @@ import {
   Input,
   VStack,
   FormControl,
-  FormLabel,
   Textarea,
   InputGroup,
   InputLeftElement,
@@ -53,38 +52,6 @@ function ContactForm() {
       <form name="contact" method="POST" data-netlify="true" onSubmit={handleSubmit}>
         <input type="hidden" name="form-name" value="contact" />
         <VStack spacing={6} maxW="lg" w={{ md: 'md' }} mx="auto">
-          {/*<FormControl id="name">*/}
-          {/*  <FormLabel fontSize="sm" fontWeight="md" color="gray.700">*/}
-          {/*    Name*/}
-          {/*  </FormLabel>*/}
-
-          {/*  <Input*/}
-          {/*    name="name"*/}
-          {/*    type="text"*/}
-          {/*    placeholder="Name"*/}
-          {/*    focusBorderColor="brand.400"*/}
-          {/*    rounded="md"*/}
-          {/*    value={name}*/}
-          {/*    onChange={(e) => setName(e.target.value)}*/}
-          {/*    required*/}
-          {/*  />*/}
-          {/*</FormControl>*/}
-          {/*<FormControl id="email">*/}
-          {/*  <FormLabel fontSize="sm" fontWeight="md" color="gray.700">*/}
-          {/*    Email*/}
-          {/*  </FormLabel>*/}
-
-          {/*  <Input*/}
-          {/*    name="email"*/}
-          {/*    type="email"*/}
-          {/*    placeholder="Your Email"*/}
-          {/*    focusBorderColor="brand.400"*/}
-          {/*    rounded="md"*/}
-          {/*    value={email}*/}
-          {/*    onChange={(e) => setEmail(e.target.value)}*/}
-          {/*    required*/}
-          {/*  />*/}
-          {/*</FormControl>*/}
           <FormControl id="lastName">
             <InputGroup>
               <InputLeftElement pointerEvents="none" children={<CFaUserAlt color="gray.300" />} />

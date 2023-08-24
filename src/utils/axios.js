@@ -5,6 +5,11 @@ const instance = axios.create()
 instance.defaults.baseURL = process.env.REACT_APP_SERVER_API
 // instance.defaults.baseURL = process.env.REACT_APP_LOCAL_API
 
+// another case
+// const api = axios.create({
+//   baseURL: process.env.REACT_APP_SERVER_API,
+// })
+
 export const setAxiosInterceptors = ({ onLogout }) => {
   instance.interceptors.response.use(
     (response) => response,
@@ -21,7 +26,9 @@ export const setAxiosInterceptors = ({ onLogout }) => {
 }
 
 export const removeTokenHeader = () => {
-  delete instance.defaults.headers.common.token
+  delete instance.defaults.headers.common['Authorization']
+  // delete api.defaults.headers.common['Authorization']
 }
 
 export default instance
+// export default api

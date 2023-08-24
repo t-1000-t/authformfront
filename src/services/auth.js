@@ -24,71 +24,89 @@ const isValidToken = (accessToken) => {
 const setSession = (accessToken) => {
   if (accessToken) {
     axios.defaults.headers.common.token = accessToken
+
+    // or this case
+    // const token = {
+    //   set(accessToken) {
+    //     axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`
+    //   },
+    //   unset() {
+    //     axios.defaults.headers.common.Authorization = ''
+    //   },
+    // }
   }
 }
 
 export const signin = async (name, password) => {
-  const response = await axios.post('/api/auth/login', {
-    email: name,
-    password: password,
-  })
+  try {
+    const response = await axios.post('/api/auth/login', {
+      email: name,
+      password: password,
+    })
 
-  console.log('response LOGIN', response.data)
+    console.log('response LOGIN', response.data)
 
-  const { token, userData, userId } = response.data
+    const { token, userData, userId } = response.data
 
-  setSession(token)
+    setSession(token)
 
-  // const avatar = parseAvatar(profilePic)
+    // const avatar = parseAvatar(profilePic)
 
-  const user = {
-    userId,
-    username: userData.role,
-    score: Math.round(2000) || 300,
-  }
+    const user = {
+      userId,
+      username: userData.role,
+      score: Math.round(2000) || 300,
+    }
 
-  if (userData.role === 'admin') {
-    user.isAdmin = true
-    user.status = 'admin'
-  } else if (userData.role === 'user') {
-    user.status = 'user'
-  } else {
-    user.status = 'guest'
-  }
+    if (userData.role === 'admin') {
+      user.isAdmin = true
+      user.status = 'admin'
+    } else if (userData.role === 'user') {
+      user.status = 'user'
+    } else {
+      user.status = 'guest'
+    }
 
-  return {
-    user,
-    accessToken: token,
+    return {
+      user,
+      accessToken: token,
+    }
+  } catch (error) {
+    throw error
   }
 }
 
 export const signup = async ({ username, surname, email, password, role, avatar, message }) => {
-  const response = await axios.post('/api/auth/signup', {
-    username: username,
-    surname: surname,
-    email: email,
-    password: password,
-    message: message,
-    role: role,
-    avatar: avatar,
-  })
+  try {
+    const response = await axios.post('/api/auth/signup', {
+      username: username,
+      surname: surname,
+      email: email,
+      password: password,
+      message: message,
+      role: role,
+      avatar: avatar,
+    })
 
-  console.log('response DATA', response.data)
+    console.log('response DATA', response.data)
 
-  const { userData, token } = response.data
+    const { userData, token } = response.data
 
-  setSession(token)
+    setSession(token)
 
-  if (userData.role === 'admin') {
-    userData.isAdmin = true
-  } else if (userData.role === 'user') {
-    userData.status = 'user'
-  } else {
-    userData.status = 'guest'
-  }
+    if (userData.role === 'admin') {
+      userData.isAdmin = true
+    } else if (userData.role === 'user') {
+      userData.status = 'user'
+    } else {
+      userData.status = 'guest'
+    }
 
-  return {
-    user: userData,
-    accessToken: token,
+    return {
+      user: userData,
+      accessToken: token,
+    }
+  } catch (error) {
+    throw error
   }
 }

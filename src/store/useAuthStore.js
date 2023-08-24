@@ -32,7 +32,10 @@ const store = (set) => ({
 
     // user.isIncognito = userSettings?.incognito || false
 
-    set({ user, accessToken })
+    set({
+      user,
+      accessToken,
+    })
 
     // if (userSettings) {
     //   // update settings

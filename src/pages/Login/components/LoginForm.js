@@ -1,17 +1,15 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import {
   Alert,
   AlertIcon,
   Box,
   CloseButton,
   FormControl,
-  // FormLabel,
   Input,
   Stack,
   Button,
-  // Text,
   InputLeftElement,
   chakra,
   InputGroup,
@@ -29,6 +27,7 @@ const CFaLock = chakra(FaLock)
 
 export default function LoginForm() {
   const login = useStore((state) => state.login)
+  const history = useHistory()
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -43,12 +42,12 @@ export default function LoginForm() {
     e.preventDefault()
     setIsLoading(true)
     setError(false)
-
     try {
-      await login(username, password.trim())
+      await login(username, password.trim()).then(() => history.push('/'))
     } catch (err) {
       const msg = err.response?.data?.message || err.message
       setError(msg)
+    } finally {
       setIsLoading(false)
     }
   }
@@ -57,13 +56,6 @@ export default function LoginForm() {
     <Box as={'form'} rounded={'lg'} shadow={'2xl'} p={8} w={{ base: 'full', md: 'md' }} onSubmit={handleLogin}>
       <Stack spacing={4}>
         <Stack spacing={10}>
-          {/*<Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'end'}>*/}
-          {/*  <Link to="/reset-password">*/}
-          {/*    <Text color="#204E78" fontSize="sm">*/}
-          {/*      Forgot password?*/}
-          {/*    </Text>*/}
-          {/*  </Link>*/}
-          {/*</Stack>*/}
           <FormControl>
             <InputGroup>
               <InputLeftElement pointerEvents="none" children={<CFaUserAlt color="gray.300" />} />

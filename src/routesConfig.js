@@ -1,6 +1,6 @@
 import { lazy } from 'react'
 
-import HomePage from './pages/Home'
+import HomeDefault from './pages/Home'
 import GuestLayout from './layouts/GuestLayout'
 import GuestGuard from 'components/Guards/GuestGuard'
 
@@ -10,7 +10,7 @@ const routesConfig = [
     layout: GuestLayout,
     path: '/',
     guard: GuestGuard,
-    component: HomePage,
+    component: HomeDefault,
   },
   {
     exact: true,

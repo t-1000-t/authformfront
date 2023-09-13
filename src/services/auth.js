@@ -1,14 +1,8 @@
 import jwtDecode from 'jwt-decode'
+import { useHistory } from 'react-router-dom'
 import axios from 'utils/axios'
-// import useSettingsStore from 'store/useSettings'
+import instance from 'utils/axios'
 // import useAuthStore from 'store/useAuthStore'
-// import parseAvatar from 'utils/parseUserAvatar'
-
-export const handleAuthentication = (accessToken) => {
-  if (isValidToken(accessToken)) {
-    setSession(accessToken)
-  }
-}
 
 const isValidToken = (accessToken) => {
   if (!accessToken) {
@@ -37,8 +31,26 @@ const setSession = (accessToken) => {
   }
 }
 
+export const useAuthHandler = () => {
+  const history = useHistory()
+
+  const handleAuthentication = (accessToken) => {
+    if (isValidToken(accessToken)) {
+      setSession(accessToken)
+
+      if (accessToken) {
+        history.push('/')
+      }
+    }
+  }
+
+  return handleAuthentication
+}
+
 export const signin = async (name, password) => {
   try {
+    console.log('base IN', instance.defaults.baseURL)
+
     const response = await axios.post('/api/auth/login', {
       email: name,
       password: password,
@@ -49,8 +61,6 @@ export const signin = async (name, password) => {
     const { token, userData, userId } = response.data
 
     setSession(token)
-
-    // const avatar = parseAvatar(profilePic)
 
     const user = {
       userId,
@@ -78,6 +88,8 @@ export const signin = async (name, password) => {
 
 export const signup = async ({ username, surname, email, password, role, avatar, message }) => {
   try {
+    console.log('base UP', instance.defaults.baseURL)
+
     const response = await axios.post('/api/auth/signup', {
       username: username,
       surname: surname,
@@ -87,8 +99,6 @@ export const signup = async ({ username, surname, email, password, role, avatar,
       role: role,
       avatar: avatar,
     })
-
-    console.log('response DATA', response.data)
 
     const { userData, token } = response.data
 
@@ -110,3 +120,5 @@ export const signup = async ({ username, surname, email, password, role, avatar,
     throw error
   }
 }
+
+export default useAuthHandler

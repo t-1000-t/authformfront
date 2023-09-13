@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import useAuthStore from 'store/useAuthStore'
-import { handleAuthentication } from '../../services/auth'
+// import { handleAuthentication } from '../../services/auth'
 import { setAxiosInterceptors } from '../../utils/axios'
 import LoadingScreen from '../LoadingScreen'
 
@@ -13,7 +13,7 @@ const Auth = ({ children }) => {
   const [isLoading, setLoading] = useState(true)
 
   const restoreSession = useCallback(() => {
-    handleAuthentication(accessToken)
+    // handleAuthentication(accessToken)
 
     try {
       setLoading(false)
@@ -21,7 +21,7 @@ const Auth = ({ children }) => {
       setLoading(false)
       logout()
     }
-  }, [accessToken, logout])
+  }, [logout])
 
   useEffect(() => {
     setAxiosInterceptors({

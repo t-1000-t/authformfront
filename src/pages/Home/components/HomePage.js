@@ -5,7 +5,7 @@ import Container from 'layouts/Container'
 
 const MotionButton = motion(Button)
 
-export default function Home() {
+export default function HomePage() {
   return (
     <Container position="relative" mb={{ base: 36, md: 0 }}>
       <Stack direction={{ base: 'column', md: 'row' }} pb={16}>

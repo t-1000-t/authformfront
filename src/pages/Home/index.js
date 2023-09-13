@@ -1,11 +1,11 @@
 import Page from 'components/Page'
 
-import Start from './components/Home'
+import HomePage from './components/HomePage'
 
 export default function HomeDefault() {
   return (
     <Page>
-      <Start />
+      <HomePage />
     </Page>
   )
 }

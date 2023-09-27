@@ -1,5 +1,6 @@
 import { Box, Button, Flex, Heading, Image, Stack, Text } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
 import Container from 'layouts/Container'
 
@@ -24,13 +25,12 @@ export default function HomePage() {
               w={56}
               py={8}
               as="a"
-              href="/signup"
               size="lg"
               fontSize="3xl"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Make Now
+              <Link to="/signup">Make Now</Link>
             </MotionButton>
           </Stack>
         </Flex>

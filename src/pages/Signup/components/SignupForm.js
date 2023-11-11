@@ -20,12 +20,14 @@ import {
   InputRightElement,
   Stack,
   Text,
+  useToast,
 } from '@chakra-ui/react'
 import useAuthStore from 'store/useAuthStore'
 
 import { IoIosArrowRoundBack } from 'react-icons/io'
 import { FaUserAlt, FaLock, FaUserPlus } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
+import AlertSignUp from './AlertSignUp'
 const MotionButton = motion(Button)
 
 function SignupForm({ avatar }) {
@@ -40,6 +42,7 @@ function SignupForm({ avatar }) {
   const [surname, setSurname] = useState('')
   const [email, setEmail] = useState()
   const [password, setPassword] = useState('')
+  const toast = useToast()
 
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
@@ -66,7 +69,13 @@ function SignupForm({ avatar }) {
         password: password.trim(),
       })
       setIsLoading(false)
+      toast({
+        render: () => <AlertSignUp status={true} />,
+      })
     } catch (err) {
+      toast({
+        render: () => <AlertSignUp status={false} />,
+      })
       const msg = err?.response?.data?.error || err.message
 
       setError(msg)

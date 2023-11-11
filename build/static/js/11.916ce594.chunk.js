@@ -1,0 +1,2 @@
+(this["webpackJsonpauth-reload"]=this["webpackJsonpauth-reload"]||[]).push([[11],{167:function(e,t,s){"use strict";s.r(t),s.d(t,"default",(function(){return i}));var n=s(73),c=s(61),a=s(59),r=s(4);function i(){return Object(r.jsx)(a.a,{children:Object(r.jsx)(n.c,{bg:"white",minH:"75vh",justify:"center",align:"center",children:Object(r.jsxs)(n.a,{children:[Object(r.jsx)(c.a,{h:{base:48,md:64},src:"/images/mail_sent.svg"}),Object(r.jsx)(n.f,{mt:4,children:"Your message has been received. Thank you. "})]})})})}}}]);
+//# sourceMappingURL=11.916ce594.chunk.js.map

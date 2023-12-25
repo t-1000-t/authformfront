@@ -17,7 +17,7 @@ export default function HomePage() {
                 From for test AUTH
               </Heading>
               <Text fontSize={{ base: 'lg', lg: 'xl' }} color="teal.500">
-                Just fill the form and do request
+                Just need to fill out the request form, please
               </Text>
             </Box>
             <MotionButton

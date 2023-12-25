@@ -34,7 +34,7 @@
     "delay": "^5.0.0",
     "embed-video": "^1.6.0",
     "fen-validator": "^1.4.1",
-    "framer-motion": "^4.1.17",
+    "framer-motion": "^10.16.16",
     "fuse.js": "^6.6.2",
     "howler": "^2.2.1",
     "js-chess-engine": "^1.0.2",

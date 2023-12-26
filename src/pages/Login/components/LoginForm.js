@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   Alert,
   AlertIcon,
@@ -27,7 +27,7 @@ const CFaLock = chakra(FaLock)
 
 export default function LoginForm() {
   const login = useStore((state) => state.login)
-  const history = useHistory()
+  const history = useNavigate()
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')

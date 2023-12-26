@@ -1,9 +1,15 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import { BrowserRouter } from 'react-router-dom'
+import { createRoot } from 'react-dom/client'
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import './index.css'
 import App from './App'
+
+import { BrowserRouter } from 'react-router-dom'
+
+const root = createRoot(document.getElementById('root'))
+
+
+
 
 const theme = extendTheme({
   fonts: {
@@ -12,11 +18,10 @@ const theme = extendTheme({
   },
 })
 
-ReactDOM.render(
+root.render(
   <ChakraProvider theme={theme}>
     <BrowserRouter>
       <App />
     </BrowserRouter>
   </ChakraProvider>,
-  document.getElementById('root'),
 )

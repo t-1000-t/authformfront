@@ -1,5 +1,5 @@
-import jwtDecode from 'jwt-decode'
-import { useHistory } from 'react-router-dom'
+import { jwtDecode } from 'jwt-decode'
+import { useNavigate } from 'react-router-dom'
 import axios from 'utils/axios'
 import instance from 'utils/axios'
 // import useAuthStore from 'store/useAuthStore'
@@ -32,7 +32,7 @@ const setSession = (accessToken) => {
 }
 
 export const useAuthHandler = () => {
-  const history = useHistory()
+  const history = useNavigate()
 
   const handleAuthentication = (accessToken) => {
     if (isValidToken(accessToken)) {

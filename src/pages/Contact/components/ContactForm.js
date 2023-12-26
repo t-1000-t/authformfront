@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
   Box,
   Button,
@@ -15,7 +15,7 @@ import { FaUserAlt } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
 
 function ContactForm() {
-  const history = useHistory()
+  const history = useNavigate()
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')

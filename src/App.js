@@ -1,12 +1,13 @@
+import React from 'react'
 import './App.css'
 import Auth from './components/Guards/Auth'
-import Routes from './Routes'
+import RoutesRender from './RoutesRender'
 
 function App() {
   return (
-    <Auth>
-      <Routes />
-    </Auth>
+      <Auth>
+            <RoutesRender />
+      </Auth>
   )
 }
 

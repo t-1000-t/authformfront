@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import useAuthStore from 'store/useAuthStore'
 // import { handleAuthentication } from '../../services/auth'
 import { setAxiosInterceptors } from '../../utils/axios'
 import LoadingScreen from '../LoadingScreen'
 
 const Auth = ({ children }) => {
-  const history = useHistory()
+  const history = useNavigate()
   const logout = useAuthStore((state) => state.logout)
   const accessToken = useAuthStore((state) => state.accessToken)
 

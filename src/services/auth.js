@@ -56,8 +56,6 @@ export const signin = async (name, password) => {
       password: password,
     })
 
-    console.log('response LOGIN', response.data)
-
     const { token, userData, userId } = response.data
 
     setSession(token)
@@ -66,6 +64,7 @@ export const signin = async (name, password) => {
       userId,
       username: userData.role,
       score: Math.round(2000) || 300,
+      userData
     }
 
     if (userData.role === 'admin') {
@@ -79,7 +78,7 @@ export const signin = async (name, password) => {
 
     return {
       user,
-      accessToken: token,
+      accessToken: token
     }
   } catch (error) {
     throw error

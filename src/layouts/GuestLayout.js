@@ -8,6 +8,10 @@ import useAuthStore from '../store/useAuthStore'
 
 function GuestLayout(props) {
   const accessToken = useAuthStore((state) => state.accessToken)
+  const userName = useAuthStore((state) => state?.user?.userData?.username)
+
+  // console.log('accessToken', accessToken)
+
   const [isAccessToken, setIsAccessToken] = useState(null)
   useEffect(() => {
     setIsAccessToken(accessToken)
@@ -16,7 +20,7 @@ function GuestLayout(props) {
   return (
     <Box minHeight="100vh" display="flex" flexDirection="column" justifyContent="space-between">
       <Box flexBasis="auto" flexGrow="1" flexShrink="1">
-        {isAccessToken ? <GuestNavUser /> : <GuestNav />}
+        {isAccessToken ? <GuestNavUser name={userName} /> : <GuestNav />}
         <main>{props.children}</main>
       </Box>
       <GuestFooter />

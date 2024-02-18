@@ -1,4 +1,4 @@
-import useStore from 'store/useAuthStore'
+import useAuthStore from 'store/useAuthStore'
 import { useState } from 'react'
 import { Alert, AlertIcon, Box, Button, CloseButton, Flex, Image, Stack } from '@chakra-ui/react'
 import Container from './Container'
@@ -7,8 +7,8 @@ import { motion } from 'framer-motion'
 
 const MotionButton = motion(Button)
 
-export default function UserForm() {
-  const logout = useStore((state) => state.logout)
+export default function UserForm({ name }) {
+  const logout = useAuthStore((state) => state.logout)
 
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
@@ -39,22 +39,23 @@ export default function UserForm() {
           </Flex>
         </Link>
         <Stack direction="row" spacing={6}>
-          <MotionButton
-            as={Link}
-            to="/"
-            colorScheme="gray"
-            color="teal.400"
-            px={{ base: 4, md: 8 }}
-            py={{ base: 2, md: 6 }}
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            fontSize={{ base: 'md', md: 'xl' }}
-            isLoading={isLoading}
-            onClick={handleLogOut}
-          >
-            Logout
-          </MotionButton>
-        </Stack>
+          <Box>{name}</Box>
+            <MotionButton
+              as={Link}
+              to="/"
+              colorScheme="gray"
+              color="teal.400"
+              px={{ base: 4, md: 8 }}
+              py={{ base: 2, md: 6 }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              fontSize={{ base: 'md', md: 'xl' }}
+              isLoading={isLoading}
+              onClick={handleLogOut}
+            >
+              Logout
+            </MotionButton>
+          </Stack>
         {error && (
           <Alert status="error" mt={4} color="teal.700" fontWeight="semibold">
             <AlertIcon />

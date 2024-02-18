@@ -6,7 +6,7 @@ import { setAxiosInterceptors } from '../../utils/axios'
 import LoadingScreen from '../LoadingScreen'
 
 const Auth = ({ children }) => {
-  const history = useNavigate()
+  const navigate = useNavigate()
   const logout = useAuthStore((state) => state.logout)
   const accessToken = useAuthStore((state) => state.accessToken)
 
@@ -27,7 +27,7 @@ const Auth = ({ children }) => {
     setAxiosInterceptors({
       onLogout: () => {
         logout()
-        history.push('/')
+        navigate('/')
       },
     })
 
@@ -36,7 +36,7 @@ const Auth = ({ children }) => {
     } else {
       setLoading(false)
     }
-  }, [accessToken, history, logout, restoreSession])
+  }, [accessToken, navigate, logout, restoreSession])
 
   if (isLoading) {
     return <LoadingScreen />

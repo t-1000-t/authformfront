@@ -30,12 +30,12 @@ const store = (set) => ({
   login: async (username, password) => {
     const { accessToken, user } = await signin(username, password)
 
-    console.log('user', user)
-    console.log('login accessToken', accessToken)
+    let redirect = '/'
 
     set({
       user,
       accessToken,
+      redirect,
     })
   },
   logout: () => {
@@ -53,6 +53,9 @@ const store = (set) => ({
     // clear saved token from axios
     removeTokenHeader()
   },
+  setToken: (token) => {
+    set({ accessToken: token })
+  }
 })
 
 const useAuthStore = create(

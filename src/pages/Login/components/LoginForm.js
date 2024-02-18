@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import {
@@ -17,7 +17,7 @@ import {
   FormHelperText,
 } from '@chakra-ui/react'
 
-import useStore from 'store/useAuthStore'
+import useAuthStore from 'store/useAuthStore'
 
 import { FaUserAlt, FaLock } from 'react-icons/fa'
 const MotionButton = motion(Button)
@@ -26,31 +26,49 @@ const CFaUserAlt = chakra(FaUserAlt)
 const CFaLock = chakra(FaLock)
 
 export default function LoginForm() {
-  const login = useStore((state) => state.login)
-  const history = useNavigate()
+  const login = useAuthStore((state) => state.login)
+  const accessToken = useAuthStore((state) => state.accessToken)
+  const setToken = useAuthStore((state) => state.setToken)
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
+  const [redirect, setRedirect] = useState(false)
 
   const [showPassword, setShowPassword] = useState(false)
 
+  const navigate = useNavigate()
+
   const handleShowClick = () => setShowPassword(!showPassword)
+
+  useEffect(() => {
+    if (accessToken) {
+      setRedirect(true)
+    }
+  }, [accessToken])
 
   async function handleLogin(e) {
     e.preventDefault()
     setIsLoading(true)
     setError(false)
     try {
-      await login(username, password.trim()).then(() => history.push('/'))
+      await login(username, password.trim())
     } catch (err) {
       const msg = err.response?.data?.message || err.message
+      if (msg !== false) {
+        setToken(null)
+      }
       setError(msg)
     } finally {
       setIsLoading(false)
     }
   }
+
+  if (redirect) {
+    navigate('/')
+  }
+
 
   return (
     <Box as={'form'} rounded={'lg'} shadow={'2xl'} p={8} w={{ base: 'full', md: 'md' }} onSubmit={handleLogin}>

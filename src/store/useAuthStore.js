@@ -23,7 +23,6 @@ const store = (set) => ({
 
     set({
       user,
-      // accessToken,
       redirect,
     })
   },

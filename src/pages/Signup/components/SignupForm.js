@@ -40,7 +40,6 @@ function SignupForm({ avatar }) {
   const navigate = useNavigate()
 
   const signup = useAuthStore((state) => state.signup)
-  // const accessToken = useAuthStore((state) => state.accessToken)
 
   const [username, setUserName] = useState('')
   const [surname, setSurname] = useState('')
@@ -52,13 +51,8 @@ function SignupForm({ avatar }) {
   const [error, setError] = useState(false)
 
   const [showPassword, setShowPassword] = useState(false)
-  const [redirect, setRedirect] = useState(false)
 
   const handleShowClick = () => setShowPassword(!showPassword)
-
-  // useEffect(() => {
-  //   accessToken ? setRedirect(true) : setRedirect(false)
-  // }, [accessToken])
 
   async function handleSignup(e) {
     e.preventDefault()

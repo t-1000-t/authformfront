@@ -1,13 +1,13 @@
 import useAuthStore from 'store/useAuthStore'
 import { useState } from 'react'
-import { Alert, AlertIcon, Box, Button, CloseButton, Flex, Image, Stack } from '@chakra-ui/react'
+import { Alert, AlertIcon, Box, Button, CloseButton, Flex, Image, Stack, Text, Highlight } from '@chakra-ui/react'
 import Container from './Container'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
 const MotionButton = motion(Button)
 
-export default function UserForm({ name }) {
+export default function GuestNavLogout({ name, idUserName }) {
   const logout = useAuthStore((state) => state.logout)
 
   const [isLoading, setIsLoading] = useState(false)
@@ -39,8 +39,15 @@ export default function UserForm({ name }) {
           </Flex>
         </Link>
         <Stack direction="row" spacing={6}>
-          <Box>{name}</Box>
-            <MotionButton
+          {idUserName && <>
+          <Image src={`https://i.pravatar.cc/50?u=${idUserName}`}
+                                style={{ borderRadius: '50%', wight: 50, height: 50}} />
+          <Box p='4'><Text as='ins' paddingRight='2'>{name},</Text>
+            <Highlight query={['Welcome', 'page']}
+                       styles={{ px: '2', py: '1', rounded: 'full', bg: 'teal.100' }}
+          >Welcome to your page!</Highlight></Box>
+          </>}
+          <MotionButton
               as={Link}
               to="/"
               colorScheme="gray"

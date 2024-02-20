@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 // import { useLocation } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
@@ -28,6 +28,7 @@ import { IoIosArrowRoundBack } from 'react-icons/io'
 import { FaUserAlt, FaLock, FaUserPlus } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
 import AlertSignUp from './AlertSignUp'
+import { useNavigate } from 'react-router'
 const MotionButton = motion(Button)
 
 function SignupForm({ avatar }) {
@@ -36,7 +37,10 @@ function SignupForm({ avatar }) {
   const CFaLock = chakra(FaLock)
   const CMdOutlineEmail = chakra(MdEmail)
 
+  const navigate = useNavigate()
+
   const signup = useAuthStore((state) => state.signup)
+  // const accessToken = useAuthStore((state) => state.accessToken)
 
   const [username, setUserName] = useState('')
   const [surname, setSurname] = useState('')
@@ -48,8 +52,13 @@ function SignupForm({ avatar }) {
   const [error, setError] = useState(false)
 
   const [showPassword, setShowPassword] = useState(false)
+  const [redirect, setRedirect] = useState(false)
 
   const handleShowClick = () => setShowPassword(!showPassword)
+
+  // useEffect(() => {
+  //   accessToken ? setRedirect(true) : setRedirect(false)
+  // }, [accessToken])
 
   async function handleSignup(e) {
     e.preventDefault()
@@ -68,10 +77,11 @@ function SignupForm({ avatar }) {
         email,
         password: password.trim(),
       })
-      setIsLoading(false)
       toast({
         render: () => <AlertSignUp status={true} />,
       })
+      setIsLoading(false)
+
     } catch (err) {
       toast({
         render: () => <AlertSignUp status={false} />,
@@ -81,6 +91,8 @@ function SignupForm({ avatar }) {
       setError(msg)
 
       setIsLoading(false)
+    } finally {
+      navigate('/')
     }
   }
 

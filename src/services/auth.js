@@ -96,7 +96,7 @@ export const signup = async ({ username, surname, email, password, role, avatar,
       password: password,
       message: message,
       role: role,
-      avatar: avatar,
+      avatar: avatar
     })
 
     const { userData, token } = response.data

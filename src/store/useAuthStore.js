@@ -9,7 +9,7 @@ const store = (set) => ({
   user: null,
   redirect: null,
   signup: async ({ username, surname, email, password, role, message, avatar }) => {
-    const { accessToken, user } = await signup({
+    const { user } = await signup({
       username,
       surname,
       email,
@@ -23,7 +23,7 @@ const store = (set) => ({
 
     set({
       user,
-      accessToken,
+      // accessToken,
       redirect,
     })
   },

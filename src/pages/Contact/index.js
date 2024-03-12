@@ -1,10 +1,10 @@
-import { Box, Text } from '@chakra-ui/react'
 import Page from 'components/Page'
+import { Box, Text } from '@chakra-ui/react'
 
 import ContactMe from './components/ContactMe'
 import ContactForm from './components/ContactForm'
 
-export default function Home() {
+export default function ContactDefault() {
   return (
     <Page>
       <Box bg="white">

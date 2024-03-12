@@ -47,6 +47,18 @@ export const useAuthHandler = () => {
   return handleAuthentication
 }
 
+export const noteup = async (data) => {
+  try {
+    // data is object { text: '', email: 'goo@gmail.com' }
+    const result = await axios.post('/api/auth/notes', data)
+
+    console.log('result', result.data)
+
+  } catch (error) {
+    throw error
+  }
+}
+
 export const signin = async (name, password) => {
   try {
     console.log('base IN', instance.defaults.baseURL)

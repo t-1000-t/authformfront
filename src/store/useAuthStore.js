@@ -1,7 +1,7 @@
-import create from 'zustand'
+import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-import { signin, signup } from 'services/auth'
+import { signin, signup, noteup } from 'services/auth'
 import { removeTokenHeader } from 'utils/axios'
 
 const store = (set) => ({
@@ -9,7 +9,7 @@ const store = (set) => ({
   user: null,
   redirect: null,
   signup: async ({ username, surname, email, password, role, message, avatar }) => {
-    const { user } = await signup({
+    const { user, idAvatar } = await signup({
       username,
       surname,
       email,
@@ -24,6 +24,7 @@ const store = (set) => ({
     set({
       user,
       redirect,
+      idAvatar
     })
   },
   login: async (username, password) => {
@@ -37,6 +38,19 @@ const store = (set) => ({
       redirect,
     })
   },
+  noteText: async (data) => {
+    try {
+      // Perform any necessary operations, such as making API calls
+      // For now, we'll assume you just want to update the state with the note
+      await noteup(data)
+      set({ text: data.text })
+      // console.log('Note updated successfully')
+    } catch (error) {
+      console.error('Error updating note:', error)
+      throw error; // Throw the error to be caught by the caller, if needed
+    }
+  },
+
   logout: () => {
     // clear state
     set({ accessToken: null, user: null, redirect: null })

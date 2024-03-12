@@ -4,7 +4,7 @@ import { Box, Stack, Heading, Text, Avatar, Switch, FormControl, FormLabel, useC
 import LoginForm from './components/LoginForm'
 import { IoIosArrowRoundBack } from 'react-icons/io'
 
-export default function Login() {
+export default function LoginDefault() {
   const { toggleColorMode } = useColorMode()
 
   return (

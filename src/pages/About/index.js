@@ -3,7 +3,7 @@ import Page from 'components/Page'
 
 import AboutMe from './components/AboutMe'
 
-export default function Home() {
+export default function AboutDefault() {
   return (
     <Page>
       <Box bg="white">

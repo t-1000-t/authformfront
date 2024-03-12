@@ -12,6 +12,9 @@ export default function GuestFooter() {
           <Link to="/">Home</Link>
         </Text>
         <Text _hover={{ textDecoration: 'underline' }}>
+          <Link to="/notes">Notes</Link>
+        </Text>
+        <Text _hover={{ textDecoration: 'underline' }}>
           <Link to="/contact">Contact</Link>
         </Text>
         <Text _hover={{ textDecoration: 'underline' }}>

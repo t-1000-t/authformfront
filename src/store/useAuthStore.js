@@ -8,6 +8,7 @@ const store = (set) => ({
   accessToken: null,
   user: null,
   redirect: null,
+  list: null,
   signup: async ({ username, surname, email, password, role, message, avatar }) => {
     const { user, idAvatar } = await signup({
       username,
@@ -42,15 +43,17 @@ const store = (set) => ({
     try {
       // Perform any necessary operations, such as making API calls
       // For now, we'll assume you just want to update the state with the note
-      await noteup(data)
-      set({ text: data.text })
+      const list = await noteup(data)
+      set({ text: data.text, list: list.notes })
       // console.log('Note updated successfully')
     } catch (error) {
       console.error('Error updating note:', error)
       throw error; // Throw the error to be caught by the caller, if needed
     }
   },
-
+  setNoteList: (notes) => {
+    set({ list: notes });
+  },
   logout: () => {
     // clear state
     set({ accessToken: null, user: null, redirect: null })

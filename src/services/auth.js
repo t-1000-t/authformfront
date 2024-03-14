@@ -53,7 +53,7 @@ export const noteup = async (data) => {
     const result = await axios.post('/api/auth/notes', data)
 
     console.log('result', result.data)
-
+    return result.data
   } catch (error) {
     throw error
   }

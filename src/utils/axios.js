@@ -2,8 +2,8 @@ import axios from 'axios'
 
 const instance = axios.create()
 
-instance.defaults.baseURL = process.env.REACT_APP_SERVER_API
-// instance.defaults.baseURL = process.env.REACT_APP_LOCAL_API
+// instance.defaults.baseURL = process.env.REACT_APP_SERVER_API
+instance.defaults.baseURL = process.env.REACT_APP_LOCAL_API
 
 // another case
 // const api = axios.create({

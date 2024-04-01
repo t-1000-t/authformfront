@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback  } from 'react'
 import {
   Box,
   Button,
-  Container,
+  Container, Flex,
   FormControl,
-  Heading, List, ListIcon, ListItem,
+  Heading, List, ListIcon, ListItem, Spacer,
   Stack,
   Textarea,
 } from '@chakra-ui/react'
@@ -16,23 +16,24 @@ import axios from 'utils/axios'
 const MotionButton = motion(Button)
 
 export default function Notes() {
-  const { noteText, accessToken, user, list, setNoteList } = useAuthStore()
+  const { noteText, deleteNote, accessToken, user, list, setNoteList } = useAuthStore()
   const [value, setValue] = useState('')
 
-  useEffect(() => {
-    async function fetchNotes() {
-      try {
-        const response = await axios.get('/api/auth/notes', { params: { email: user?.userData?.email }})
-        setNoteList(response.data.notes)
-      } catch (error) {
-        console.error('Error fetching notes:', error)
-      }
+  // Define fetchNotes function using useCallback
+  const fetchNotes = useCallback(async () => {
+    try {
+      const response = await axios.get('/api/auth/notes', { params: { email: user?.userData?.email }})
+      setNoteList(response.data.notes)
+    } catch (error) {
+      console.error('Error fetching notes:', error)
     }
+  }, [user?.userData?.email, setNoteList])
 
+  useEffect(() => {
     if (user?.userData?.email) {
       fetchNotes().then()
     }
-  }, [user?.userData?.email, setNoteList])
+  }, [user?.userData?.email, fetchNotes]) // Include fetchNotes in the dependency array
 
   async function handleInputChange(e) {
     e.preventDefault()
@@ -53,7 +54,22 @@ export default function Notes() {
     }
   }
 
-  console.log('list', list)
+  async function handleDelete(id) {
+
+    if (!accessToken) {
+      console.log('Access token not available')
+      return
+    }
+
+    try {
+      const result = await deleteNote(id)
+      if (result.status === 200 && result.statusText === 'OK') {
+        fetchNotes()
+      }
+    } catch (error) {
+      console.error('Error sending note:', error)
+    }
+  }
 
   return (
     <Container maxW={'6xl'} py={24} px={{ base: 6, md: 12 }}>
@@ -81,17 +97,32 @@ export default function Notes() {
             </MotionButton>
           </Stack>
         </Box>
-        <List spacing={3}>
-          {list?.toReversed().map((item) => {
+      </form>
+      <List spacing={3}>
+        {list?.toReversed().map((item) => {
           return(
             <ListItem>
-                <ListIcon as={MdCheckCircle} color='green.500' />
-              {item.text}
+              <Flex>
+                <Box>
+                  <ListIcon as={MdCheckCircle} color='green.500' />
+                  {item.text}
+                </Box>
+                <Spacer/>
+                <Button
+                  size='sm'
+                  height='28px'
+                  width='100px'
+                  border='1px'
+                  borderColor='red.500'
+                  onClick={() => handleDelete(item._id)}
+                >
+                  Delete
+                </Button>
+              </Flex>
             </ListItem>
-            )
-          })}
-        </List>
-      </form>
+          )
+        })}
+      </List>
     </Container>
   )
 }

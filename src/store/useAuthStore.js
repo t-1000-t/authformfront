@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-import { signin, signup, noteup } from 'services/auth'
+import { signin, signup, noteup, noteDelete } from 'services/auth'
 import { removeTokenHeader } from 'utils/axios'
 
 const store = (set) => ({
@@ -48,11 +48,21 @@ const store = (set) => ({
       // console.log('Note updated successfully')
     } catch (error) {
       console.error('Error updating note:', error)
-      throw error; // Throw the error to be caught by the caller, if needed
+      throw error // Throw the error to be caught by the caller, if needed
+    }
+  },
+  deleteNote: async (id) => {
+    try {
+      const result = await noteDelete(id)
+
+      return result
+    } catch (error) {
+      console.error('Error updating note:', error)
+      throw error // Throw the error to be caught by the caller, if needed
     }
   },
   setNoteList: (notes) => {
-    set({ list: notes });
+    set({ list: notes })
   },
   logout: () => {
     // clear state

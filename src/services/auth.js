@@ -59,6 +59,17 @@ export const noteup = async (data) => {
   }
 }
 
+export const noteDelete = async (id) => {
+  try {
+    const { status, statusText } = await axios.delete(`/api/auth/notes/${id}`)
+
+    return { status, statusText }
+  } catch (error) {
+    console.error('Error deleting note:', error)
+    throw error
+  }
+}
+
 export const signin = async (name, password) => {
   try {
     console.log('base IN', instance.defaults.baseURL)

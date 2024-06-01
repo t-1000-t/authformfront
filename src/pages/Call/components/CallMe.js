@@ -22,7 +22,7 @@ export default function CallMe() {
   const [callAccepted, setCallAccepted] = useState(false)
   const [idToCall, setIdToCall] = useState("")
   const [callEnded, setCallEnded] = useState(false)
-  const [name, setName] = useState("")
+  const [name] = useState("VLAD")
   const myVideo = useRef(null)
   const opponentVideo = useRef(null)
   const connectionRef = useRef(null)

@@ -35,6 +35,13 @@ const routesConfig = [
   },
   {
     exact: true,
+    layout: GuestLayout,
+    path: '/call',
+    guard: GuestGuard,
+    component: lazy(() => import('pages/Call')),
+  },
+  {
+    exact: true,
     path: '/login',
     guard: GuestGuard,
     component: lazy(() => import('pages/Login')),

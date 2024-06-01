@@ -18,6 +18,9 @@ export default function GuestFooter() {
           <Link to="/contact">Contact</Link>
         </Text>
         <Text _hover={{ textDecoration: 'underline' }}>
+          <Link to="/call">Call</Link>
+        </Text>
+        <Text _hover={{ textDecoration: 'underline' }}>
           <Link to="/about">About</Link>
         </Text>
       </Stack>

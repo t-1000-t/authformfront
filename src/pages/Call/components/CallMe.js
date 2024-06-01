@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Box, Button, TextField, IconButton } from '@material-ui/core'
-import AssignmentIcon from '@material-ui/icons/Assignment'
-import PhoneIcon from '@material-ui/icons/Phone'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import Peer from 'simple-peer'
 // import { useVideoChat } from '../../../utils/hooks/useVideoChat'
 import { useSocket } from '../../../context/socket-context'
 // import useAuthStore from '../../../store/useAuthStore'
-import { Text } from '@chakra-ui/react'
+import { Box, Button, IconButton, Text, Textarea } from '@chakra-ui/react'
+import { BellIcon, PhoneIcon } from '@chakra-ui/icons'
 
 import process from 'process'
 
@@ -79,8 +77,8 @@ export default function CallMe() {
         signalData: data,
         from: me,
         name: name,
-      });
-    });
+      })
+    })
 
     peer.on("stream", (currentStream) => {
       opponentVideo.current.srcObject = currentStream
@@ -146,10 +144,6 @@ export default function CallMe() {
     }
   }, [stream])
 
-  console.log('myVideo.current', myVideo.current)
-  console.log('opponentVideo.current', opponentVideo.current)
-  console.log('stream', stream)
-
   return (
     <>
       <h1 style={{ textAlign: "center", color: '#fff' }}>Zoomish</h1>
@@ -209,23 +203,16 @@ export default function CallMe() {
           )}
         </div>
         <div className="myId">
-          <TextField
-            id="filled-basic"
-            label="Name"
-            variant="filled"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            style={{ marginBottom: "20px" }}
-          />
           <Box>
             <CopyToClipboard text={me} style={{ marginBottom: "2rem" }}>
-              <Button variant="contained" color="primary" startIcon={<AssignmentIcon fontSize="large" />}>
+              <Button variant="contained" color="primary" startIcon={<BellIcon fontSize="large" />}>
                 Copy ID
               </Button>
             </CopyToClipboard>
             <Text>{me}</Text>
           </Box>
-          <TextField
+          <Textarea
+            style={{ width: "20rem" }}
             id="filled-basic"
             label="ID to call"
             variant="filled"
@@ -256,7 +243,7 @@ export default function CallMe() {
         </div>
       </div>
     </>
-  );
+  )
 }
 // return (
   //   <Container maxW={'6xl'} py={24} px={{ base: 6, md: 12 }}>

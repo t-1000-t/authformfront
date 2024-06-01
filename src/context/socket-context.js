@@ -1,51 +1,47 @@
 // src/socket-context.js
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { io } from 'socket.io-client'
+
 import useAuthStore from '../store/useAuthStore'
 
 const SocketContext = createContext({})
 
 const SocketProvider = ({ children }) => {
-  const [socket, setSocket] = useState(null)
+  const socket = useRef({})
+
   const [isConnecting, setIsConnecting] = useState(true)
+
   const user = useAuthStore((state) => state.user)
+
 
   const connectSocket = () => {
     setIsConnecting(true)
-    const newSocket = io(process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000')
+    socket.current = io(process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000')
 
-    newSocket.on('connect', () => {
-      newSocket.emit('userConnected', user)
+    socket.current.on('connect', () => {
+      socket.current.emit('userConnected', user)
       setIsConnecting(false)
     })
-
-    newSocket.on('connect_error', (err) => {
-      console.error('Connection Error:', err)
-      setIsConnecting(false)
-    })
-
-    newSocket.on('disconnect', () => {
-      console.log('Socket disconnected')
-    })
-
-    setSocket(newSocket)
   }
 
   const disconnectSocket = () => {
-    if (socket?.connected) {
-      socket.disconnect()
+    if (socket.current?.connected) {
+      socket.current.disconnect()
     }
   }
 
   useEffect(() => {
     connectSocket()
+
     return () => {
       disconnectSocket()
     }
   }, [user])
 
+  console.log('socket context', socket)
+  console.log('user context', user)
   return (
-    <SocketContext.Provider value={socket}>
+    <SocketContext.Provider value={socket.current}>
       {!isConnecting && children}
     </SocketContext.Provider>
   )

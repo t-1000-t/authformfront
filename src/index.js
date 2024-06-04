@@ -6,7 +6,7 @@ import App from './App'
 import process from 'process'
 
 import { BrowserRouter } from 'react-router-dom'
-import {SocketProvider} from './context/socket-context'
+import { SocketProvider } from './context/socket-context'
 
 
 // Polyfill process object

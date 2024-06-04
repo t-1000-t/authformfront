@@ -16,7 +16,7 @@ const SocketProvider = ({ children }) => {
 
   const connectSocket = useCallback(() => {
     setIsConnecting(true)
-    socket.current = io(process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000')
+    socket.current = io(process.env.REACT_APP_SERVER_API || 'http://localhost:2011')
 
     socket.current.on('connect', () => {
       socket.current.emit('userConnected', user)

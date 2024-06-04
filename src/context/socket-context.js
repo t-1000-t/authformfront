@@ -1,5 +1,5 @@
 // src/socket-context.js
-import React, { createContext, useContext, useEffect, useRef, useState } from 'react'
+import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { io } from 'socket.io-client'
 
 import useAuthStore from '../store/useAuthStore'
@@ -14,7 +14,7 @@ const SocketProvider = ({ children }) => {
   const user = useAuthStore((state) => state.user)
 
 
-  const connectSocket = () => {
+  const connectSocket = useCallback(() => {
     setIsConnecting(true)
     socket.current = io(process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000')
 
@@ -22,7 +22,7 @@ const SocketProvider = ({ children }) => {
       socket.current.emit('userConnected', user)
       setIsConnecting(false)
     })
-  }
+  }, [user])
 
   const disconnectSocket = () => {
     if (socket.current?.connected) {
@@ -36,10 +36,8 @@ const SocketProvider = ({ children }) => {
     return () => {
       disconnectSocket()
     }
-  }, [user])
+  }, [user, connectSocket])
 
-  console.log('socket context', socket)
-  console.log('user context', user)
   return (
     <SocketContext.Provider value={socket.current}>
       {!isConnecting && children}

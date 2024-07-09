@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Peer from 'simple-peer'
 import { useSocket } from '../../../context/socket-context'
 import {
@@ -17,6 +17,7 @@ import {
 import ListUsers from './ListUsers'
 import { PhoneIcon, CopyIcon, BellIcon, CloseIcon } from '@chakra-ui/icons'
 import process from 'process'
+import getList from '../../../services/getListUsers'
 
 window.process = process
 
@@ -32,12 +33,22 @@ export default function CallMe() {
   const [idToCall, setIdToCall] = useState('')
   const [callEnded, setCallEnded] = useState(false)
   const [name] = useState('VLAD')
+  const [listUsers, setListUsers] = useState([])
   const myVideo = useRef(null)
   const opponentVideo = useRef(null)
   const connectionRef = useRef(null)
 
   const { onCopy } = useClipboard(me)
   const toast = useToast()
+
+  const fetchUserList = useCallback(async () => {
+    const res = await getList()
+    setListUsers(res.list || [])
+  }, [])
+
+  useEffect(() => {
+    fetchUserList().then()
+  }, [fetchUserList])
 
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
@@ -149,7 +160,7 @@ export default function CallMe() {
     }
   }, [stream])
 
-
+  console.log('listUsers', listUsers)
   return (
     <Box bg="#282c34" color="#fff" minH="100vh" py={10}>
       <Heading textAlign="center" mb={10}>
@@ -157,7 +168,7 @@ export default function CallMe() {
       </Heading>
       <Container centerContent>
         <Flex>
-          <ListUsers />
+          <ListUsers list={listUsers} />
         <Flex mb={8} justify="center">
           {callAccepted && !callEnded && (
             <Box
@@ -214,30 +225,13 @@ export default function CallMe() {
           )}
         </Flex>
         <VStack spacing={4} mb={8}>
-          <Button
-            leftIcon={<CopyIcon />}
-            colorScheme="blue"
-            onClick={() => {
-              onCopy()
-              toast({
-                title: 'Copied',
-                description: 'Your ID has been copied.',
-                status: 'success',
-                duration: 2000,
-                isClosable: true,
-              })
-            }}
-          >
-            Copy ID
-          </Button>
-          <Text>{me}</Text>
-          <Input
-            width="20rem"
-            variant="filled"
-            placeholder="ID to call"
-            value={idToCall}
-            onChange={(e) => setIdToCall(e.target.value)}
-          />
+          {/*<Input*/}
+          {/*  width="20rem"*/}
+          {/*  variant="filled"*/}
+          {/*  placeholder="ID to call"*/}
+          {/*  value={idToCall}*/}
+          {/*  onChange={(e) => setIdToCall(e.target.value)}*/}
+          {/*/>*/}
           {callAccepted && !callEnded ? (
             <Button
               colorScheme="red"

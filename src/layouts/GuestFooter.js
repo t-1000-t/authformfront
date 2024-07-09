@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 // import Lottie from 'react-lottie-player'
 import { Container, Stack, Text } from '@chakra-ui/react'
+import useAuthStore from 'store/useAuthStore'
 
 export default function GuestFooter() {
   // const lottieRef = useRef()
+  const accessToken = useAuthStore((state) => state.accessToken)
 
   return (
     <Container as={Stack} py={4} bg="teal.500" maxW="1440px" rounded={{ md: '2xl' }}>
@@ -17,9 +19,9 @@ export default function GuestFooter() {
         <Text _hover={{ textDecoration: 'underline' }}>
           <Link to="/contact">Contact</Link>
         </Text>
-        <Text _hover={{ textDecoration: 'underline' }}>
+        {!!accessToken && <Text _hover={{ textDecoration: 'underline' }}>
           <Link to="/call">Call</Link>
-        </Text>
+        </Text>}
         <Text _hover={{ textDecoration: 'underline' }}>
           <Link to="/about">About</Link>
         </Text>

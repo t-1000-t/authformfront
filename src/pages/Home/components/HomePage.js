@@ -3,10 +3,15 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
 import Container from 'layouts/Container'
+import useAuthStore from 'store/useAuthStore'
 
 const MotionButton = motion(Button)
 
 export default function HomePage() {
+  const accessToken = useAuthStore((state) => state.accessToken)
+
+  console.log('accessToken', accessToken)
+
   return (
     <Container position="relative" mb={{ base: 36, md: 0 }}>
       <Stack direction={{ base: 'column', md: 'row' }} pb={16}>

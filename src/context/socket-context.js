@@ -22,7 +22,7 @@ const SocketProvider = ({ children }) => {
       setIsConnecting(false)
     })
 
-    // socket.current.emit('registerSocket', user?.userData.id)
+    socket.current.emit('registerSocket', user?.userData?.id)
 
     socket.current.on('me', (id) => {
       // console.log('id', id)

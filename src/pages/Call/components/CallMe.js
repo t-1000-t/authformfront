@@ -7,15 +7,12 @@ import {
   Container,
   Flex,
   IconButton,
-  Input,
-  Text,
-  useClipboard,
   VStack,
-  Heading,
-  useToast,
+  Heading, Input,
+  // useToast,
 } from '@chakra-ui/react'
 import ListUsers from './ListUsers'
-import { PhoneIcon, CopyIcon, BellIcon, CloseIcon } from '@chakra-ui/icons'
+import { PhoneIcon, BellIcon, CloseIcon } from '@chakra-ui/icons'
 import process from 'process'
 import getList from '../../../services/getListUsers'
 
@@ -38,8 +35,7 @@ export default function CallMe() {
   const opponentVideo = useRef(null)
   const connectionRef = useRef(null)
 
-  const { onCopy } = useClipboard(me)
-  const toast = useToast()
+  // const toast = useToast()
 
   const fetchUserList = useCallback(async () => {
     const res = await getList()
@@ -225,13 +221,13 @@ export default function CallMe() {
           )}
         </Flex>
         <VStack spacing={4} mb={8}>
-          {/*<Input*/}
-          {/*  width="20rem"*/}
-          {/*  variant="filled"*/}
-          {/*  placeholder="ID to call"*/}
-          {/*  value={idToCall}*/}
-          {/*  onChange={(e) => setIdToCall(e.target.value)}*/}
-          {/*/>*/}
+          <Input
+            width="20rem"
+            variant="filled"
+            placeholder="ID to call"
+            value={idToCall}
+            onChange={(e) => setIdToCall(e.target.value)}
+          />
           {callAccepted && !callEnded ? (
             <Button
               colorScheme="red"

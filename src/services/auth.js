@@ -76,7 +76,7 @@ export const signin = async (name, password) => {
 
     const response = await axios.post('/api/auth/login', {
       email: name,
-      password: password,
+      password: password
     })
 
     const { token, userData, userId } = response.data
@@ -139,6 +139,17 @@ export const signup = async ({ username, surname, email, password, role, avatar,
       accessToken: token,
     }
   } catch (error) {
+    throw error
+  }
+}
+
+export const logoutAuth = async (id) => {
+  try {
+  await axios.post('/api/auth/logout', {
+    userId: id
+  })
+    }
+    catch (error) {
     throw error
   }
 }

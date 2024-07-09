@@ -4,11 +4,13 @@ import { Alert, AlertIcon, Box, Button, CloseButton, Flex, Image, Stack, Text, H
 import Container from './Container'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { useSocket } from '../context/socket-context'
 
 const MotionButton = motion(Button)
 
 export default function GuestNavLogout({ name, idUserName }) {
   const logout = useAuthStore((state) => state.logout)
+  const { user } = useSocket()
 
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
@@ -17,9 +19,10 @@ export default function GuestNavLogout({ name, idUserName }) {
     // e.preventDefault()
     setIsLoading(true)
     setError(false)
+    const { id } = user.userData
 
     try {
-      await logout()
+      await logout(id)
     } catch (err) {
       const msg = err.response?.data?.message || err.message
       setError(msg)

@@ -14,13 +14,14 @@ import {
   Heading,
   useToast,
 } from '@chakra-ui/react'
+import ListUsers from './ListUsers'
 import { PhoneIcon, CopyIcon, BellIcon, CloseIcon } from '@chakra-ui/icons'
 import process from 'process'
 
 window.process = process
 
 export default function CallMe() {
-  const socket = useSocket()
+  const { socket, socketId } = useSocket()
 
   const [me, setMe] = useState('')
   const [stream, setStream] = useState(null)
@@ -48,10 +49,6 @@ export default function CallMe() {
       })
       .catch(error => console.error('Error accessing media devices.', error))
 
-    socket.on('me', (id) => {
-      setMe(id)
-    })
-
     socket.on('callUser', (data) => {
       setReceivingCall(true)
       setCaller(data.from)
@@ -59,7 +56,6 @@ export default function CallMe() {
     })
 
     return () => {
-      socket.off('me')
       socket.off('callUser')
     }
   }, [socket])
@@ -68,8 +64,8 @@ export default function CallMe() {
     if (stream && myVideo.current) {
       myVideo.current.srcObject = stream
     }
-    setMe(socket.id)
-  }, [stream, socket.id, socket])
+    setMe(socketId)
+  }, [stream, socketId])
 
   const callUser = (id) => {
     const peer = new Peer({
@@ -145,7 +141,7 @@ export default function CallMe() {
   useEffect(() => {
     return () => {
       if (connectionRef.current) {
-        connectionRef.current.destroy();
+        connectionRef.current.destroy()
       }
       if (stream) {
         stream.getTracks().forEach(track => track.stop())
@@ -153,12 +149,15 @@ export default function CallMe() {
     }
   }, [stream])
 
+
   return (
     <Box bg="#282c34" color="#fff" minH="100vh" py={10}>
       <Heading textAlign="center" mb={10}>
         Zoomish
       </Heading>
       <Container centerContent>
+        <Flex>
+          <ListUsers />
         <Flex mb={8} justify="center">
           {callAccepted && !callEnded && (
             <Box
@@ -270,6 +269,7 @@ export default function CallMe() {
             </Button>
           </Box>
         )}
+        </Flex>
       </Container>
     </Box>
   )

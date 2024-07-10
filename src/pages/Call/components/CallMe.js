@@ -6,13 +6,11 @@ import {
   Button,
   Container,
   Flex,
-  IconButton,
-  VStack,
-  Heading, Input,
+  Heading,
   // useToast,
 } from '@chakra-ui/react'
 import ListUsers from './ListUsers'
-import { PhoneIcon, BellIcon, CloseIcon } from '@chakra-ui/icons'
+import { BellIcon } from '@chakra-ui/icons'
 import process from 'process'
 import getList from '../../../services/getListUsers'
 
@@ -27,9 +25,8 @@ export default function CallMe() {
   const [caller, setCaller] = useState('')
   const [callerSignal, setCallerSignal] = useState(null)
   const [callAccepted, setCallAccepted] = useState(false)
-  const [idToCall, setIdToCall] = useState('')
   const [callEnded, setCallEnded] = useState(false)
-  const [name] = useState('VLAD')
+  const [name, setName] = useState('')
   const [listUsers, setListUsers] = useState([])
   const myVideo = useRef(null)
   const opponentVideo = useRef(null)
@@ -164,7 +161,14 @@ export default function CallMe() {
       </Heading>
       <Container centerContent>
         <Flex>
-          <ListUsers list={listUsers} />
+          <ListUsers
+          list={listUsers}
+          callAccepted={callAccepted}
+          callEnded={callEnded}
+          callUser={callUser}
+          endCall={endCall}
+          setName={setName}
+          />
         <Flex mb={8} justify="center">
           {callAccepted && !callEnded && (
             <Box
@@ -220,31 +224,6 @@ export default function CallMe() {
             </Box>
           )}
         </Flex>
-        <VStack spacing={4} mb={8}>
-          <Input
-            width="20rem"
-            variant="filled"
-            placeholder="ID to call"
-            value={idToCall}
-            onChange={(e) => setIdToCall(e.target.value)}
-          />
-          {callAccepted && !callEnded ? (
-            <Button
-              colorScheme="red"
-              leftIcon={<CloseIcon />}
-              onClick={endCall}
-            >
-              End Call
-            </Button>
-          ) : (
-            <IconButton
-              colorScheme="blue"
-              aria-label="call"
-              icon={<PhoneIcon />}
-              onClick={() => callUser(idToCall)}
-            />
-          )}
-        </VStack>
         {receivingCall && !callAccepted && (
           <Box textAlign="center">
             <Heading size="md" mb={4}>

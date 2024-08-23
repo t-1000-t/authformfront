@@ -24,9 +24,15 @@ function RoutesRender() {
                   )}
                 </route.guard>
               ) : (
-                <route.layout>
-                  <route.component />
-                </route.layout>
+                <>
+                {route.layout ? ( // Apply layout if present
+                    <route.layout>
+                      <route.component />
+                    </route.layout>
+                  ) : (
+                    <route.component />
+                  )}
+                </>
               )}
             </Suspense>
           )}

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import Peer from 'simple-peer'
-import { useSocket } from '../../../context/socket-context'
-import getList from '../../../services/getListUsers'
+import { useSocket } from '../../context/socket-context'
+import getList from '../../services/getListUsers'
 
 export function useCall() {
   const { socket, socketId } = useSocket()
@@ -15,10 +15,10 @@ export function useCall() {
   const [callEnded, setCallEnded] = useState(false)
   const [name, setName] = useState('')
   const [listUsers, setListUsers] = useState([])
-  const opponentVideo = useRef(null)
-  const connectionRef = useRef(null)
+  const myVideo = useRef(null)
+  const opponentVideo = useRef()
+  const connectionRef = useRef()
 
-  // Fetch the list of users
   const fetchUserList = useCallback(async () => {
     const res = await getList()
     setListUsers(res.list || [])
@@ -28,14 +28,7 @@ export function useCall() {
     fetchUserList().then()
   }, [fetchUserList])
 
-  // Get user media (video and audio)
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-      .then((currentStream) => {
-        setStream(currentStream)
-      })
-      .catch(error => console.error('Error accessing media devices.', error))
-
     socket.on('callUser', (data) => {
       setReceivingCall(true)
       setCaller(data.from)
@@ -49,93 +42,112 @@ export function useCall() {
 
   useEffect(() => {
     setMe(socketId)
+    console.log('socketID', socketId)
   }, [socketId])
 
-  // Function to initiate a call to another user
+  // UseEffect to update video element
+  useEffect(() => {
+    if (myVideo.current && stream) {
+      myVideo.current.srcObject = stream;
+      console.log('Assigned stream to myVideo', stream);
+    }
+  }, [stream]);  // This will run when `stream` updates
+
   const callUser = (id) => {
-    const peer = new Peer({
-      initiator: true,
-      trickle: false,
-      stream: stream,
-    })
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+      .then((currentStream) => {
+        if (!currentStream) {
+          return alert('Unable to access your camera and microphone')
+        }
+        setStream(currentStream)
+        setCallAccepted(true)
 
-    peer.on('signal', (data) => {
-      socket.emit('callUser', {
-        userToCall: id,
-        signalData: data,
-        from: me,
-        name: name,
+        // Assign current stream to myVideo directly here
+        if (myVideo.current) {
+          myVideo.current.srcObject = currentStream
+        }
+
+        const peer = new Peer({
+          initiator: true,
+          trickle: false,
+          stream: currentStream,
+        })
+
+        peer.on('signal', (data) => {
+          socket.emit('callUser', {
+            userToCall: id,
+            signalData: data,
+            from: me,
+            name: name,
+          })
+        })
+
+        peer.on('stream', (currentStream) => {
+          if (opponentVideo.current) {
+            opponentVideo.current.srcObject = currentStream
+          }
+        })
+
+        peer.on('error', (err) => console.error('Peer error:', err))
+
+        socket.on('callAccepted', (signal) => {
+          setCallAccepted(true)
+          peer.signal(signal)
+        })
+
+        connectionRef.current = peer
       })
-    })
-
-    peer.on('stream', (currentStream) => {
-      if (opponentVideo.current) {
-        opponentVideo.current.srcObject = currentStream
-      }
-    })
-
-    peer.on('error', err => console.error('Peer error:', err))
-
-    socket.on('callAccepted', (signal) => {
-      setCallAccepted(true)
-      peer.signal(signal)
-    })
-
-    connectionRef.current = peer
+      .catch((error) => console.error('Error accessing media devices.', error))
   }
 
-  // Function to answer an incoming call
   const answerCall = () => {
-    setCallAccepted(true)
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+      .then((currentStream) => {
+        if (!currentStream) {
+          return alert('Unable to access your camera and microphone')
+        }
+        setStream(currentStream)
+        setCallAccepted(true)
 
-    const peer = new Peer({
-      initiator: false,
-      trickle: false,
-      stream: stream,
-    })
+        if (myVideo.current) {
+          myVideo.current.srcObject = currentStream
+        }
 
-    peer.on('signal', (data) => {
-      socket.emit('answerCall', { signal: data, to: caller })
-    })
+        const peer = new Peer({
+          initiator: false,
+          trickle: false,
+          stream: currentStream,
+        })
 
-    peer.on('stream', (currentStream) => {
-      if (opponentVideo.current) {
-        opponentVideo.current.srcObject = currentStream
-      }
-    })
+        peer.on('signal', (data) => {
+          socket.emit('answerCall', { signal: data, to: caller })
+        })
 
-    peer.on('error', err => console.error('Peer error:', err))
+        peer.on('stream', (currentStream) => {
+          if (opponentVideo.current) {
+            opponentVideo.current.srcObject = currentStream
+          }
+        })
 
-    peer.signal(callerSignal)
-    connectionRef.current = peer
-  }
+        peer.on('error', (err) => console.error('Peer error:', err))
 
-  // Function to end the call
+        peer.signal(callerSignal)
+        connectionRef.current = peer
+      })
+      .catch((error) => console.error('Error accessing media devices.', error))
+  };
+
   const endCall = () => {
     setCallEnded(true)
-    if (connectionRef.current) {
-      connectionRef.current.destroy()
-    }
     if (stream) {
-      stream.getTracks().forEach(track => track.stop())
+      stream.getTracks().forEach((track) => track.stop())
     }
     setReceivingCall(false)
     setCaller('')
     setCallerSignal(null)
     setCallAccepted(false)
+    socket.off('callAccepted')
   }
-
-  // Clean up when the component unmounts
-  useEffect(() => {
-    return () => {
-      if (connectionRef.current) {
-        connectionRef.current.destroy();
-      }
-      if (stream) {
-        stream.getTracks().forEach(track => track.stop());
-      }
-    }
-  }, [stream])
 
   return {
     me,
@@ -148,6 +160,7 @@ export function useCall() {
     name,
     setName,
     listUsers,
+    myVideo,
     opponentVideo,
     callUser,
     answerCall,

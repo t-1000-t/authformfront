@@ -1,15 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Button, IconButton, Text, VStack } from '@chakra-ui/react'
 import { CloseIcon, PhoneIcon } from '@chakra-ui/icons'
+import { useSocket } from '../../../context/socket-context'
 
-const ListUsers = React.memo(({ list, callAccepted, callEnded, callUser, endCall, setName }) => {
-  console.log('list', list)
+const ListUsers = React.memo(({ list, callAccepted, callEnded, callUser, endCall }) => {
+  const { socket } = useSocket()
+  const [usersList, setUsersList] = useState(list)
+
+  useEffect(() => {
+    setUsersList(list)
+  }, [list])
+
+  useEffect(() => {
+    if (socket) {
+      socket.on('updateUserSocket', (updatedUser) => {
+        setUsersList((prevList) =>
+          prevList.map((user) =>
+            user.id === updatedUser.userId
+              ? { ...user, idSocketIO: updatedUser.idSocketIO }
+              : user
+          )
+        )
+      })
+    }
+
+    return () => {
+      if (socket) {
+        socket.off('updateUserSocket')
+      }
+    }
+  }, [socket])
+
   return (
     <VStack align="stretch">
-      {list && list.length > 0 ? (
-        list.map((user, index) => {
-          setName(user.username)
-          return <Box key={index} p={4} borderWidth={1} borderRadius="lg" bg="white" color="black">
+      {usersList && usersList.length > 0 ? (
+        usersList.map((user, index) => (
+          <Box key={index} p={4} borderWidth={1} borderRadius="lg" bg="white" color="black">
             <Text fontWeight="bold">{user.username} {user.surname}</Text>
             <Text>{user.email}</Text>
             <Text>{user.idSocketIO}</Text>
@@ -32,7 +58,7 @@ const ListUsers = React.memo(({ list, callAccepted, callEnded, callUser, endCall
               )}
             </VStack>
           </Box>
-      })
+        ))
       ) : (
         <Text>No users available</Text>
       )}

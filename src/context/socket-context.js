@@ -18,6 +18,7 @@ const SocketProvider = ({ children }) => {
     // socket.current = io('http://localhost:5000' || 'http://localhost:2011')
 
     socket.current.on('connect', () => {
+      console.log('user CHECK', user)
       socket.current.emit('userConnected', user)
       setIsConnecting(false)
     })

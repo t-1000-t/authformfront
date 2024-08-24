@@ -4,7 +4,7 @@ import { CloseIcon, PhoneIcon } from '@chakra-ui/icons'
 import { useSocket } from '../../../context/socket-context'
 
 const ListUsers = React.memo(({ list, callAccepted, callEnded, callUser, endCall }) => {
-  const { socket } = useSocket()
+  const { socket, socketId } = useSocket()
   const [usersList, setUsersList] = useState(list)
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const ListUsers = React.memo(({ list, callAccepted, callEnded, callUser, endCall
             <Text>{user.email}</Text>
             <Text>{user.idSocketIO}</Text>
             <VStack spacing={4} mb={8}>
-              {callAccepted && !callEnded ? (
+              {callAccepted && !callEnded && (user.idSocketIO === socketId) ? (
                 <Button
                   colorScheme="red"
                   leftIcon={<CloseIcon />}

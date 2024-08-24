@@ -3,7 +3,7 @@ import Peer from 'simple-peer'
 import { useSocket } from '../../context/socket-context'
 import getList from '../../services/getListUsers'
 
-export function useCall() {
+function useCall() {
   const { socket, socketId } = useSocket()
 
   const [me, setMe] = useState('')
@@ -167,3 +167,5 @@ export function useCall() {
     endCall,
   }
 }
+
+export default useCall

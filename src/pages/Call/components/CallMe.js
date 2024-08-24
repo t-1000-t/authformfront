@@ -1,11 +1,11 @@
 import React from 'react'
-import { Box, Container, Flex, Heading } from '@chakra-ui/react'
+import { Box, Container, Flex, Heading, Spacer } from '@chakra-ui/react'
 import VideoBox from './VideoBox'
 import CallControls from './CallControls'
-import { useCall } from '../../../utils/hooks/useCall'
+import useCall from '../../../utils/hooks/useCall'
 import ListUsers from './ListUsers'
 
-export default function CallMe() {
+function CallMe() {
   const {
     stream,
     callAccepted,
@@ -24,16 +24,9 @@ export default function CallMe() {
       <Heading textAlign="center" mb={10}>
         Zoomish
       </Heading>
-      <Container centerContent>
-        <Flex>
-          <ListUsers
-            list={listUsers}
-            callAccepted={callAccepted}
-            callEnded={callEnded}
-            callUser={callUser}
-            endCall={endCall}
-          />
-          <Flex mb={8} justify="center" alignItems="center">
+      <Container centerContent maxW='container.md'>
+        <Flex direction='row' w='full' wrap='wrap' justifyContent='center'>
+          <Flex mb={8} position='relative'>
             {stream && (
               <>
                 ME
@@ -54,8 +47,18 @@ export default function CallMe() {
             answerCall={answerCall}
             endCall={endCall}
           />
-        </Flex>
+          <Spacer />
+          <ListUsers
+            list={listUsers}
+            callAccepted={callAccepted}
+            callEnded={callEnded}
+            callUser={callUser}
+            endCall={endCall}
+          />
+          </Flex>
       </Container>
     </Box>
   )
 }
+
+export default CallMe

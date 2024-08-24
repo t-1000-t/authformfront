@@ -1,16 +1,18 @@
-import { Box, Flex } from '@chakra-ui/react'
+import { Box, Container } from '@chakra-ui/react'
 import Page from 'components/Page'
 
 import CallMe from './components/CallMe'
 
-export default function CallDefault() {
+function CallDefault() {
   return (
     <Page>
-      <Flex>
-        <Box bg="white">
+      <Container maxW='2xl'>
+        <Box bg="white" padding='4'>
           <CallMe />
         </Box>
-      </Flex>
+      </Container>
     </Page>
   )
 }
+
+export default CallDefault

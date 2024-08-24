@@ -1,8 +1,10 @@
 import React from 'react'
 import { Box } from '@chakra-ui/react'
+import Draggable from 'react-draggable'
 
 function VideoBox({ streamRef, isOpponent }) {
   return (
+    <Draggable>
     <Box
       h="136px"
       w="136px"
@@ -28,6 +30,7 @@ function VideoBox({ streamRef, isOpponent }) {
         }}
       />
     </Box>
+    </Draggable>
   )
 }
 

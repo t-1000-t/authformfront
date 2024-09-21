@@ -23,7 +23,7 @@ const store = (set, get) => ({
     set({
       user,
       redirect,
-      idAvatar
+      idAvatar,
     })
   },
 
@@ -62,7 +62,6 @@ const store = (set, get) => ({
   },
 
   logout: async (id) => {
-
     // clear state
     set({ accessToken: null, user: null, redirect: null })
     await logoutAuth(id)
@@ -79,7 +78,7 @@ const store = (set, get) => ({
 
   setToken: (token) => {
     set({ accessToken: token })
-  }
+  },
 })
 
 const useAuthStore = create(

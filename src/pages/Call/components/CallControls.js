@@ -10,11 +10,7 @@ function CallControls({ receivingCall, callAccepted, name, answerCall }) {
           <Heading size="md" mb={4}>
             {name} is calling...
           </Heading>
-          <Button
-            colorScheme="green"
-            leftIcon={<BellIcon />}
-            onClick={answerCall}
-          >
+          <Button colorScheme="green" leftIcon={<BellIcon />} onClick={answerCall}>
             Answer
           </Button>
         </Box>

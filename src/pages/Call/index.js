@@ -6,8 +6,8 @@ import CallMe from './components/CallMe'
 function CallDefault() {
   return (
     <Page>
-      <Container maxW='2xl'>
-        <Box bg="white" padding='4'>
+      <Container maxW="2xl">
+        <Box bg="white" padding="4">
           <CallMe />
         </Box>
       </Container>

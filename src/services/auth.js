@@ -48,110 +48,95 @@ export const useAuthHandler = () => {
 }
 
 export const noteup = async (data) => {
-  try {
-    // data is object { text: '', email: 'goo@gmail.com' }
-    const result = await axios.post('/api/auth/notes', data)
+  // data is object { text: '', email: 'goo@gmail.com' }
+  const result = await axios.post('/api/auth/notes', data)
 
-    console.log('result', result.data)
-    return result.data
-  } catch (error) {
-    throw error
-  }
+  console.log('result', result.data)
+  return result.data
+  
 }
 
 export const noteDelete = async (id) => {
-  try {
-    const { status, statusText } = await axios.delete(`/api/auth/notes/${id}`)
 
-    return { status, statusText }
-  } catch (error) {
-    console.error('Error deleting note:', error)
-    throw error
-  }
+  const { status, statusText } = await axios.delete(`/api/auth/notes/${id}`)
+
+  return { status, statusText }
+  
 }
 
 export const signin = async (name, password) => {
-  try {
-    console.log('base IN', instance.defaults.baseURL)
 
-    const response = await axios.post('/api/auth/login', {
-      email: name,
-      password: password
-    })
+  console.log('base IN', instance.defaults.baseURL)
 
-    const { token, userData, userId } = response.data
+  const response = await axios.post('/api/auth/login', {
+    email: name,
+    password: password,
+  })
 
-    setSession(token)
+  const { token, userData, userId } = response.data
 
-    const user = {
-      userId,
-      username: userData.role,
-      score: Math.round(2000) || 300,
-      userData
-    }
+  setSession(token)
 
-    if (userData.role === 'admin') {
-      user.isAdmin = true
-      user.status = 'admin'
-    } else if (userData.role === 'user') {
-      user.status = 'user'
-    } else {
-      user.status = 'guest'
-    }
-
-    return {
-      user,
-      accessToken: token
-    }
-  } catch (error) {
-    throw error
+  const user = {
+    userId,
+    username: userData.role,
+    score: Math.round(2000) || 300,
+    userData,
   }
+
+  if (userData.role === 'admin') {
+    user.isAdmin = true
+    user.status = 'admin'
+  } else if (userData.role === 'user') {
+    user.status = 'user'
+  } else {
+    user.status = 'guest'
+  }
+
+  return {
+    user,
+    accessToken: token,
+  }
+
 }
 
 export const signup = async ({ username, surname, email, password, role, avatar, message }) => {
-  try {
-    console.log('base UP', instance.defaults.baseURL)
 
-    const response = await axios.post('/api/auth/signup', {
-      username: username,
-      surname: surname,
-      email: email,
-      password: password,
-      message: message,
-      role: role,
-      avatar: avatar
-    })
+  console.log('base UP', instance.defaults.baseURL)
 
-    const { userData, token } = response.data
+  const response = await axios.post('/api/auth/signup', {
+    username: username,
+    surname: surname,
+    email: email,
+    password: password,
+    message: message,
+    role: role,
+    avatar: avatar,
+  })
 
-    setSession(token)
+  const { userData, token } = response.data
 
-    if (userData.role === 'admin') {
-      userData.isAdmin = true
-    } else if (userData.role === 'user') {
-      userData.status = 'user'
-    } else {
-      userData.status = 'guest'
-    }
+  setSession(token)
 
-    return {
-      user: userData,
-      accessToken: token,
-    }
-  } catch (error) {
-    throw error
+  if (userData.role === 'admin') {
+    userData.isAdmin = true
+  } else if (userData.role === 'user') {
+    userData.status = 'user'
+  } else {
+    userData.status = 'guest'
   }
+
+  return {
+    user: userData,
+    accessToken: token,
+  }
+
 }
 
 export const logoutAuth = async (id) => {
-  try {
   await axios.post('/api/auth/logout', {
-    userId: id
+    userId: id,
   })
-    }
-    catch (error) {
-    throw error
-  }
 }
 
 export default useAuthHandler

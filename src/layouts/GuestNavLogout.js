@@ -42,30 +42,38 @@ export default function GuestNavLogout({ name, idUserName }) {
           </Flex>
         </Link>
         <Stack direction="row" spacing={6}>
-          {idUserName && <>
-          <Image src={`https://i.pravatar.cc/50?u=${idUserName}`}
-                                style={{ borderRadius: '50%', wight: 50, height: 50}} />
-          <Box p='4'><Text as='ins' paddingRight='2'>{name},</Text>
-            <Highlight query={['Welcome', 'page']}
-                       styles={{ px: '2', py: '1', rounded: 'full', bg: 'teal.100' }}
-          >Welcome to your page!</Highlight></Box>
-          </>}
+          {idUserName && (
+            <>
+              <Image
+                src={`https://i.pravatar.cc/50?u=${idUserName}`}
+                style={{ borderRadius: '50%', wight: 50, height: 50 }}
+              />
+              <Box p="4">
+                <Text as="ins" paddingRight="2">
+                  {name},
+                </Text>
+                <Highlight query={['Welcome', 'page']} styles={{ px: '2', py: '1', rounded: 'full', bg: 'teal.100' }}>
+                  Welcome to your page!
+                </Highlight>
+              </Box>
+            </>
+          )}
           <MotionButton
-              as={Link}
-              to="/"
-              colorScheme="gray"
-              color="teal.400"
-              px={{ base: 4, md: 8 }}
-              py={{ base: 2, md: 6 }}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              fontSize={{ base: 'md', md: 'xl' }}
-              isLoading={isLoading}
-              onClick={handleLogOut}
-            >
-              Logout
-            </MotionButton>
-          </Stack>
+            as={Link}
+            to="/"
+            colorScheme="gray"
+            color="teal.400"
+            px={{ base: 4, md: 8 }}
+            py={{ base: 2, md: 6 }}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            fontSize={{ base: 'md', md: 'xl' }}
+            isLoading={isLoading}
+            onClick={handleLogOut}
+          >
+            Logout
+          </MotionButton>
+        </Stack>
         {error && (
           <Alert status="error" mt={4} color="teal.700" fontWeight="semibold">
             <AlertIcon />

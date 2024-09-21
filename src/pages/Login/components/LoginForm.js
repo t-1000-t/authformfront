@@ -69,7 +69,6 @@ export default function LoginForm() {
     navigate('/')
   }
 
-
   return (
     <Box as={'form'} rounded={'lg'} shadow={'2xl'} p={8} w={{ base: 'full', md: 'md' }} onSubmit={handleLogin}>
       <Stack spacing={4}>

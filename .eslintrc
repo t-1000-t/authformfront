@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "react-app"
+  ],
+  "rules": {
+    "quotes": ["error", "single"],  // Enforce single quotes
+    "semi": ["error", "never"],  // No semicolons
+    "comma-dangle": ["error", "always-multiline"],  // Ensure trailing commas
+    "max-len": ["error", { "code": 120 }],  // Enforce max line length of 120
+    "indent": ["error", 2],  // Enforce 2 spaces for indentation (replaces tabWidth)
+    "no-multiple-empty-lines": ["error", { "max": 1 }],  // Allow at most one empty line
+    "object-curly-spacing": ["error", "always"],  // Ensure spacing inside curly braces
+    "arrow-parens": ["error", "always"], // Enforce parentheses around arrow function arguments
+    "brace-style": ["error", "1tbs", { "allowSingleLine": true }]  // Enforce brace style
+  }
+}

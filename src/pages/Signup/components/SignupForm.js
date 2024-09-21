@@ -74,7 +74,6 @@ function SignupForm({ avatar }) {
         render: () => <AlertSignUp status={true} />,
       })
       setIsLoading(false)
-
     } catch (err) {
       toast({
         render: () => <AlertSignUp status={false} />,

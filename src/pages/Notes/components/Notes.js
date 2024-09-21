@@ -1,10 +1,15 @@
-import { useEffect, useState, useCallback  } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import {
   Box,
   Button,
-  Container, Flex,
+  Container,
+  Flex,
   FormControl,
-  Heading, List, ListIcon, ListItem, Spacer,
+  Heading,
+  List,
+  ListIcon,
+  ListItem,
+  Spacer,
   Stack,
   Textarea,
 } from '@chakra-ui/react'
@@ -22,7 +27,7 @@ export default function Notes() {
   // Define fetchNotes function using useCallback
   const fetchNotes = useCallback(async () => {
     try {
-      const response = await axios.get('/api/auth/notes', { params: { email: user?.userData?.email }})
+      const response = await axios.get('/api/auth/notes', { params: { email: user?.userData?.email } })
       setNoteList(response.data.notes)
     } catch (error) {
       console.error('Error fetching notes:', error)
@@ -44,7 +49,7 @@ export default function Notes() {
     }
 
     try {
-      await noteText({ text: value, email: user.userData.email}) // Assuming noteText sends the note to the server
+      await noteText({ text: value, email: user.userData.email }) // Assuming noteText sends the note to the server
       console.log('Note sent successfully')
 
       // Clear the textarea after successfully sending the note
@@ -55,7 +60,6 @@ export default function Notes() {
   }
 
   async function handleDelete(id) {
-
     if (!accessToken) {
       console.log('Access token not available')
       return
@@ -81,18 +85,13 @@ export default function Notes() {
           <FormControl>
             <Textarea
               value={value}
-              placeholder='Please, write some note'
+              placeholder="Please, write some note"
               onChange={(e) => setValue(e.target.value)}
-              size='sm'
+              size="sm"
             />
           </FormControl>
           <Stack spacing={10}>
-            <MotionButton
-              colorScheme="teal"
-              type="submit"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
+            <MotionButton colorScheme="teal" type="submit" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               Submit
             </MotionButton>
           </Stack>
@@ -100,20 +99,20 @@ export default function Notes() {
       </form>
       <List spacing={3}>
         {list?.toReversed().map((item) => {
-          return(
+          return (
             <ListItem>
               <Flex>
                 <Box>
-                  <ListIcon as={MdCheckCircle} color='green.500' />
+                  <ListIcon as={MdCheckCircle} color="green.500" />
                   {item.text}
                 </Box>
-                <Spacer/>
+                <Spacer />
                 <Button
-                  size='sm'
-                  height='28px'
-                  width='100px'
-                  border='1px'
-                  borderColor='red.500'
+                  size="sm"
+                  height="28px"
+                  width="100px"
+                  border="1px"
+                  borderColor="red.500"
                   onClick={() => handleDelete(item._id)}
                 >
                   Delete

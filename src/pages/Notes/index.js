@@ -2,13 +2,11 @@ import Page from '../../components/Page'
 import { Box } from '@chakra-ui/react'
 import Notes from './components/Notes'
 
-
 export default function NotesDefault() {
-
-  return(
+  return (
     <Page>
       <Box bg="white">
-        <Notes/>
+        <Notes />
       </Box>
     </Page>
   )

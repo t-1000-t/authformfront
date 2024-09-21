@@ -24,9 +24,9 @@ function CallMe() {
       <Heading textAlign="center" mb={10}>
         Zoomish
       </Heading>
-      <Container centerContent maxW='container.md'>
-        <Flex direction='row' w='full' wrap='wrap' justifyContent='center'>
-          <Flex mb={8} position='relative'>
+      <Container centerContent maxW="container.md">
+        <Flex direction="row" w="full" wrap="wrap" justifyContent="center">
+          <Flex mb={8} position="relative">
             {stream && (
               <>
                 ME
@@ -55,7 +55,7 @@ function CallMe() {
             callUser={callUser}
             endCall={endCall}
           />
-          </Flex>
+        </Flex>
       </Container>
     </Box>
   )

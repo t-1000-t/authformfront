@@ -8,17 +8,15 @@ import process from 'process'
 import { BrowserRouter } from 'react-router-dom'
 import { SocketProvider } from './context/socket-context'
 
-
 // Polyfill process object
 window.process = process
 
 const root = createRoot(document.getElementById('root'))
 
-
 const theme = extendTheme({
   fonts: {
-    heading: `'Roboto', sans-serif`,
-    body: `'Montserrat', sans-serif`,
+    heading: '\'Roboto\', sans-serif',
+    body: '\'Montserrat\', sans-serif',
   },
 })
 

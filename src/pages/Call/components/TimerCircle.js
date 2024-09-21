@@ -46,19 +46,8 @@ const TimerCircle = ({ totalTime, stream, socket }) => {
             }}
           />
         )}
-        <svg
-          style={{ position: 'absolute', top: 0, left: 0 }}
-          width="136%"
-          height="136%"
-        >
-          <circle
-            r={radius}
-            cx="68"
-            cy="68"
-            stroke="#fc8181"
-            strokeWidth="4"
-            fill="none"
-          />
+        <svg style={{ position: 'absolute', top: 0, left: 0 }} width="136%" height="136%">
+          <circle r={radius} cx="68" cy="68" stroke="#fc8181" strokeWidth="4" fill="none" />
           <motion.circle
             r={radius}
             cx="68"

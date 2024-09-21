@@ -18,7 +18,11 @@ function GuestLayout(props) {
   return (
     <Box minHeight="100vh" display="flex" flexDirection="column" justifyContent="space-between">
       <Box flexBasis="auto" flexGrow="1" flexShrink="1">
-        {!isAccessToken && !user?.idAvatar ? <GuestNav /> : <GuestNavLogout name={user?.username} idUserName={user?.idAvatar} />}
+        {!isAccessToken && !user?.idAvatar ? (
+          <GuestNav />
+        ) : (
+          <GuestNavLogout name={user?.username} idUserName={user?.idAvatar} />
+        )}
         <main>{props.children}</main>
       </Box>
       <GuestFooter />

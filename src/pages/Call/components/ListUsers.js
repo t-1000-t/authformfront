@@ -16,10 +16,8 @@ const ListUsers = React.memo(({ list, callAccepted, callEnded, callUser, endCall
       socket.on('updateUserSocket', (updatedUser) => {
         setUsersList((prevList) =>
           prevList.map((user) =>
-            user.id === updatedUser.userId
-              ? { ...user, idSocketIO: updatedUser.idSocketIO }
-              : user
-          )
+            user.id === updatedUser.userId ? { ...user, idSocketIO: updatedUser.idSocketIO } : user,
+          ),
         )
       })
     }
@@ -36,16 +34,14 @@ const ListUsers = React.memo(({ list, callAccepted, callEnded, callUser, endCall
       {usersList && usersList.length > 0 ? (
         usersList.map((user, index) => (
           <Box key={index} p={4} borderWidth={1} borderRadius="lg" bg="white" color="black">
-            <Text fontWeight="bold">{user.username} {user.surname}</Text>
+            <Text fontWeight="bold">
+              {user.username} {user.surname}
+            </Text>
             <Text>{user.email}</Text>
             <Text>{user.idSocketIO}</Text>
             <VStack spacing={4} mb={8}>
-              {callAccepted && !callEnded && (user.idSocketIO === socketId) ? (
-                <Button
-                  colorScheme="red"
-                  leftIcon={<CloseIcon />}
-                  onClick={endCall}
-                >
+              {callAccepted && !callEnded && user.idSocketIO === socketId ? (
+                <Button colorScheme="red" leftIcon={<CloseIcon />} onClick={endCall}>
                   End Call
                 </Button>
               ) : (

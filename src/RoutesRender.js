@@ -11,7 +11,7 @@ function RoutesRender() {
         <Route
           key={index}
           path={route.path}
-          element={(
+          element={
             <Suspense fallback={<LoadingScreen />}>
               {route.guard ? ( // Apply guard if present
                 <route.guard>
@@ -25,7 +25,7 @@ function RoutesRender() {
                 </route.guard>
               ) : (
                 <>
-                {route.layout ? ( // Apply layout if present
+                  {route.layout ? ( // Apply layout if present
                     <route.layout>
                       <route.component />
                     </route.layout>
@@ -35,7 +35,7 @@ function RoutesRender() {
                 </>
               )}
             </Suspense>
-          )}
+          }
           exact={route.exact}
         />
       ))}

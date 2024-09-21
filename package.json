@@ -33,7 +33,7 @@
     "dayjs": "^1.11.11",
     "delay": "^6.0.0",
     "embed-video": "^2.0.4",
-    "fen-validator": "^2.0.1",
+    "fen-validator": "^1.4.2",
     "framer-motion": "^11.2.10",
     "fuse.js": "^7.0.0",
     "howler": "^2.2.4",
@@ -77,18 +77,17 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.0.0"
+    "@babel/plugin-proposal-private-property-in-object": "^7.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.10.0",
+    "eslint-config-react-app": "^6.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "lint:fix": "eslint \"src/**/*.{js,jsx}\" --fix",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ]
   },
   "browserslist": {
     "production": [

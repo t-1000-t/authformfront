@@ -48,13 +48,14 @@ function useCall() {
   // UseEffect to update video element
   useEffect(() => {
     if (myVideo.current && stream) {
-      myVideo.current.srcObject = stream;
-      console.log('Assigned stream to myVideo', stream);
+      myVideo.current.srcObject = stream
+      console.log('Assigned stream to myVideo', stream)
     }
-  }, [stream]);  // This will run when `stream` updates
+  }, [stream]) // This will run when `stream` updates
 
   const callUser = (id) => {
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: true })
       .then((currentStream) => {
         if (!currentStream) {
           return alert('Unable to access your camera and microphone')
@@ -101,7 +102,8 @@ function useCall() {
   }
 
   const answerCall = () => {
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: true })
       .then((currentStream) => {
         if (!currentStream) {
           return alert('Unable to access your camera and microphone')
@@ -135,7 +137,7 @@ function useCall() {
         connectionRef.current = peer
       })
       .catch((error) => console.error('Error accessing media devices.', error))
-  };
+  }
 
   const endCall = () => {
     setCallEnded(true)

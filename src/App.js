@@ -4,10 +4,11 @@ import Auth from './components/Guards/Auth'
 import RoutesRender from './RoutesRender'
 
 function App() {
+
   return (
-      <Auth>
-            <RoutesRender />
-      </Auth>
+    <Auth>
+      <RoutesRender />
+    </Auth>
   )
 }
 

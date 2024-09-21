@@ -107,8 +107,6 @@ export const useVideoChat = (socket, user, caller, callerSignal) => {
     }
   }, [endVideo])
 
-
-
   return {
     stream,
     callAccepted,

@@ -22,6 +22,13 @@ const routesConfig = [
   {
     exact: true,
     layout: GuestLayout,
+    path: '/check',
+    guard: GuestGuard,
+    component: lazy(() => import('pages/Check')),
+  },
+  {
+    exact: true,
+    layout: GuestLayout,
     path: '/notes',
     guard: GuestGuard,
     component: lazy(() => import('pages/Notes')),

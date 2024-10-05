@@ -19,6 +19,9 @@ export default function GuestFooter() {
         <Text _hover={{ textDecoration: 'underline' }}>
           <Link to="/contact">Contact</Link>
         </Text>
+        <Text _hover={{ textDecoration: 'underline' }}>
+          <Link to="/check">Check</Link>
+        </Text>
         {!!accessToken && (
           <Text _hover={{ textDecoration: 'underline' }}>
             <Link to="/call">Call</Link>

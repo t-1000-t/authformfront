@@ -26,9 +26,8 @@ export const setAxiosInterceptors = ({ onLogout }) => {
 }
 
 export const removeTokenHeader = () => {
-  delete instance.defaults.headers.common['Authorization']
+  delete instance.defaults.headers.common.Authorization
   // delete api.defaults.headers.common['Authorization']
 }
 
 export default instance
-// export default api

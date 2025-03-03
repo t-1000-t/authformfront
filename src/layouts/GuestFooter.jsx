@@ -1,36 +1,38 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-// import Lottie from 'react-lottie-player'
-import { Container, Stack, Text } from '@chakra-ui/react'
+import { Container, Stack, Icon, Text, useBreakpointValue } from '@chakra-ui/react'
+import { FaHome, FaStickyNote, FaEnvelope, FaCheck, FaInfoCircle, FaPhone } from 'react-icons/fa'
 import useAuthStore from '../store/useAuthStore'
+import TextLink from './TextLink' // Import your reusable TextLink component
 
 export default function GuestFooter() {
-  // const lottieRef = useRef()
   const accessToken = useAuthStore((state) => state.accessToken)
+
+  // Determine whether to show text or just icons
+  const showText = useBreakpointValue({ base: false, md: true })
+
+  const links = [
+    { to: '/', label: 'Home', icon: FaHome },
+    { to: '/notes', label: 'Notes', icon: FaStickyNote },
+    { to: '/contact', label: 'Contact', icon: FaEnvelope },
+    { to: '/check', label: 'Check', icon: FaCheck },
+    { to: '/about', label: 'About', icon: FaInfoCircle },
+  ]
+
+  if (accessToken) {
+    links.splice(4, 0, { to: '/call', label: 'Call', icon: FaPhone })
+  }
 
   return (
     <Container as={Stack} py={4} bg="teal.500" maxW="1440px" rounded={{ md: '2xl' }}>
-      <Stack direction={{ base: 'column', sm: 'row' }} justify="center" align="center" spacing={8} color="black">
-        <Text _hover={{ textDecoration: 'underline' }}>
-          <Link to="/">Home</Link>
-        </Text>
-        <Text _hover={{ textDecoration: 'underline' }}>
-          <Link to="/notes">Notes</Link>
-        </Text>
-        <Text _hover={{ textDecoration: 'underline' }}>
-          <Link to="/contact">Contact</Link>
-        </Text>
-        <Text _hover={{ textDecoration: 'underline' }}>
-          <Link to="/check">Check</Link>
-        </Text>
-        {!!accessToken && (
-          <Text _hover={{ textDecoration: 'underline' }}>
-            <Link to="/call">Call</Link>
-          </Text>
-        )}
-        <Text _hover={{ textDecoration: 'underline' }}>
-          <Link to="/about">About</Link>
-        </Text>
+      <Stack direction="row" justify="center" align="center" spacing={6} color="black">
+        {links.map(({ to, label, icon }) => (
+          <TextLink key={to} to={to}>
+            <Stack direction="column" align="center">
+              <Icon as={icon} boxSize={6} />
+              {showText && <Text fontSize="sm">{label}</Text>}
+            </Stack>
+          </TextLink>
+        ))}
       </Stack>
     </Container>
   )

@@ -75,6 +75,14 @@ const routesConfig = [
     component: lazy(() => import('./pages/Success')),
     id: '0x8',
   },
+  {
+    exact: false,
+    path: '/game',
+    layout: GuestLayout,
+    guard: GuestGuard,
+    component: lazy(() => import('./pages/Game')),
+    id: '0x9',
+  },
 ]
 
 export default routesConfig

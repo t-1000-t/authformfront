@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container, Stack, Icon, Text, useBreakpointValue } from '@chakra-ui/react'
-import { FaHome, FaStickyNote, FaEnvelope, FaCheck, FaInfoCircle, FaPhone } from 'react-icons/fa'
+import { FaHome, FaStickyNote, FaEnvelope, FaCheck, FaInfoCircle, FaPhone, FaGamepad } from 'react-icons/fa'
 import useAuthStore from '../store/useAuthStore'
 import TextLink from './TextLink' // Import your reusable TextLink component
 
@@ -14,6 +14,7 @@ export default function GuestFooter() {
     { to: '/', label: 'Home', icon: FaHome },
     { to: '/notes', label: 'Notes', icon: FaStickyNote },
     { to: '/contact', label: 'Contact', icon: FaEnvelope },
+    { to: '/game', label: 'Game', icon: FaGamepad },
     { to: '/check', label: 'Check', icon: FaCheck },
     { to: '/about', label: 'About', icon: FaInfoCircle },
   ]

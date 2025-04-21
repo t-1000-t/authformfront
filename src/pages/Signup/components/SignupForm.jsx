@@ -32,7 +32,7 @@ import AlertSignUp from './AlertSignUp'
 const MotionButton = motion(Button)
 
 // eslint-disable-next-line react/prop-types
-function SignupForm({ avatar }) {
+const SignupForm = ({ avatar }) => {
   const CFaUserAlt = chakra(FaUserAlt)
   const CFaUserPlus = chakra(FaUserPlus)
   const CFaLock = chakra(FaLock)

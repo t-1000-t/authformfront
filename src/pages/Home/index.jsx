@@ -2,10 +2,12 @@ import React from 'react'
 import Page from '../../components/Page'
 import HomePage from './components/HomePage'
 
-export default function HomeDefault() {
+const HomeDefault = () => {
   return (
     <Page>
       <HomePage />
     </Page>
   )
 }
+
+export default HomeDefault

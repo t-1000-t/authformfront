@@ -21,7 +21,7 @@ import { logError } from '../../../utils/services'
 
 const MotionButton = motion(Button)
 
-export default function Notes() {
+const Notes = () => {
   const { noteText, deleteNote, accessToken, user, list, setNoteList } = useAuthStore()
   const [value, setValue] = useState('')
 
@@ -126,3 +126,5 @@ export default function Notes() {
     </Container>
   )
 }
+
+export default Notes

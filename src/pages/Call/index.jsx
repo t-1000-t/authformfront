@@ -4,7 +4,7 @@ import Page from '../../components/Page'
 
 import CallMe from './components/CallMe'
 
-function CallDefault() {
+const CallDefault = () => {
   return (
     <Page>
       <Container maxW="2xl">

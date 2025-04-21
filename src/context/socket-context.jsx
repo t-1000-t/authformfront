@@ -7,7 +7,7 @@ import useAuthStore from '../store/useAuthStore'
 const SocketContext = createContext({})
 
 // eslint-disable-next-line react/prop-types
-function SocketProvider({ children }) {
+const SocketProvider = ({ children }) => {
   const socket = useRef({})
   const [isConnecting, setIsConnecting] = useState(true)
   const [socketId, setSocketId] = useState('')

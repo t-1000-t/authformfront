@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box } from '@chakra-ui/react'
 
-function LoadingScreen() {
+const LoadingScreen = () => {
   return <Box>...isLoading</Box>
 }
 

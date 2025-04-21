@@ -15,7 +15,7 @@ import { FaUserAlt } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
 import { notifyUser } from '../../../utils/services'
 
-function ContactForm() {
+const ContactForm = () => {
   const history = useNavigate()
 
   const [name, setName] = useState('')

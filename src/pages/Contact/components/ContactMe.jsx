@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, Heading, Text, useBreakpointValue } from '@chakra-ui/react'
 
-export default function ContactMe() {
+const ContactMe = () => {
   return (
     <Container maxW="5xl" py={12} px={{ base: 6, md: 12 }}>
       <Heading fontSize={{ base: '3xl', md: '4xl', lg: '6xl' }} textAlign="center">
@@ -28,3 +28,5 @@ export default function ContactMe() {
     </Container>
   )
 }
+
+export default ContactMe

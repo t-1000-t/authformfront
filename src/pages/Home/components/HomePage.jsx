@@ -9,7 +9,7 @@ import { notifyUser } from '../../../utils/services'
 
 const MotionButton = motion(Button)
 
-export default function HomePage() {
+const HomePage = () => {
   const accessToken = useAuthStore((state) => state.accessToken)
 
   notifyUser('accessToken', accessToken)
@@ -56,3 +56,5 @@ export default function HomePage() {
     </Container>
   )
 }
+
+export default HomePage

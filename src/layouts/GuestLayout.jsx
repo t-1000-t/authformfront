@@ -6,7 +6,7 @@ import GuestFooter from './GuestFooter'
 import useAuthStore from '../store/useAuthStore'
 import GuestNavLogout from './GuestNavLogout'
 
-function GuestLayout(props) {
+const GuestLayout = (props) => {
   const accessToken = useAuthStore((state) => state.accessToken)
   const user = useAuthStore((state) => state?.user?.userData)
   // eslint-disable-next-line react/prop-types

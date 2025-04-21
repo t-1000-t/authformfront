@@ -3,7 +3,7 @@ import { Box } from '@chakra-ui/react'
 import Draggable from 'react-draggable'
 
 // eslint-disable-next-line react/prop-types
-function VideoBox({ streamRef, isOpponent }) {
+const VideoBox = ({ streamRef, isOpponent }) => {
   return (
     <Draggable>
       <Box h="136px" w="136px" rounded="full" position="relative" flexShrink={0} overflow="hidden" bg="black" mx={2}>

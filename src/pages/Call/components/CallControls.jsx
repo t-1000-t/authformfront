@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Box, Button, Heading } from '@chakra-ui/react'
 import { BellIcon } from '@chakra-ui/icons'
 
-function CallControls({ receivingCall, callAccepted, name, answerCall }) {
+const CallControls = ({ receivingCall, callAccepted, name, answerCall }) => {
   return receivingCall && !callAccepted ? (
     <Box textAlign="center">
       <Heading size="md" mb={4}>

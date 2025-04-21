@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Container, Heading, Text } from '@chakra-ui/react'
 
-export default function AboutMe() {
+const AboutMe = () => {
   return (
     <Container maxW="6xl" py={24} px={{ base: 6, md: 12 }}>
       <Box position="relative" maxW="850px" mx="auto" mb={{ base: 4, md: 16 }}>
@@ -15,3 +15,5 @@ export default function AboutMe() {
     </Container>
   )
 }
+
+export default AboutMe

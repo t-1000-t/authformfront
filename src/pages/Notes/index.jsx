@@ -3,7 +3,7 @@ import { Box } from '@chakra-ui/react'
 import Page from '../../components/Page'
 import Notes from './components/Notes'
 
-export default function NotesDefault() {
+const NotesDefault = () => {
   return (
     <Page>
       <Box bg="white">
@@ -12,3 +12,5 @@ export default function NotesDefault() {
     </Page>
   )
 }
+
+export default NotesDefault

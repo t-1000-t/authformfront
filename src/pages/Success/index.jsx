@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, Image, Flex, Text } from '@chakra-ui/react'
 import Page from '../../components/Page'
 
-export default function SuccessDefault() {
+const SuccessDefault = () => {
   return (
     <Page>
       <Flex bg="white" minH="75vh" justify="center" align="center">
@@ -14,3 +14,5 @@ export default function SuccessDefault() {
     </Page>
   )
 }
+
+export default SuccessDefault

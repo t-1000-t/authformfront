@@ -3,7 +3,7 @@ import { Box, Button, Container, Input, Text, VStack } from '@chakra-ui/react'
 import axios from '../../../utils/axios'
 import { logError } from '../../../utils/services'
 
-function Check() {
+const Check = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [lastSearchTerm, setLastSearchTerm] = useState('')
   const [searchResult, setSearchResult] = useState(null)

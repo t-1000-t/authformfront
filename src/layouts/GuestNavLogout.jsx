@@ -9,7 +9,7 @@ import { useSocket } from '../context/socket-context'
 const MotionButton = motion(Button)
 
 // eslint-disable-next-line react/prop-types
-export default function GuestNavLogout({ name, idUserName }) {
+const GuestNavLogout = ({ name, idUserName }) => {
   const logout = useAuthStore((state) => state.logout)
   const { user } = useSocket()
 
@@ -86,3 +86,5 @@ export default function GuestNavLogout({ name, idUserName }) {
     </Container>
   )
 }
+
+export default GuestNavLogout

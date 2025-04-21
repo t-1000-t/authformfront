@@ -5,7 +5,7 @@ import Page from '../../components/Page'
 import ContactMe from './components/ContactMe'
 import ContactForm from './components/ContactForm'
 
-export default function ContactDefault() {
+const ContactDefault = () => {
   return (
     <Page>
       <Box bg="white">
@@ -21,3 +21,5 @@ export default function ContactDefault() {
     </Page>
   )
 }
+
+export default ContactDefault

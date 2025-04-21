@@ -25,7 +25,7 @@ const MotionButton = motion(Button)
 const CFaUserAlt = chakra(FaUserAlt)
 const CFaLock = chakra(FaLock)
 
-export default function LoginForm() {
+const LoginForm = () => {
   const login = useAuthStore((state) => state.login)
   const accessToken = useAuthStore((state) => state.accessToken)
   const setToken = useAuthStore((state) => state.setToken)
@@ -125,3 +125,5 @@ export default function LoginForm() {
     </Box>
   )
 }
+
+export default LoginForm

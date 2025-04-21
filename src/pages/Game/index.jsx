@@ -1,11 +1,19 @@
 import React from 'react'
+import { Center } from '@chakra-ui/react'
 import GamePage from './components/GamePage'
 import Page from '../../components/Page'
+import Container from '../../layouts/Container'
 
-export default function GameDefault() {
+const GameDefault = () => {
   return (
-    <Page>
-      <GamePage />
-    </Page>
+    <Center>
+      <Container>
+        <Page>
+          <GamePage />
+        </Page>
+      </Container>
+    </Center>
   )
 }
+
+export default GameDefault

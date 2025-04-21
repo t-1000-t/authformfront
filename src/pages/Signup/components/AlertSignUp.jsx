@@ -6,7 +6,7 @@ import sendLetter2 from '../../../animations/sendLetter2.json'
 import sendUnSuccess from '../../../animations/sendUnsuccess.json'
 
 // eslint-disable-next-line react/prop-types
-function AlertSignUp({ status }) {
+const AlertSignUp = ({ status }) => {
   const result = status ? sendLetter2 : sendUnSuccess
 
   return (

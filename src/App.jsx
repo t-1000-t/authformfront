@@ -3,7 +3,7 @@ import './App.css'
 import Auth from './components/Guards/Auth'
 import RoutesRender from './RoutesRender'
 
-function App() {
+const App = () => {
   return (
     <Auth>
       <RoutesRender />

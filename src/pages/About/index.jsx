@@ -4,7 +4,7 @@ import Page from '../../components/Page'
 
 import AboutMe from './components/AboutMe'
 
-export default function AboutDefault() {
+const AboutDefault = () => {
   return (
     <Page>
       <Box bg="white">
@@ -13,3 +13,5 @@ export default function AboutDefault() {
     </Page>
   )
 }
+
+export default AboutDefault

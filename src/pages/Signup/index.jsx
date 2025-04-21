@@ -4,7 +4,7 @@ import { Box, Stack, Heading, Text } from '@chakra-ui/react'
 
 import SignupForm from './components/SignupForm'
 
-export default function SignupDefault() {
+const SignupDefault = () => {
   const [accountType] = useState('')
   const [avatar, setAvatar] = useState('')
 
@@ -34,3 +34,5 @@ export default function SignupDefault() {
     </Box>
   )
 }
+
+export default SignupDefault

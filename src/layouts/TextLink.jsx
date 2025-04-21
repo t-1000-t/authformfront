@@ -3,7 +3,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import { Link as ChakraLink } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 
-function TextLink({ to, children, isExternal = false, ...props }) {
+const TextLink = ({ to, children, isExternal = false, ...props }) => {
   return (
     <ChakraLink
       as={isExternal ? 'a' : RouterLink}

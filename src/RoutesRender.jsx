@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 import routesConfig from './routesConfig'
 import LoadingScreen from './components/LoadingScreen'
 
-function RoutesRender() {
+const RoutesRender = () => {
   return (
     <Routes>
       {routesConfig.map((route) => (

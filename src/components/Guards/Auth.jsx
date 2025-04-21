@@ -6,7 +6,7 @@ import { setAxiosInterceptors } from '../../utils/axios'
 import LoadingScreen from '../LoadingScreen'
 
 // eslint-disable-next-line react/prop-types
-function Auth({ children }) {
+const Auth = ({ children }) => {
   const navigate = useNavigate()
   const logout = useAuthStore((state) => state.logout)
   const accessToken = useAuthStore((state) => state.accessToken)

@@ -5,7 +5,7 @@ import CallControls from './CallControls'
 import useCall from '../../../utils/hooks/useCall'
 import ListUsers from './ListUsers'
 
-function CallMe() {
+const CallMe = () => {
   const {
     stream,
     callAccepted,

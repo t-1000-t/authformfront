@@ -6,7 +6,7 @@ import Container from './Container'
 
 const MotionButton = motion(Button)
 
-export default function GuestNav() {
+const GuestNav = () => {
   return (
     <Container>
       <Flex mx="auto" justify="space-between" py={2} align="center">
@@ -48,3 +48,5 @@ export default function GuestNav() {
     </Container>
   )
 }
+
+export default GuestNav

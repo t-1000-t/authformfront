@@ -3,7 +3,7 @@ import { Box } from '@chakra-ui/react'
 import Page from '../../components/Page'
 import Check from './components/Check'
 
-export default function CheckDefault() {
+const CheckDefault = () => {
   return (
     <Page>
       <Box bg="white">
@@ -12,3 +12,5 @@ export default function CheckDefault() {
     </Page>
   )
 }
+
+export default CheckDefault

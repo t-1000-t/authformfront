@@ -4,7 +4,7 @@ import { FaHome, FaStickyNote, FaEnvelope, FaCheck, FaInfoCircle, FaPhone, FaGam
 import useAuthStore from '../store/useAuthStore'
 import TextLink from './TextLink' // Import your reusable TextLink component
 
-export default function GuestFooter() {
+const GuestFooter = () => {
   const accessToken = useAuthStore((state) => state.accessToken)
 
   // Determine whether to show text or just icons
@@ -38,3 +38,5 @@ export default function GuestFooter() {
     </Container>
   )
 }
+
+export default GuestFooter

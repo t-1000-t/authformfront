@@ -15852,7 +15852,7 @@
                     null != a
                       ? a
                       : ((c = i),
-                        ''.concat(o, ' returned `undefined`. Seems you forgot to wrap component within ').concat(c)),
+                        ''.concat(o, ' returned `undefined`. Seems you forgot to wrap components within ').concat(c)),
                   )
                   throw ((n.name = 'ContextError'), null == (t = Error.captureStackTrace) || t.call(Error, n, e), n)
                 }
@@ -21832,7 +21832,7 @@
             const n = e.current
             ;(0, Bt.V)(
               null !== n,
-              "If `dragConstraints` is set as a React ref, that ref must be passed to another component's `ref` prop.",
+              "If `dragConstraints` is set as a React ref, that ref must be passed to another components's `ref` prop.",
             )
             const { projection: r } = this.visualElement
             if (!r || !r.layout) return !1
@@ -26630,7 +26630,7 @@
         const {
             strict: n = !0,
             errorMessage:
-              r = 'useContext: `context` is undefined. Seems you forgot to wrap component within the Provider',
+              r = 'useContext: `context` is undefined. Seems you forgot to wrap components within the Provider',
             name: o,
           } = t,
           i = (0, e.createContext)(void 0)

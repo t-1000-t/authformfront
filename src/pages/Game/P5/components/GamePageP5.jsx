@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useCallback, useState } from 'react'
 import Sketch from 'react-p5'
-import brickImg from '../../../assets/bricks.png'
-import robotoFont from '../../../assets/fonts/Roboto_Condensed-Regular.ttf'
+import brickImg from '../../../../assets/bricks.png'
+import robotoFont from '../../../../assets/fonts/Roboto_Condensed-Regular.ttf'
 import Player from './Player'
 import Wall from './Wall'
 import Enemy from './Enemy'
@@ -24,7 +24,7 @@ const GAME_MAP = [
   'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
 ]
 
-const GamePage = () => {
+const GamePageP5 = () => {
   const wallTexture = useRef(null)
   const walls = useRef([])
   const enemies = useRef([])
@@ -135,4 +135,4 @@ const GamePage = () => {
   return <Sketch setup={setup} draw={draw} />
 }
 
-export default GamePage
+export default GamePageP5

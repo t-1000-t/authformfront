@@ -1,8 +1,9 @@
 import React from 'react'
 import { Container, Stack, Icon, Text, useBreakpointValue } from '@chakra-ui/react'
-import { FaHome, FaStickyNote, FaEnvelope, FaCheck, FaInfoCircle, FaPhone, FaGamepad } from 'react-icons/fa'
+import { FaHome, FaStickyNote, FaAddressCard, FaCheck, FaInfoCircle, FaPhone, FaGamepad } from 'react-icons/fa'
+import { GrGamepad } from 'react-icons/gr'
 import useAuthStore from '../store/useAuthStore'
-import TextLink from './TextLink' // Import your reusable TextLink component
+import TextLink from './TextLink' // Import your reusable TextLink components
 
 const GuestFooter = () => {
   const accessToken = useAuthStore((state) => state.accessToken)
@@ -13,14 +14,15 @@ const GuestFooter = () => {
   const links = [
     { to: '/', label: 'Home', icon: FaHome },
     { to: '/notes', label: 'Notes', icon: FaStickyNote },
-    { to: '/contact', label: 'Contact', icon: FaEnvelope },
-    { to: '/game', label: 'Game', icon: FaGamepad },
+    { to: '/contact', label: 'Contact', icon: FaAddressCard },
+    { to: '/p5', label: 'Game P5', icon: FaGamepad },
+    { to: '/phaz', label: 'Game Phaz', icon: GrGamepad },
     { to: '/check', label: 'Check', icon: FaCheck },
     { to: '/about', label: 'About', icon: FaInfoCircle },
   ]
 
   if (accessToken) {
-    links.splice(4, 0, { to: '/call', label: 'Call', icon: FaPhone })
+    links.splice(-1, 0, { to: '/call', label: 'Call', icon: FaPhone })
   }
 
   return (

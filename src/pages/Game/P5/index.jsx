@@ -1,15 +1,15 @@
 import React from 'react'
 import { Center } from '@chakra-ui/react'
-import GamePage from './components/GamePage'
-import Page from '../../components/Page'
-import Container from '../../layouts/Container'
+import GamePageP5 from './components/GamePageP5'
+import Page from '../../../components/Page'
+import Container from '../../../layouts/Container'
 
 const GameDefault = () => {
   return (
     <Center>
       <Container>
         <Page>
-          <GamePage />
+          <GamePageP5 />
         </Page>
       </Container>
     </Center>

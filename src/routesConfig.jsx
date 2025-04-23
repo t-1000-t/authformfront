@@ -85,10 +85,10 @@ const routesConfig = [
   },
   {
     exact: false,
-    path: '/phaz',
+    path: '/phas',
     layout: GuestLayout,
     guard: GuestGuard,
-    component: lazy(() => import('./pages/Game/Phazer')),
+    component: lazy(() => import('./pages/Game/Phaser')),
     id: '0x01',
   },
 ]

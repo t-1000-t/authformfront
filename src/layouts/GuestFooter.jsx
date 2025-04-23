@@ -16,7 +16,7 @@ const GuestFooter = () => {
     { to: '/notes', label: 'Notes', icon: FaStickyNote },
     { to: '/contact', label: 'Contact', icon: FaAddressCard },
     { to: '/p5', label: 'Game P5', icon: FaGamepad },
-    { to: '/phaz', label: 'Game Phaz', icon: GrGamepad },
+    { to: '/phas', label: 'Game Phas', icon: GrGamepad },
     { to: '/check', label: 'Check', icon: FaCheck },
     { to: '/about', label: 'About', icon: FaInfoCircle },
   ]

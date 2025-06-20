@@ -10,6 +10,7 @@ import {
   FaGamepad,
   FaDatabase,
 } from 'react-icons/fa'
+import { TbFileCv } from 'react-icons/tb'
 import { GrGamepad } from 'react-icons/gr'
 import useAuthStore from '../store/useAuthStore'
 import TextLink from './TextLink' // Import your reusable TextLink components
@@ -22,6 +23,7 @@ const GuestFooter = () => {
 
   const links = [
     { to: '/', label: 'Home', icon: FaHome },
+    { to: '/cv', label: 'CV', icon: TbFileCv },
     { to: '/notes', label: 'Notes', icon: FaStickyNote },
     { to: '/contact', label: 'Contact', icon: FaAddressCard },
     { to: '/p5', label: 'Game P5', icon: FaGamepad },

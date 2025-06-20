@@ -97,7 +97,15 @@ const routesConfig = [
     layout: GuestLayout,
     guard: GuestGuard,
     component: lazy(() => import('./pages/Mysql')),
-    id: '0x01',
+    id: '0x02',
+  },
+  {
+    exact: false,
+    path: '/cv',
+    layout: GuestLayout,
+    guard: GuestGuard,
+    component: lazy(() => import('./pages/Cv')),
+    id: '0x03',
   },
 ]
 

@@ -91,6 +91,14 @@ const routesConfig = [
     component: lazy(() => import('./pages/Game/Phaser')),
     id: '0x01',
   },
+  {
+    exact: false,
+    path: '/mysql_db',
+    layout: GuestLayout,
+    guard: GuestGuard,
+    component: lazy(() => import('./pages/Mysql')),
+    id: '0x01',
+  },
 ]
 
 export default routesConfig

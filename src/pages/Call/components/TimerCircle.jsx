@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { motion } from 'framer-motion'
 import { useParams } from 'react-router-dom'
 
-function TimerCircle({ totalTime, stream, socket }) {
+const TimerCircle = ({ totalTime, stream, socket }) => {
   const [timeLeft, setTimeLeft] = useState(totalTime)
   const { id } = useParams()
 

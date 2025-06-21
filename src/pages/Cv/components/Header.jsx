@@ -4,12 +4,16 @@ import { Text } from '@chakra-ui/react'
 const Header = () => {
   return (
     <>
-      <Text as="samp">Branetskyi Vladlen</Text>
-      <br />
-      <Text>
-        Email: goognya@gmail.com Skype: t-1000-t LinkedIn Location: Dublin 15 Languages: English (intermediate), Russian
-        (native), Ukrainian (fluent)
+      <Text as="b" fontSize="larger">
+        Full Stack Developer
       </Text>
+      <br />
+      <br />
+      <Text as="b" fontSize="larger">
+        Branetskyi Vladlen
+      </Text>
+      <br />
+      <br />
     </>
   )
 }

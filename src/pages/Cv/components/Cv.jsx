@@ -1,12 +1,23 @@
 import React from 'react'
-import { Box, Container } from '@chakra-ui/react'
+import { Container } from '@chakra-ui/react'
 import Header from './Header'
+import About from './About'
+import Education from './Education'
+import Skills from './Skills'
+import PetInProgress from './PetInProgress'
+import Experience from './Experience'
+import PetsOlds from './PetsOlds'
 
 const Cv = () => {
   return (
     <Container>
-      <Box>CV</Box>
       <Header />
+      <About />
+      <Education />
+      <Skills />
+      <PetInProgress />
+      <Experience />
+      <PetsOlds />
     </Container>
   )
 }

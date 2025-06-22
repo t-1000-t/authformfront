@@ -9,10 +9,12 @@ import PetsOlds from './PetsOlds'
 
 import A4Container from '../Wrappers/A4Container'
 import CardWrap from '../Wrappers/CardWrap'
+import SendData from './SendData'
 
 const Cv = () => {
   return (
     <A4Container>
+      <SendData />
       <CardWrap>
         <Header />
         <About />

@@ -4,6 +4,7 @@ import { Text } from '@chakra-ui/react'
 const RightAbove = () => {
   return (
     <Text>
+      <br />
       <Text as="samp" fontSize="larger">
         Company
       </Text>

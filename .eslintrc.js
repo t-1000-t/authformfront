@@ -33,6 +33,7 @@ module.exports = {
     'prettier/prettier': 'error',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'max-classes-per-file': 'off',
+    'react/prop-types': 'off', // Disables PropTypes checks globally
     'react/function-component-definition': [
       'error',
       {

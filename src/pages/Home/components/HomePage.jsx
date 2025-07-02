@@ -21,7 +21,7 @@ const HomePage = () => {
           <Stack spacing={4} justify={{ base: 'center', md: 'start' }} w={{ md: 'full' }}>
             <Box>
               <Heading as="h1" fontSize={{ base: '4xl', md: '5xl', lg: '6xl' }} textColor="#2D81A5" m={0} p={0}>
-                From for test AUTH
+                Testing the AUTH form
               </Heading>
               <Text fontSize={{ base: 'lg', lg: 'xl' }} color="teal.500">
                 Just fill out the request form, please

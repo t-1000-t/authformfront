@@ -52,6 +52,17 @@ export const cvdataup = async (data) => {
   return result.data
 }
 
+export const cvUpPdf = async (data) => {
+  const response = await instance.post(
+    '/api/auth/cvpdf',
+    { url: data.url },
+    {
+      responseType: 'blob', // important for binary PDF data
+    },
+  )
+  return response.data
+}
+
 export const noteup = async (data) => {
   // data is object { text: '', email: 'goo@gmail.com' }
   const result = await instance.post('/api/auth/notes', data)

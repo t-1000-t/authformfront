@@ -8,7 +8,7 @@ const CvPagePdf = () => {
 
   const handlerUrl = async () => {
     try {
-      const blob = await cvPdfUp({ url: 'http://localhost:3000/cv' }) // just the payload
+      const blob = await cvPdfUp({ url: `${process.env.REACT_APP_API}/cv` }) // just the payload
       const pdfUrl = window.URL.createObjectURL(new Blob([blob], { type: 'application/pdf' }))
 
       // Automatically download the PDF

@@ -69,6 +69,12 @@ export const noteup = async (data) => {
   return result.data
 }
 
+export const pullDataCv = async (str) => {
+  const result = await instance.post('/api/auth/cvinfo', { email: str })
+
+  return result.data
+}
+
 export const noteDelete = async (id) => {
   const { status, statusText } = await instance.delete(`/api/auth/notes/${id}`)
 

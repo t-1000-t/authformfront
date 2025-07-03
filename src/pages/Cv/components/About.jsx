@@ -1,27 +1,48 @@
 import React from 'react'
-import { Image, Text, WrapItem } from '@chakra-ui/react'
+import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react'
 
 const About = () => {
   return (
-    <>
-      <WrapItem>
-        <Text>
-          <Text as="u">Email:</Text> goognya@gmail.com <br />
-          <Text as="u">LinkedIn</Text>
-          <br />
-          <Text as="u">Location:</Text> Dublin 15
-          <br />
-          <Text as="b" fontSize="larger">
-            Languages:
+    <Flex mb="20px">
+      {/* Left Column - Text */}
+      <Box flex={1}>
+        <Text mb="5px">
+          <Text as="span" textDecoration="underline">
+            Email
           </Text>
-          <br />
-          English (intermediate), Russian (native), Ukrainian (fluent)
+          :&nbsp;goognya@gmail.com
         </Text>
-      </WrapItem>
-      <WrapItem pl={20}>
-        <Image src="/images/I_19.jpg" alt="Vlad" />
-      </WrapItem>
-    </>
+        <Text mb="5px">
+          <Text as="span" textDecoration="underline">
+            LinkedIn
+          </Text>
+          :&nbsp;[Your Profile]
+        </Text>
+        <Text mb="5px">
+          <Text as="span" textDecoration="underline">
+            Location
+          </Text>
+          :&nbsp;Dublin 15
+        </Text>
+
+        <Heading as="h3" fontWeight="bold" fontSize="18px" my="15px">
+          Languages:
+        </Heading>
+        <Text>English (intermediate), Ukrainian (fluent), Russian (native)</Text>
+      </Box>
+
+      {/* Right Column - Image */}
+      <Flex flex={1} justifyContent="center" alignItems="center">
+        <Image
+          src="/images/I_19.jpg"
+          alt="Vlad"
+          maxWidth="280px"
+          height="auto"
+          border="1px solid"
+          borderColor="gray.200"
+        />
+      </Flex>
+    </Flex>
   )
 }
 

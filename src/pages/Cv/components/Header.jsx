@@ -1,20 +1,16 @@
 import React from 'react'
-import { Text } from '@chakra-ui/react'
+import { Box, Heading } from '@chakra-ui/react'
 
 const Header = () => {
   return (
-    <>
-      <Text as="b" fontSize="larger">
+    <Box mb="20px">
+      <Heading as="h1" fontSize="24px" fontWeight="bold" mb="10px">
         Full Stack Developer
-      </Text>
-      <br />
-      <br />
-      <Text as="b" fontSize="larger">
+      </Heading>
+      <Heading as="h2" fontSize="22px" fontWeight="bold">
         Branetskyi Vladlen
-      </Text>
-      <br />
-      <br />
-    </>
+      </Heading>
+    </Box>
   )
 }
 

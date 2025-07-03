@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { logoutAuth, noteDelete, noteup, signin, signup, cvdataup, cvUpPdf } from '../services/auth'
+import { logoutAuth, noteDelete, noteup, signin, signup, cvdataup, cvUpPdf, pullDataCv } from '../services/auth'
 import { removeTokenHeader } from '../utils/axios'
 import { logError } from '../utils/services'
 
@@ -9,6 +9,7 @@ const store = (set) => ({
   user: null,
   redirect: null,
   list: null,
+  cv: null,
 
   signup: async ({ username, surname, email, password, role, message, avatar }) => {
     const { user, idAvatar } = await signup({
@@ -36,6 +37,15 @@ const store = (set) => ({
       accessToken,
       redirect,
     })
+  },
+
+  getCvInfo: async (data) => {
+    try {
+      const list = await pullDataCv(data)
+      set({ cv: list.user })
+    } catch (error) {
+      logError(error)
+    }
   },
 
   cvText: async (data) => {

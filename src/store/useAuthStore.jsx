@@ -39,10 +39,9 @@ const store = (set) => ({
     })
   },
 
-  getCvInfo: async (data) => {
+  putCvInfo: async (obj) => {
     try {
-      const list = await pullDataCv(data)
-      set({ cv: list.user })
+      set({ cv: { data: obj } })
     } catch (error) {
       logError(error)
     }
@@ -51,7 +50,18 @@ const store = (set) => ({
   cvText: async (data) => {
     try {
       const cvlist = await cvdataup(data)
-      set({ text: data.text, list: cvlist.data })
+      set({ list: cvlist.data })
+    } catch (error) {
+      logError(error)
+    }
+  },
+
+  getCvInfo: async (data) => {
+    try {
+      console.log('data', data)
+      const result = await pullDataCv(data)
+      console.log('result', result)
+      set({ cv: result })
     } catch (error) {
       logError(error)
     }

@@ -23,7 +23,6 @@ const GuestFooter = () => {
 
   const links = [
     { to: '/', label: 'Home', icon: FaHome },
-    { to: '/cv', label: 'CV', icon: TbFileCv },
     { to: '/notes', label: 'Notes', icon: FaStickyNote },
     { to: '/contact', label: 'Contact', icon: FaAddressCard },
     { to: '/p5', label: 'Game P5', icon: FaGamepad },
@@ -35,6 +34,7 @@ const GuestFooter = () => {
 
   if (accessToken) {
     links.splice(-1, 0, { to: '/call', label: 'Call', icon: FaPhone })
+    links.splice(1, 0, { to: '/cv', label: 'CV', icon: TbFileCv })
   }
 
   return (

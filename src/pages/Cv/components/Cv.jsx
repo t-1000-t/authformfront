@@ -13,15 +13,13 @@ import SendData from './SendData'
 import useAuthStore from '../../../store/useAuthStore'
 
 const Cv = () => {
-  const { user, getCvInfo, cv } = useAuthStore() // TODO should add cv
+  const { user, getCvInfo } = useAuthStore() // TODO should add cv
 
   const { email } = user.userData
 
   useEffect(() => {
     getCvInfo(email).then()
   }, [])
-
-  console.log('cv', cv)
 
   return (
     <A4Container>

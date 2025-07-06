@@ -9,7 +9,19 @@ const store = (set) => ({
   user: null,
   redirect: null,
   list: null,
-  cv: null,
+  cv: {
+    user: {
+      userId: '...',
+      email: '...',
+      newData: {
+        title: '...',
+        about: '...',
+        info: {
+          email: '...',
+        },
+      },
+    },
+  },
 
   signup: async ({ username, surname, email, password, role, message, avatar }) => {
     const { user, idAvatar } = await signup({

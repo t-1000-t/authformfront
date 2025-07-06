@@ -1,7 +1,8 @@
 import React from 'react'
 import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react'
 
-const About = () => {
+const About = ({ newData }) => {
+  const { email, linked, lang, local } = newData.info
   return (
     <Flex mb="20px">
       {/* Left Column - Text */}
@@ -10,25 +11,25 @@ const About = () => {
           <Text as="span" textDecoration="underline">
             Email
           </Text>
-          :&nbsp;goognya@gmail.com
+          :&nbsp;{email}
         </Text>
         <Text mb="5px">
           <Text as="span" textDecoration="underline">
             LinkedIn
           </Text>
-          :&nbsp;[Your Profile]
+          :&nbsp;{linked}
         </Text>
         <Text mb="5px">
           <Text as="span" textDecoration="underline">
             Location
           </Text>
-          :&nbsp;Dublin 15
+          :&nbsp;{local}
         </Text>
 
         <Heading as="h3" fontWeight="bold" fontSize="18px" my="15px">
           Languages:
         </Heading>
-        <Text>English (intermediate), Ukrainian (fluent), Russian (native)</Text>
+        <Text>{lang}</Text>
       </Box>
 
       {/* Right Column - Image */}

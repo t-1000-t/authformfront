@@ -70,9 +70,7 @@ const store = (set) => ({
 
   getCvInfo: async (data) => {
     try {
-      console.log('data', data)
       const result = await pullDataCv(data)
-      console.log('result', result)
       set({ cv: result })
     } catch (error) {
       logError(error)
@@ -98,6 +96,7 @@ const store = (set) => ({
   },
 
   deleteNote: async (id) => {
+    console.log('id', id)
     try {
       return await noteDelete(id)
     } catch (error) {

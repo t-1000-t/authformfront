@@ -41,6 +41,7 @@ module.exports = {
         unnamedComponents: 'arrow-function',
       },
     ],
+    'no-underscore-dangle': ['error', { allow: ['_id'] }],
   },
   settings: {
     react: {

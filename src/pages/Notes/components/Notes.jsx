@@ -101,7 +101,7 @@ const Notes = () => {
       <List spacing={3}>
         {list?.toReversed().map((item) => {
           return (
-            <ListItem key={item.id}>
+            <ListItem key={item._id}>
               <Flex>
                 <Box>
                   <ListIcon as={MdCheckCircle} color="green.500" />
@@ -114,7 +114,7 @@ const Notes = () => {
                   width="100px"
                   border="1px"
                   borderColor="red.500"
-                  onClick={() => handleDelete(item.id)}
+                  onClick={() => handleDelete(item._id)}
                 >
                   Delete
                 </Button>

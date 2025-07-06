@@ -21,9 +21,6 @@ const Cv = () => {
     getCvInfo(email).then()
   }, [])
 
-  // console.log('newData', newData)
-  console.log('cv', cv)
-
   return (
     <A4Container>
       <SendData />

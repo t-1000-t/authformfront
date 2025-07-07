@@ -14,8 +14,8 @@ const store = (set) => ({
       userId: '...',
       email: '...',
       newData: {
-        title: '...',
-        about: '...',
+        title: '',
+        about: '',
         info: {
           email: '...',
         },
@@ -96,7 +96,6 @@ const store = (set) => ({
   },
 
   deleteNote: async (id) => {
-    console.log('id', id)
     try {
       return await noteDelete(id)
     } catch (error) {

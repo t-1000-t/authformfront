@@ -13,7 +13,7 @@ import SendData from './SendData'
 import useAuthStore from '../../../store/useAuthStore'
 
 const Cv = () => {
-  const { user, getCvInfo, cv } = useAuthStore() // TODO should add cv
+  const { user, getCvInfo, cv } = useAuthStore() // TODO should be "putCvInfo" function set in the store
   const { newData } = cv.user
   const { email } = user.userData
 

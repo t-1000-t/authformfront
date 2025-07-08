@@ -65,8 +65,6 @@ const SendData = () => {
   return (
     <VStack spacing={3} align="stretch">
       <Text>Send Data</Text>
-      <Input name="title" value={input.title} placeholder="Title" onChange={handlerChange} />
-      <Input name="about" value={input.about} placeholder="About" onChange={handlerChange} />
       <Input name="email" value={input.info.email} placeholder="Email" onChange={handlerChange} />
       <Input name="linked" value={input.info.linked} placeholder="Linked" onChange={handlerChange} />
       <Input name="local" value={input.info.local} placeholder="Local" onChange={handlerChange} />

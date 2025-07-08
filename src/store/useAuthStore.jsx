@@ -17,7 +17,7 @@ const store = (set) => ({
         title: '',
         about: '',
         info: {
-          email: '...',
+          email: '',
         },
       },
     },
@@ -51,9 +51,9 @@ const store = (set) => ({
     })
   },
 
-  putCvInfo: async (obj) => {
+  putCvInfo: async (obj, cvtest) => {
     try {
-      set({ cv: { data: obj } })
+      set({ cv: { user: { ...cvtest.user, newData: { ...obj, info: cvtest.user.newData.info } } } })
     } catch (error) {
       logError(error)
     }

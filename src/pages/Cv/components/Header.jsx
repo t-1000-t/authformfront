@@ -1,11 +1,29 @@
-import React, { useState } from 'react'
-import { Box, Button, Heading, Textarea } from '@chakra-ui/react'
+import React, { useRef, useState } from 'react'
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Textarea,
+} from '@chakra-ui/react'
 import useAuthStore from '../../../store/useAuthStore'
 
 const Header = ({ newData }) => {
   const { putCvInfo, cv } = useAuthStore()
+  const initialRef = useRef(null)
+  const finalRef = useRef(null)
   const { about, title } = newData
   const [toggle, setToggle] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
   const [text, setText] = useState({ about: newData.about, title: newData.title })
 
   const handleTextChange = (e) => {
@@ -44,6 +62,32 @@ const Header = ({ newData }) => {
       <Button onClick={() => handleSubmit()}>Ok</Button>
       <Button onClick={() => setToggle(!toggle)}>Edit</Button>
       <Button onClick={() => handelCancel()}>Cancel</Button>
+      <Button onClick={() => setIsOpen(!isOpen)}>Modal</Button>
+      <Modal initialFocusRef={initialRef} finalFocusRef={finalRef} isOpen={isOpen} onClose={() => setIsOpen(!isOpen)}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Type your details</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl>
+              <FormLabel>Your position</FormLabel>
+              <Input ref={initialRef} placeholder="Title" />
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>Full name</FormLabel>
+              <Input placeholder="Full name" />
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3}>
+              Save
+            </Button>
+            <Button onClick={() => setIsOpen(!isOpen)}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   )
 }

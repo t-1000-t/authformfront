@@ -4,7 +4,7 @@ import useAuthStore from '../../../store/useAuthStore'
 import { logError } from '../../../utils/services'
 
 const SendData = () => {
-  const { accessToken, cv } = useAuthStore()
+  const { accessToken, cv, user, pushCvText } = useAuthStore()
 
   const handlerSendData = async (e) => {
     e.preventDefault()
@@ -15,8 +15,7 @@ const SendData = () => {
     }
 
     try {
-      console.log('cv', cv)
-      // await cvText({ cv, email: user?.userData.email }) // Assuming noteText sends the note to the server
+      await pushCvText({ cv, email: user?.userData.email }) // Assuming noteText sends the note to the server
       logError('Note sent successfully')
     } catch (error) {
       logError(error)

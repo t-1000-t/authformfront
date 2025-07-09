@@ -62,8 +62,7 @@ const store = (set) => ({
   pushCvText: async (data) => {
     try {
       const cvResult = await cvdataup(data)
-      console.log('cvResult', cvResult)
-      // set({ list: cvResult.data })
+      set({ list: cvResult.data })
     } catch (error) {
       logError(error)
     }

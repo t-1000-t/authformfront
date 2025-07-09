@@ -15,7 +15,7 @@ const SendData = () => {
     }
 
     try {
-      await pushCvText({ cv, email: user?.userData.email }) // Assuming noteText sends the note to the server
+      await pushCvText({ newData: cv.user.newData, email: user?.userData.email })
       logError('Note sent successfully')
     } catch (error) {
       logError(error)
@@ -27,7 +27,7 @@ const SendData = () => {
       <Flex justify="space-between">
         <Text>Save CV</Text>
         <Button colorScheme="blue" onClick={handlerSendData}>
-          Send
+          Save
         </Button>
       </Flex>
     </VStack>

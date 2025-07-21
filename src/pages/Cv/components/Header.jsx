@@ -8,10 +8,10 @@ const Header = ({ newData }) => {
   const initialRef = useRef(null)
   const [obj, setObj] = useState({})
   // const finalRef = useRef(null)
-  const { about, title } = newData
+  const { fullname, title } = newData
   const [toggle, setToggle] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
-  const [text, setText] = useState({ about: newData.about, title: newData.title })
+  const [text, setText] = useState({ fullname: newData.fullname, title: newData.title })
 
   const handleTextChange = (e) => {
     e.preventDefault()
@@ -20,12 +20,14 @@ const Header = ({ newData }) => {
   }
 
   const handelCancel = () => {
-    setText({ about: newData.about, title: newData.title })
+    setText({ fullname: newData.fullname, title: newData.title })
     setToggle(false)
+    setIsOpen(false)
   }
   const handleSubmit = () => {
     putCvInfo(text, cv).then()
     setToggle(false)
+    setIsOpen(false)
   }
 
   useEffect(() => {
@@ -33,8 +35,13 @@ const Header = ({ newData }) => {
       initialRef,
       isOpen,
       onClose: () => setIsOpen(!isOpen),
+      handleTextChange,
+      handleSubmit,
+      handelCancel,
+      title: text.title ? text.title : newData.title,
+      fullname: text.fullname ? text.fullname : newData.fullname,
     })
-  }, [initialRef, isOpen])
+  }, [initialRef, isOpen, handleTextChange, handleSubmit, handelCancel])
 
   return (
     <Box mb="20px">
@@ -47,11 +54,11 @@ const Header = ({ newData }) => {
         </Textarea>
       )}
       <Heading as="h2" fontSize="22px" fontWeight="bold">
-        {about}
+        {fullname}
       </Heading>
       {toggle && (
-        <Textarea name="about" value={text.about ? text.about : newData.about} onChange={handleTextChange}>
-          {text.about}
+        <Textarea name="fullname" value={text.fullname ? text.fullname : newData.fullname} onChange={handleTextChange}>
+          {text.fullname}
         </Textarea>
       )}
       <Button onClick={() => handleSubmit()}>Ok</Button>

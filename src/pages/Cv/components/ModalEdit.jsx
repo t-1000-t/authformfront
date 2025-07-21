@@ -15,7 +15,7 @@ import {
 
 const ModalEdit = ({ obj }) => {
   return (
-    <Modal isOpen={obj.isOpen} onClose={obj.onClose}>
+    <Modal isOpen={obj.isOpen} onClose={obj.handelCancel}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Type your details</ModalHeader>
@@ -23,20 +23,26 @@ const ModalEdit = ({ obj }) => {
         <ModalBody pb={6}>
           <FormControl>
             <FormLabel>Your position</FormLabel>
-            <Input ref={obj.initialRef} placeholder="Title" />
+            <Input
+              name="title"
+              value={obj.title}
+              ref={obj.initialRef}
+              placeholder="Title"
+              onChange={obj.handleTextChange}
+            />
           </FormControl>
 
           <FormControl mt={4}>
             <FormLabel>Full name</FormLabel>
-            <Input placeholder="Full name" />
+            <Input name="fullname" value={obj.fullname} placeholder="Full name" onChange={obj.handleTextChange} />
           </FormControl>
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="blue" mr={3}>
-            Save
+          <Button colorScheme="blue" mr={3} onClick={obj.handleSubmit}>
+            OK
           </Button>
-          <Button onClick={() => obj.onClose()}>Cancel</Button>
+          <Button onClick={obj.handelCancel}>Cancel</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

@@ -24,11 +24,8 @@ const SendData = () => {
         }
         return result
       })
-      console.log('promise', promise)
       promiseBasedToast(toast, promise)
 
-      const result = await promise
-      console.log('result', result)
       logError('Note sent successfully')
     } catch (error) {
       logError(error)

@@ -26,8 +26,6 @@ const Header = ({ newData }) => {
   }, [newData])
 
   const handleSubmit = useCallback(() => {
-    console.log('text', text)
-    console.log('cv', cv)
     putCvInfo(text, cv).then()
     setToggle(false)
     setIsOpen(false)

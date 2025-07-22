@@ -13,7 +13,7 @@ import SendData from './SendData'
 import useAuthStore from '../../../store/useAuthStore'
 
 const Cv = () => {
-  const { user, getCvInfo, cv } = useAuthStore() // TODO should be "putCvInfo" function set in the store
+  const { user, getCvInfo, cv } = useAuthStore()
   const { newData } = cv.user
   const { email } = user.userData
 
@@ -24,9 +24,9 @@ const Cv = () => {
   return (
     <A4Container>
       <SendData />
+      <Header newData={newData} />
+      <About newData={newData} />
       <CardWrap>
-        <Header newData={newData} />
-        <About newData={newData} />
         <Education />
         <Skills />
         <PetInProgress />

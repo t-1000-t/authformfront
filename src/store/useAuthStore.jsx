@@ -9,6 +9,7 @@ const store = (set) => ({
   user: null,
   redirect: null,
   list: null,
+  statusUpCv: null,
   cv: {
     user: {
       userId: '...',
@@ -62,10 +63,11 @@ const store = (set) => ({
   pushCvText: async (data) => {
     try {
       const cvResult = await cvdataup(data)
-
-      set({ list: cvResult.data })
+      set({ statusUpCv: cvResult.status })
+      return cvResult
     } catch (error) {
       logError(error)
+      return null
     }
   },
 

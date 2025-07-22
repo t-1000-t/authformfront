@@ -1,7 +1,6 @@
 import { jwtDecode } from 'jwt-decode'
 import { useNavigate } from 'react-router-dom'
 import instance from '../utils/axios'
-// import useAuthStore from 'store/useAuthStore'
 
 const isValidToken = (accessToken) => {
   if (!accessToken) {
@@ -49,7 +48,7 @@ export const useAuthHandler = () => {
 export const cvdataup = async (data) => {
   // data is object { data: '', email: 'goo@gmail.com' }
   const result = await instance.post('/api/auth/cvdata', data)
-  return result.data
+  return { data: result.data, status: result.status }
 }
 
 export const cvUpPdf = async (data) => {

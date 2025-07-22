@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Box, Button, Heading, Textarea } from '@chakra-ui/react'
 import useAuthStore from '../../../store/useAuthStore'
 import ModalEdit from './ModalEdit'
@@ -13,35 +13,42 @@ const Header = ({ newData }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [text, setText] = useState({ fullname: newData.fullname, title: newData.title })
 
-  const handleTextChange = (e) => {
+  const handleTextChange = useCallback((e) => {
     e.preventDefault()
     const { name, value } = e.target
     setText((prev) => ({ ...prev, [name]: value }))
-  }
+  }, [])
 
-  const handelCancel = () => {
+  const handelCancel = useCallback(() => {
     setText({ fullname: newData.fullname, title: newData.title })
     setToggle(false)
     setIsOpen(false)
-  }
-  const handleSubmit = () => {
+  }, [newData])
+
+  const handleSubmit = useCallback(() => {
+    console.log('text', text)
+    console.log('cv', cv)
     putCvInfo(text, cv).then()
     setToggle(false)
     setIsOpen(false)
-  }
+  }, [text, cv, putCvInfo])
+
+  const handleClose = useCallback(() => {
+    setIsOpen(false)
+  }, [])
 
   useEffect(() => {
     setObj({
       initialRef,
       isOpen,
-      onClose: () => setIsOpen(!isOpen),
+      onClose: handleClose,
       handleTextChange,
       handleSubmit,
       handelCancel,
       title: text.title ? text.title : newData.title,
       fullname: text.fullname ? text.fullname : newData.fullname,
     })
-  }, [initialRef, isOpen, handleTextChange, handleSubmit, handelCancel])
+  }, [initialRef, isOpen, handleClose, handleTextChange, handleSubmit, handelCancel, text, newData])
 
   return (
     <Box mb="20px">
@@ -61,9 +68,11 @@ const Header = ({ newData }) => {
           {text.fullname}
         </Textarea>
       )}
-      <Button onClick={() => handleSubmit()}>Ok</Button>
-      <Button onClick={() => setToggle(!toggle)}>Edit</Button>
-      <Button onClick={() => handelCancel()}>Cancel</Button>
+      {/* <Flex justifyContent="space-around"> */}
+      {/*  <Button onClick={() => handleSubmit()}>Ok</Button> */}
+      {/*  <Button onClick={() => setToggle(!toggle)}>Edit</Button> */}
+      {/*  <Button onClick={() => handelCancel()}>Cancel</Button> */}
+      {/* </Flex> */}
       <Button onClick={() => setIsOpen(!isOpen)}>Modal</Button>
       <ModalEdit obj={obj} />
     </Box>

@@ -13,9 +13,10 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react'
 
-const ModalEdit = ({ obj }) => {
+const ModalEdit = ({ isOpen, onClose, onSubmit, text, onChange, initialRef }) => {
+  const { fullname, title } = text
   return (
-    <Modal isOpen={obj.isOpen} onClose={obj.handelCancel}>
+    <Modal isOpen={isOpen} onClose={onClose} initialFocusRef={initialRef}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Type your details</ModalHeader>
@@ -23,26 +24,20 @@ const ModalEdit = ({ obj }) => {
         <ModalBody pb={6}>
           <FormControl>
             <FormLabel>Your position</FormLabel>
-            <Input
-              name="title"
-              value={obj.title}
-              ref={obj.initialRef}
-              placeholder="Title"
-              onChange={obj.handleTextChange}
-            />
+            <Input name="title" value={title} ref={initialRef} placeholder="Title" onChange={onChange} />
           </FormControl>
 
           <FormControl mt={4}>
             <FormLabel>Full name</FormLabel>
-            <Input name="fullname" value={obj.fullname} placeholder="Full name" onChange={obj.handleTextChange} />
+            <Input name="fullname" value={fullname} placeholder="Full name" onChange={onChange} />
           </FormControl>
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={obj.handleSubmit}>
+          <Button colorScheme="blue" mr={3} onClick={onSubmit}>
             OK
           </Button>
-          <Button onClick={obj.handelCancel}>Cancel</Button>
+          <Button onClick={onClose}>Cancel</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

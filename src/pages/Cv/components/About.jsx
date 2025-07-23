@@ -1,8 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react'
 
 const About = ({ newData }) => {
   const { email, linked, lang, local } = newData.info
+  const [objAbout, setObjAbout] = useState({})
+
+  useEffect(() => {
+    setObjAbout({
+      email,
+      linked,
+      lang,
+      local,
+    })
+  }, [email, linked, lang, local])
+
+  console.log('objAbout', objAbout)
+
   return (
     <Flex mb="20px" justifyContent="space-around" alignItems="flex-start">
       {/* Left Column - Text */}

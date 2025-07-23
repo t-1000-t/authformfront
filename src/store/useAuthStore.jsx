@@ -53,7 +53,6 @@ const store = (set) => ({
   },
 
   putCvInfo: async (obj, cvtest) => {
-    console.log('obj', obj)
     try {
       set({ cv: { user: { ...cvtest.user, newData: { ...obj, info: cvtest.user.newData.info } } } })
     } catch (error) {

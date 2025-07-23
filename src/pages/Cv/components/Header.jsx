@@ -20,10 +20,7 @@ const Header = ({ newData }) => {
     setText(text)
   }
 
-  useEffect(() => {
-    console.log('text', text)
-    console.log('newData', newData)
-  }, [text, newData])
+  useEffect(() => {}, [text, newData])
 
   return (
     <Box mb="20px">

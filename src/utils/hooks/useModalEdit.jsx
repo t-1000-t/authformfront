@@ -5,12 +5,13 @@ const useModalEdit = (initialText) => {
   const [text, setText] = useState(initialText)
 
   const onOpen = useCallback(() => {
-    setIsOpen(true)
-    setText(text)
-  }, [])
-  const onClose = useCallback(() => {
     setText(initialText)
+    setIsOpen(true)
+  }, [initialText])
+
+  const onClose = useCallback(() => {
     setIsOpen(false)
+    setText(initialText)
   }, [initialText])
 
   const onChange = useCallback((e) => {

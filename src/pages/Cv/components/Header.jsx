@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import { Box, Button, Heading } from '@chakra-ui/react'
 import useAuthStore from '../../../store/useAuthStore'
 import ModalEdit from './ModalEdit'
@@ -8,7 +8,7 @@ const Header = ({ newData }) => {
   const { putCvInfo, cv } = useAuthStore()
   const initialRef = useRef(null)
 
-  const { isOpen, text, onOpen, setText, onClose, onChange } = useModalEdit(newData)
+  const { isOpen, text, onOpen, onClose, onChange } = useModalEdit(newData)
 
   const handleSubmit = () => {
     if (!text.title || !text.fullname) {
@@ -17,10 +17,8 @@ const Header = ({ newData }) => {
     }
 
     putCvInfo(text, cv).then(() => onClose())
-    setText(text)
+    // setText(text)
   }
-
-  useEffect(() => {}, [text, newData])
 
   return (
     <Box mb="20px">

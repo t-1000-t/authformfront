@@ -4,9 +4,10 @@ import useAuthStore from '../../../store/useAuthStore'
 import ModalEdit from './ModalEdit'
 import useModalEdit from '../../../utils/hooks/useModalEdit'
 
-const Header = ({ newData }) => {
+const Header = () => {
   const { putCvInfo, cv } = useAuthStore()
   const initialRef = useRef(null)
+  const { newData } = cv.user
 
   const { isOpen, text, onOpen, onClose, onChange } = useModalEdit(newData)
 

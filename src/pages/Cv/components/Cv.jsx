@@ -24,7 +24,7 @@ const Cv = () => {
   return (
     <A4Container>
       <SendData />
-      <Header newData={newData} />
+      <Header />
       <About newData={newData} />
       <CardWrap>
         <Education />

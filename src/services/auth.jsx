@@ -71,7 +71,6 @@ export const noteup = async (data) => {
 export const pullDataCv = async (str) => {
   const result = await instance.post('/api/auth/cvinfo', { email: str })
 
-  console.log('result', result)
   return result.data
 }
 

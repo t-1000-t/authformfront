@@ -20,9 +20,6 @@ const About = () => {
     putCvInfo(text, cv).then(() => onClose())
   }
 
-  // const keysContacts = Object.keys(contacts)
-  console.log('Object.entries(contacts)', Object.entries(contacts))
-
   return (
     <Flex mb="20px" justifyContent="space-around" alignItems="flex-start">
       <Box>{listContact(contacts)}</Box>

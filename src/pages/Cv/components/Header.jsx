@@ -20,9 +20,6 @@ const Header = () => {
     putCvInfo(text, cv).then(() => onClose())
   }
 
-  console.log('text Header', text)
-  console.log('title Header', title)
-
   return (
     <Box mb="20px">
       <Heading as="h1" fontSize="24px" fontWeight="bold" mb="10px">

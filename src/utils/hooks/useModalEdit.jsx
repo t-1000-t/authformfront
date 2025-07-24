@@ -18,8 +18,6 @@ const useModalEdit = (initialText) => {
     const { name, value } = e.target
     setText((prev) => ({ ...prev, [name]: value }))
   }, [])
-
-  console.log('text OPEN', text)
   return {
     isOpen,
     text,

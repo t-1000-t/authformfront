@@ -19,6 +19,7 @@ const useModalEdit = (initialText) => {
     setText((prev) => ({ ...prev, [name]: value }))
   }, [])
 
+  console.log('text OPEN', text)
   return {
     isOpen,
     text,

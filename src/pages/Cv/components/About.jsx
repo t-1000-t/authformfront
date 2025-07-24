@@ -1,20 +1,26 @@
 import React from 'react'
-import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Heading, Image, Text } from '@chakra-ui/react'
+import ModalEdit from './ModalEdit'
+import useAuthStore from '../../../store/useAuthStore'
+import useModalEdit from '../../../utils/hooks/useModalEdit'
 
-const About = ({ newData }) => {
-  const { email, linked, lang, local } = newData.info
-  // const [objAbout, setObjAbout] = useState({})
-  //
-  // useEffect(() => {
-  //   setObjAbout({
-  //     email,
-  //     linked,
-  //     lang,
-  //     local,
-  //   })
-  // }, [email, linked, lang, local])
-  //
-  // console.log('objAbout', objAbout)
+const About = () => {
+  const { putCvInfo, cv } = useAuthStore()
+  const { contacts } = cv.user.newData
+
+  const { onClose, onOpen, onChange, text, isOpen } = useModalEdit(contacts)
+
+  const handleSubmit = () => {
+    if (!text.mail || !text.linkedin || !text.location || !text.language) {
+      onClose()
+      return
+    }
+
+    putCvInfo(contacts, cv).then(() => onClose())
+  }
+
+  console.log('text About', text)
+  console.log('contacts About', contacts)
 
   return (
     <Flex mb="20px" justifyContent="space-around" alignItems="flex-start">
@@ -24,26 +30,32 @@ const About = ({ newData }) => {
           <Text as="span" textDecoration="underline">
             Email
           </Text>
-          :&nbsp;{email}
+          :&nbsp;{contacts?.mail}
         </Text>
         <Text mb="5px">
           <Text as="span" textDecoration="underline">
             LinkedIn
           </Text>
-          :&nbsp;{linked}
+          :&nbsp;{contacts?.linkedin}
         </Text>
         <Text mb="5px">
           <Text as="span" textDecoration="underline">
             Location
           </Text>
-          :&nbsp;{local}
+          :&nbsp;{contacts?.location}
         </Text>
 
         <Heading as="h3" fontWeight="bold" fontSize="18px" my="15px">
           Languages:
         </Heading>
-        <Text>{lang}</Text>
+        <Text>{contacts?.language}</Text>
       </Box>
+
+      <Button mt={4} onClick={onOpen}>
+        Edit
+      </Button>
+
+      <ModalEdit onSubmit={handleSubmit} onChange={onChange} onClose={onClose} text={text} isOpen={isOpen} />
 
       {/* Right Column - Image */}
       <Box>

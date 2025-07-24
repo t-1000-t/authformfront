@@ -15,10 +15,16 @@ const store = (set) => ({
       userId: '...',
       email: '...',
       newData: {
-        title: '',
-        fullname: '',
-        info: {
-          email: '',
+        title: {
+          posname: '...',
+          fullname: '...',
+        },
+        contacts: {
+          mail: '...',
+          linkedin: '...',
+          location: '...',
+          language: '...',
+          img: '...',
         },
       },
     },
@@ -53,8 +59,34 @@ const store = (set) => ({
   },
 
   putCvInfo: async (obj, cvtest) => {
+    const { title, contacts } = cvtest.user.newData
+
+    const titleKeys = Object.keys(title)
+    const contactKeys = Object.keys(contacts)
+
+    const newTitle = {}
+    const newContact = {}
+
+    Object.entries(obj).forEach(([key, value]) => {
+      if (titleKeys.includes(key)) newTitle[key] = value
+      if (contactKeys.includes(key)) newContact[key] = value
+    })
+
+    console.log('newTitle', newTitle)
+    console.log('newContact', newContact)
+
     try {
-      set({ cv: { user: { ...cvtest.user, newData: { ...obj, info: cvtest.user.newData.info } } } })
+      set({
+        cv: {
+          user: {
+            ...cvtest.user,
+            newData: {
+              title: { ...title, ...newTitle },
+              contacts: { ...contacts, ...newContact },
+            },
+          },
+        },
+      })
     } catch (error) {
       logError(error)
     }

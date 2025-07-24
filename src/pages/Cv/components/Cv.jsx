@@ -13,8 +13,7 @@ import SendData from './SendData'
 import useAuthStore from '../../../store/useAuthStore'
 
 const Cv = () => {
-  const { user, getCvInfo, cv } = useAuthStore()
-  const { newData } = cv.user
+  const { user, getCvInfo } = useAuthStore()
   const { email } = user.userData
 
   useEffect(() => {
@@ -25,7 +24,7 @@ const Cv = () => {
     <A4Container>
       <SendData />
       <Header />
-      <About newData={newData} />
+      <About />
       <CardWrap>
         <Education />
         <Skills />

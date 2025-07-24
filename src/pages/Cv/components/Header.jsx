@@ -7,27 +7,29 @@ import useModalEdit from '../../../utils/hooks/useModalEdit'
 const Header = () => {
   const { putCvInfo, cv } = useAuthStore()
   const initialRef = useRef(null)
-  const { newData } = cv.user
+  const { title } = cv.user.newData
 
-  const { isOpen, text, onOpen, onClose, onChange } = useModalEdit(newData)
+  const { isOpen, text, onOpen, onClose, onChange } = useModalEdit(title)
 
   const handleSubmit = () => {
-    if (!text.title || !text.fullname) {
+    if (!text.posname || !text.fullname) {
       onClose()
       return
     }
 
     putCvInfo(text, cv).then(() => onClose())
-    // setText(text)
   }
+
+  console.log('text Header', text)
+  console.log('title Header', title)
 
   return (
     <Box mb="20px">
       <Heading as="h1" fontSize="24px" fontWeight="bold" mb="10px">
-        {newData.title}
+        {title.posname}
       </Heading>
       <Heading as="h2" fontSize="22px" fontWeight="bold">
-        {newData.fullname}
+        {title.fullname}
       </Heading>
 
       <Button mt={4} onClick={onOpen}>
@@ -39,7 +41,6 @@ const Header = () => {
         onClose={onClose}
         onSubmit={handleSubmit}
         text={text}
-        newData={newData}
         onChange={onChange}
         initialRef={initialRef}
       />

@@ -17,7 +17,7 @@ const ModalEdit = ({ isOpen, onClose, onSubmit, text, onChange, initialRef }) =>
   console.log('text', text)
   console.log('text array', Object.keys(text))
   return (
-    <Modal isOpen={isOpen} onClose={onClose} initialFocusRef={initialRef}>
+    <Modal isOpen={isOpen} onClose={onClose} initialFocusRef={initialRef} scrollBehavior="inside">
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Type your details</ModalHeader>

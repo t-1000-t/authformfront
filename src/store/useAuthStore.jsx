@@ -20,7 +20,7 @@ const store = (set) => ({
           fullname: '...',
         },
         contacts: {
-          mail: '...',
+          email: '...',
           linkedin: '...',
           location: '...',
           language: '...',
@@ -60,7 +60,7 @@ const store = (set) => ({
 
   putCvInfo: async (obj, cvtest) => {
     const { title, contacts } = cvtest.user.newData
-
+    console.log('contacts!!!!!', contacts)
     const titleKeys = Object.keys(title)
     const contactKeys = Object.keys(contacts)
 

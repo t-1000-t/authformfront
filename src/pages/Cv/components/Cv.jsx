@@ -24,8 +24,8 @@ const Cv = () => {
     <A4Container>
       <SendData />
       <Header />
-      <About />
       <CardWrap>
+        <About />
         <Education />
         <Skills />
         <PetInProgress />

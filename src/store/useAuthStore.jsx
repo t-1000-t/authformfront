@@ -26,6 +26,10 @@ const store = (set) => ({
           language: '...',
           img: '...',
         },
+        education: {
+          diploma: '...',
+          course: '...',
+        },
       },
     },
   },
@@ -59,16 +63,19 @@ const store = (set) => ({
   },
 
   putCvInfo: async (obj, cvtest) => {
-    const { title, contacts } = cvtest.user.newData
+    const { title, contacts, education } = cvtest.user.newData
     const titleKeys = Object.keys(title)
     const contactKeys = Object.keys(contacts)
+    const educationKeys = Object.keys(education)
 
     const newTitle = {}
     const newContact = {}
+    const newEducation = {}
 
     Object.entries(obj).forEach(([key, value]) => {
       if (titleKeys.includes(key)) newTitle[key] = value
       if (contactKeys.includes(key)) newContact[key] = value
+      if (educationKeys.includes(key)) newEducation[key] = value
     })
 
     try {
@@ -79,6 +86,7 @@ const store = (set) => ({
             newData: {
               title: { ...title, ...newTitle },
               contacts: { ...contacts, ...newContact },
+              education: { ...education, ...newEducation },
             },
           },
         },

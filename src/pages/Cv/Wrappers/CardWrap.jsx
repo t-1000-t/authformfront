@@ -1,9 +1,10 @@
 import React from 'react'
-import { Wrap } from '@chakra-ui/react'
+import { Flex } from '@chakra-ui/react'
 
 const CardWrap = ({ children }) => {
   return (
-    <Wrap
+    <Flex
+      direction="column"
       maxW="210mm" // A4 width
       minH="297mm" // A4 height
       boxShadow="md" // Optional: add shadow for paper-like effect
@@ -17,7 +18,7 @@ const CardWrap = ({ children }) => {
       pb={15} // Add some padding bottom
     >
       {children}
-    </Wrap>
+    </Flex>
   )
 }
 

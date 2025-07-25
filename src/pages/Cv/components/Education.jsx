@@ -1,28 +1,42 @@
 import React from 'react'
-import { Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Text } from '@chakra-ui/react'
+import { FaRegEdit } from 'react-icons/fa'
+import ModalEdit from './ModalEdit'
+import useAuthStore from '../../../store/useAuthStore'
+import useModalEdit from '../../../utils/hooks/useModalEdit'
+import listContact from '../../../services/listContact'
 
 const Education = () => {
+  const { putCvInfo, cv } = useAuthStore()
+  console.log('cv.user.newData', cv.user.newData)
+  const { education } = cv.user.newData
+
+  const { onClose, onOpen, onChange, text, isOpen } = useModalEdit(education)
+
+  const handleSubmit = () => {
+    if (!education.diploma || !education.course) {
+      onClose()
+      return
+    }
+
+    putCvInfo(text, cv).then(() => onClose())
+  }
+
   return (
-    <Text>
-      <br />
-      <Text as="b" fontSize="larger">
+    <Flex direction="column" w="100%" justifyContent="left" mt="20px">
+      <Text as="b" fontSize="larger" pb="10px">
         Education:
       </Text>
-      <br />
-      <Text as="i">
-        Odessa’s National Polytechnic&nbsp;
-        <Text as="u">University:</Text>
-      </Text>
-      <br />
-      <Text as="u">Diploma</Text>
-      &nbsp;2006-2011, Computer Systems and Networks.
-      <br />
-      <br />
-      <Text as="i">School GoIT:</Text>
-      <br />
-      <Text as="u">Certificate</Text>
-      &nbsp;2019.2 – 2020.4
-    </Text>
+      <Flex>
+        <Box>
+          <Box>{listContact(education)}</Box>
+          <ModalEdit onSubmit={handleSubmit} text={text} onClose={onClose} onChange={onChange} isOpen={isOpen} />
+        </Box>
+        <Button onClick={onOpen} size="xs" bg="blue.50" _hover={{ bg: 'green.200' }}>
+          <FaRegEdit />
+        </Button>
+      </Flex>
+    </Flex>
   )
 }
 

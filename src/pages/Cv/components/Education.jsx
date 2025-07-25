@@ -8,7 +8,6 @@ import listContact from '../../../services/listContact'
 
 const Education = () => {
   const { putCvInfo, cv } = useAuthStore()
-  console.log('cv.user.newData', cv.user.newData)
   const { education } = cv.user.newData
 
   const { onClose, onOpen, onChange, text, isOpen } = useModalEdit(education)

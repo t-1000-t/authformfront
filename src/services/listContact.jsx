@@ -2,7 +2,6 @@ import React from 'react'
 import { Text } from '@chakra-ui/react'
 
 const listContact = (obj) => {
-  console.log('obj', obj)
   return Object.entries(obj).map(([name, value]) => {
     let displayValue = value
 

@@ -12,15 +12,12 @@ const Skills = () => {
 
   const { text, onClose, onOpen, onChange, isOpen } = useModalEdit(skills)
 
-  console.log('skills', skills)
-
   const handleSubmit = () => {
     if (!skills.company || !skills.task || !skills.responsibilities || !skills.technologies) {
       onClose()
       return
     }
 
-    console.log(text)
     putCvInfo(text, cv).then(() => onClose())
   }
 

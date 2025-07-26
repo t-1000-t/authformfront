@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Box, Button, Flex, Text } from '@chakra-ui/react'
 import { FaRegEdit } from 'react-icons/fa'
-import ModalEdit from './ModalEdit'
+import ModalEdit from './Modal/ModalEdit'
 import useAuthStore from '../../../store/useAuthStore'
 import useModalEdit from '../../../utils/hooks/useModalEdit'
-import listContact from '../../../services/listContact'
+import listItems from '../../../services/listItems'
 
 const Education = () => {
   const { putCvInfo, cv } = useAuthStore()
+  const initialRef = useRef(null)
   const { education } = cv.user.newData
 
   const { onClose, onOpen, onChange, text, isOpen } = useModalEdit(education)
@@ -28,8 +29,15 @@ const Education = () => {
       </Text>
       <Flex>
         <Box>
-          <Box>{listContact(education)}</Box>
-          <ModalEdit onSubmit={handleSubmit} text={text} onClose={onClose} onChange={onChange} isOpen={isOpen} />
+          <Box>{listItems(education)}</Box>
+          <ModalEdit
+            isOpen={isOpen}
+            onSubmit={handleSubmit}
+            text={text}
+            onClose={onClose}
+            onChange={onChange}
+            initialRef={initialRef}
+          />
         </Box>
         <Button onClick={onOpen} size="xs" bg="blue.50" _hover={{ bg: 'green.200' }}>
           <FaRegEdit />

@@ -13,7 +13,7 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react'
 
-const ModalEdit = ({ isOpen, onClose, onSubmit, text, onChange, initialRef }) => {
+const ModalObject = ({ isOpen, onClose, onSubmit, text, onChange, initialRef }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} initialFocusRef={initialRef} scrollBehavior="inside">
       <ModalOverlay />
@@ -49,4 +49,4 @@ const ModalEdit = ({ isOpen, onClose, onSubmit, text, onChange, initialRef }) =>
   )
 }
 
-export default ModalEdit
+export default ModalObject

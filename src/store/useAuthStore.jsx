@@ -32,16 +32,18 @@ const store = (set) => ({
         },
         skills: [
           {
+            _id: '...',
             company: '...',
             task: '...',
             technologies: '...',
             responsibilities: '...',
           },
           {
-            company2: '...',
-            task2: '...',
-            technologies2: '...',
-            responsibilities2: '...',
+            _id: '...',
+            company: '...',
+            task: '...',
+            technologies: '...',
+            responsibilities: '...',
           },
         ],
       },

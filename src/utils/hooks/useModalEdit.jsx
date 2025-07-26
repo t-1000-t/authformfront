@@ -21,7 +21,6 @@ const useModalEdit = (initialText) => {
   return {
     isOpen,
     text,
-    setText,
     onOpen,
     onClose,
     onChange,

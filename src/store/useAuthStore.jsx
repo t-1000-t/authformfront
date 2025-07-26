@@ -30,12 +30,22 @@ const store = (set) => ({
           diploma: '...',
           course: '...',
         },
-        skills: {
-          company: '...',
-          task: '...',
-          technologies: '...',
-          responsibilities: '...',
-        },
+        skills: [
+          {
+            _id: '...',
+            company: '...',
+            task: '...',
+            technologies: '...',
+            responsibilities: '...',
+          },
+          {
+            _id: '...',
+            company: '...',
+            task: '...',
+            technologies: '...',
+            responsibilities: '...',
+          },
+        ],
       },
     },
   },
@@ -73,18 +83,18 @@ const store = (set) => ({
     const titleKeys = Object.keys(title)
     const contactKeys = Object.keys(contacts)
     const educationKeys = Object.keys(education)
-    const skillsKeys = Object.keys(skills)
+    // const skillsKeys = Object.keys(skills)
 
     const newTitle = {}
     const newContact = {}
     const newEducation = {}
-    const newSkills = {}
+    // const newSkills = {}
 
     Object.entries(obj).forEach(([key, value]) => {
       if (titleKeys.includes(key)) newTitle[key] = value
       if (contactKeys.includes(key)) newContact[key] = value
       if (educationKeys.includes(key)) newEducation[key] = value
-      if (skillsKeys.includes(key)) newSkills[key] = value
+      // if (skillsKeys.includes(key)) newSkills[key] = value
     })
 
     try {
@@ -96,7 +106,7 @@ const store = (set) => ({
               title: { ...title, ...newTitle },
               contacts: { ...contacts, ...newContact },
               education: { ...education, ...newEducation },
-              skills: { ...skills, ...newSkills },
+              skills: [...skills],
             },
           },
         },
@@ -138,7 +148,7 @@ const store = (set) => ({
   noteText: async (data) => {
     try {
       const list = await noteup(data)
-      set({ text: data.text, list: list.notes })
+      set({ list: list.notes })
     } catch (error) {
       logError(error)
     }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text } from '@chakra-ui/react'
 
-const listContact = (obj) => {
+const listItems = (obj) => {
   return Object.entries(obj).map(([name, value]) => {
     let displayValue = value
 
@@ -39,4 +39,4 @@ const listContact = (obj) => {
   })
 }
 
-export default listContact
+export default listItems

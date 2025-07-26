@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import { Box, Button, Flex, Heading } from '@chakra-ui/react'
 import { FaRegEdit } from 'react-icons/fa'
 import useAuthStore from '../../../store/useAuthStore'
-import ModalEdit from './ModalEdit'
+import ModalEdit from './Modal/ModalEdit'
 import useModalEdit from '../../../utils/hooks/useModalEdit'
 
 const Header = () => {

@@ -41,7 +41,7 @@ const Notes = () => {
     }
   }, [user?.userData?.email, fetchNotes]) // Include fetchNotes in the dependency array
 
-  async function handleInputChange(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
 
     if (!accessToken) {
@@ -78,7 +78,7 @@ const Notes = () => {
 
   return (
     <Container maxW="6xl" py={24} px={{ base: 6, md: 12 }}>
-      <form onSubmit={handleInputChange}>
+      <form onSubmit={handleSubmit}>
         <Box position="relative" maxW="850px" mx="auto" mb={{ base: 4, md: 16 }}>
           <Heading fontSize={{ base: '3xl', md: '4xl', lg: '6xl' }} textAlign="center" color="#204E78">
             LIST of MY NOTES

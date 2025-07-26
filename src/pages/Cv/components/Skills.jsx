@@ -3,7 +3,7 @@ import { Box, Button, Text } from '@chakra-ui/react'
 import { FaRegEdit } from 'react-icons/fa'
 import useAuthStore from '../../../store/useAuthStore'
 import useModalEdit from '../../../utils/hooks/useModalEdit'
-import listContact from '../../../services/listContact'
+// import listContact from '../../../services/listContact'
 import ModalEdit from './ModalEdit'
 
 const Skills = () => {
@@ -12,21 +12,21 @@ const Skills = () => {
 
   const { text, onClose, onOpen, onChange, isOpen } = useModalEdit(skills)
 
-  console.log('skills', skills)
-
   const handleSubmit = () => {
     if (!skills.company || !skills.task || !skills.responsibilities || !skills.technologies) {
       onClose()
       return
     }
 
-    console.log(text)
     putCvInfo(text, cv).then(() => onClose())
   }
 
+  console.log('obj skills', skills)
+  console.log('Array.isArray(skills)', Array.isArray(skills))
   return (
     <>
-      <Box>{listContact(skills)}</Box>
+      {skills && <Box>Skills</Box>}
+      {/*<Box>{listContact(skills)}</Box>*/}
       <ModalEdit isOpen={isOpen} text={text} onSubmit={handleSubmit} onChange={onChange} onClose={onClose} />
       <Button onClick={onOpen}>
         <FaRegEdit />

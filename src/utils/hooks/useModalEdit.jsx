@@ -14,10 +14,16 @@ const useModalEdit = (initialText) => {
     setText(initialText)
   }, [initialText])
 
-  const onChange = useCallback((e) => {
+  const onChange = useCallback((e, activeIndex) => {
     const { name, value } = e.target
-    setText((prev) => ({ ...prev, [name]: value }))
+    console.log('activeIndex', activeIndex)
+    setText((prev) =>
+      !Array.isArray(prev)
+        ? { ...prev, [name]: value }
+        : prev.map((elem, idx) => (activeIndex === idx ? { ...elem, [name]: value } : elem)),
+    )
   }, [])
+
   return {
     isOpen,
     text,

@@ -38,13 +38,6 @@ const store = (set) => ({
             technologies: '...',
             responsibilities: '...',
           },
-          {
-            _id: '...',
-            company: '...',
-            task: '...',
-            technologies: '...',
-            responsibilities: '...',
-          },
         ],
       },
     },

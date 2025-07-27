@@ -82,6 +82,12 @@ const store = (set) => ({
     const newContact = {}
     const newEducation = {}
     // const newSkills = {}
+    const objArray = Array.isArray(obj) ? obj : [obj]
+
+    const updSkills = skills.map((skill) => {
+      const edited = objArray.find((o) => o._id === skill._id)
+      return edited ? { ...skill, ...edited } : skill
+    })
 
     Object.entries(obj).forEach(([key, value]) => {
       if (titleKeys.includes(key)) newTitle[key] = value
@@ -90,6 +96,7 @@ const store = (set) => ({
       // if (skillsKeys.includes(key)) newSkills[key] = value
     })
 
+    console.log('updSkills', updSkills)
     try {
       set({
         cv: {
@@ -99,7 +106,7 @@ const store = (set) => ({
               title: { ...title, ...newTitle },
               contacts: { ...contacts, ...newContact },
               education: { ...education, ...newEducation },
-              skills: [...skills],
+              skills: updSkills,
             },
           },
         },

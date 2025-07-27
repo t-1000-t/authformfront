@@ -21,7 +21,6 @@ const Skills = () => {
       return
     }
 
-    console.log('text', text)
     putCvInfo(text, cv).then(() => onClose())
   }
 

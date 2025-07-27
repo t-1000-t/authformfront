@@ -96,7 +96,6 @@ const store = (set) => ({
       // if (skillsKeys.includes(key)) newSkills[key] = value
     })
 
-    console.log('updSkills', updSkills)
     try {
       set({
         cv: {

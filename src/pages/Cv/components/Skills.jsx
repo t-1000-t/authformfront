@@ -3,8 +3,8 @@ import { Box, Button } from '@chakra-ui/react'
 import { FaRegEdit } from 'react-icons/fa'
 import useAuthStore from '../../../store/useAuthStore'
 import useModalEdit from '../../../utils/hooks/useModalEdit'
-import ModalEdit from './Modal/ModalEdit'
 import listItems from '../../../services/listItems'
+import ModalEdit from './Modal/ModalEdit'
 
 const Skills = () => {
   const { putCvInfo, cv } = useAuthStore()
@@ -19,6 +19,7 @@ const Skills = () => {
       return
     }
 
+    console.log(text)
     putCvInfo(text, cv).then(() => onClose())
   }
 

@@ -50,10 +50,11 @@ const Skills = () => {
 
   const handleDelClick = (skillId) => {
     const { _id } = cv.user
-    const result = deleteSkillFromCv(_id, skillId).then()
-    if (result.status === 200 && result.statusText === 'OK') {
-      console.log('!')
-    }
+    deleteSkillFromCv(_id, skillId).then()
+    // const result = deleteSkillFromCv(_id, skillId).then()
+    // if (result.status === 200 && result.statusText === 'OK') {
+    //   console.log('!')
+    // }
   }
 
   return (

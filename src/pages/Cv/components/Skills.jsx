@@ -1,10 +1,19 @@
 import React, { useRef, useState } from 'react'
 import { Box, Button, Flex } from '@chakra-ui/react'
-import { FaRegEdit } from 'react-icons/fa'
+import { MdOutlineNoteAdd, MdEditNote, MdOutlineDeleteForever } from 'react-icons/md'
 import useAuthStore from '../../../store/useAuthStore'
 import useModalEdit from '../../../utils/hooks/useModalEdit'
 import listItems from '../../../services/listItems'
 import ModalEdit from './Modal/ModalEdit'
+
+const styleButton = {
+  borderRadius: 'full',
+  w: '40px',
+  h: '40px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}
 
 const Skills = () => {
   const { putCvInfo, cv } = useAuthStore()
@@ -12,7 +21,7 @@ const Skills = () => {
   const { skills } = cv.user.newData
   const [activeIndex, setActiveIndex] = useState(null)
 
-  const { text, onClose, onOpen, onChange, isOpen } = useModalEdit(skills)
+  const { text, onClose, onOpen, onChange, isOpen, setText } = useModalEdit(skills)
 
   const handleSubmit = () => {
     const current = text[activeIndex]
@@ -29,8 +38,20 @@ const Skills = () => {
     onOpen()
   }
 
+  const handleAddClick = () => {
+    const res = skills.push({
+      company: '...',
+      task: '...',
+      technologies: '...',
+      responsibilities: '...',
+    })
+    setText(res)
+  }
+
+  const handleDelClick = () => {}
+
   return (
-    <>
+    <Flex direction="column" w="100%" justifyContent="left" pt="20px">
       {skills && <Box>Skills</Box>}
       {activeIndex !== null && (
         <ModalEdit
@@ -45,17 +66,29 @@ const Skills = () => {
           initialRef={initialRef}
         />
       )}
-      {skills.map((item, index) => (
-        <Box key={item.id}>
-          <Flex>
-            <Box>{listItems(item)}</Box>
-            <Button size="sx" onClick={() => handleEditClick(index)}>
-              <FaRegEdit />
-            </Button>
-          </Flex>
-        </Box>
-      ))}
-    </>
+      {skills.map((item, index) => {
+        const objNoId = Object.keys(item)
+          .filter((f) => f !== '_id')
+          .reduce((obj, key) => ({ ...obj, [key]: item[key] }), {})
+
+        return (
+          <Box key={item._id}>
+            <Flex>
+              <Box>{listItems(objNoId)}</Box>
+              <Button sx={styleButton} size="sx" onClick={() => handleEditClick(index)} bg="yellow.50">
+                <MdEditNote />
+              </Button>
+              <Button sx={styleButton} bg="green.50" p={2} size="sx" onClick={() => handleAddClick(index)}>
+                <MdOutlineNoteAdd />
+              </Button>
+              <Button sx={styleButton} bg="red.50" p={2} size="sx" onClick={() => handleDelClick(index)}>
+                <MdOutlineDeleteForever />
+              </Button>
+            </Flex>
+          </Box>
+        )
+      })}
+    </Flex>
   )
 }
 

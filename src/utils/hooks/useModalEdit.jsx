@@ -29,6 +29,7 @@ const useModalEdit = (initialText) => {
     onOpen,
     onClose,
     onChange,
+    setText,
   }
 }
 

@@ -3,7 +3,7 @@ import { Text } from '@chakra-ui/react'
 
 const PetsOlds = () => {
   return (
-    <Text>
+    <Text pt="20px">
       <Text as="b" fontSize="larger">
         PET-Projects not in progress
       </Text>

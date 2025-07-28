@@ -23,7 +23,7 @@ const Education = () => {
   }
 
   return (
-    <Flex direction="column" w="100%" justifyContent="left" mt="20px">
+    <Flex direction="column" w="100%" justifyContent="left" pt="20px">
       <Text as="b" fontSize="larger" pb="10px">
         Education:
       </Text>

@@ -80,6 +80,12 @@ export const noteDelete = async (id) => {
   return { status, statusText }
 }
 
+export const skillDelete = async (cvId, skillId) => {
+  const { status, statusText } = await instance.delete(`/api/auth/cv/${cvId}/skills/${skillId}`)
+
+  return { status, statusText }
+}
+
 export const signin = async (name, password) => {
   const response = await instance.post('/api/auth/login', {
     email: name,

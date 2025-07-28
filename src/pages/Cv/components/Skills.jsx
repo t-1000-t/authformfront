@@ -16,7 +16,7 @@ const styleButton = {
 }
 
 const Skills = () => {
-  const { putCvInfo, cv } = useAuthStore()
+  const { putCvInfo, cv, deleteSkillFromCv } = useAuthStore()
   const initialRef = useRef(null)
   const { skills } = cv.user.newData
   const [activeIndex, setActiveIndex] = useState(null)
@@ -48,7 +48,9 @@ const Skills = () => {
     setText(res)
   }
 
-  const handleDelClick = () => {}
+  const handleDelClick = () => {
+    deleteSkillFromCv('1', '2').then()
+  }
 
   return (
     <Flex direction="column" w="100%" justifyContent="left" pt="20px">

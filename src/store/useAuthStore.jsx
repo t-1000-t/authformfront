@@ -1,6 +1,16 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { logoutAuth, noteDelete, noteup, signin, signup, cvdataup, cvUpPdf, pullDataCv } from '../services/auth'
+import {
+  logoutAuth,
+  noteDelete,
+  noteup,
+  signin,
+  signup,
+  cvdataup,
+  cvUpPdf,
+  pullDataCv,
+  skillDelete,
+} from '../services/auth'
 import { removeTokenHeader } from '../utils/axios'
 import { logError } from '../utils/services'
 
@@ -155,6 +165,15 @@ const store = (set) => ({
   deleteNote: async (id) => {
     try {
       return await noteDelete(id)
+    } catch (error) {
+      logError(error)
+      return null
+    }
+  },
+
+  deleteSkillFromCv: async (cvId, skillId) => {
+    try {
+      return await skillDelete(cvId, skillId)
     } catch (error) {
       logError(error)
       return null

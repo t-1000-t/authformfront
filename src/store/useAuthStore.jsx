@@ -157,8 +157,10 @@ const store = (set) => ({
     try {
       const list = await noteup(data)
       set({ list: list.notes })
+      return list
     } catch (error) {
       logError(error)
+      return null
     }
   },
 

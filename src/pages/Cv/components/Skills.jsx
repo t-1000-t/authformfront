@@ -48,8 +48,9 @@ const Skills = () => {
     setText(res)
   }
 
-  const handleDelClick = () => {
-    deleteSkillFromCv('1', '2').then()
+  const handleDelClick = (skillId) => {
+    const { _id } = cv.user
+    deleteSkillFromCv(_id, skillId).then()
   }
 
   return (
@@ -83,7 +84,7 @@ const Skills = () => {
               <Button sx={styleButton} bg="green.50" p={2} size="sx" onClick={() => handleAddClick(index)}>
                 <MdOutlineNoteAdd />
               </Button>
-              <Button sx={styleButton} bg="red.50" p={2} size="sx" onClick={() => handleDelClick(index)}>
+              <Button sx={styleButton} bg="red.50" p={2} size="sx" onClick={() => handleDelClick(item._id)}>
                 <MdOutlineDeleteForever />
               </Button>
             </Flex>

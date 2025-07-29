@@ -1,10 +1,11 @@
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { Box, Button, Flex } from '@chakra-ui/react'
 import { MdOutlineNoteAdd, MdEditNote, MdOutlineDeleteForever } from 'react-icons/md'
 import useAuthStore from '../../../store/useAuthStore'
 import useModalEdit from '../../../utils/hooks/useModalEdit'
 import listItems from '../../../services/listItems'
 import ModalEdit from './Modal/ModalEdit'
+import { logError } from '../../../utils/services'
 
 const styleButton = {
   borderRadius: 'full',
@@ -21,7 +22,7 @@ const Skills = () => {
   const { skills } = cv.user.newData
   const [activeIndex, setActiveIndex] = useState(null)
 
-  const { text, onClose, onOpen, onChange, isOpen, setText } = useModalEdit(skills)
+  const { text, onClose, onOpen, onChange, isOpen } = useModalEdit(skills)
 
   const handleSubmit = () => {
     const current = text[activeIndex]
@@ -39,23 +40,30 @@ const Skills = () => {
   }
 
   const handleAddClick = () => {
-    const res = skills.push({
+    const newSkill = {
       company: '...',
       task: '...',
       technologies: '...',
       responsibilities: '...',
-    })
-    setText(res)
+    }
+    const updateSkills = [...skills, newSkill]
+
+    putCvInfo(updateSkills, cv).then()
   }
 
-  const handleDelClick = (skillId) => {
-    const { _id } = cv.user
-    deleteSkillFromCv(_id, skillId).then()
-    // const result = deleteSkillFromCv(_id, skillId).then()
-    // if (result.status === 200 && result.statusText === 'OK') {
-    //   console.log('!')
-    // }
-  }
+  const handleDelClick = useCallback(
+    async (skillId) => {
+      const { _id, email } = cv.user
+      try {
+        await deleteSkillFromCv(_id, skillId, email).then((result) => {
+          return result
+        })
+      } catch (error) {
+        logError(error('Error deleting skill', error))
+      }
+    },
+    [cv.user, deleteSkillFromCv],
+  )
 
   return (
     <Flex direction="column" w="100%" justifyContent="left" pt="20px">

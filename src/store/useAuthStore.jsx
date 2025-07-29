@@ -81,22 +81,16 @@ const store = (set) => ({
   },
 
   putCvInfo: async (obj, cvtest) => {
-    const { title, contacts, education, skills } = cvtest.user.newData
+    const { title, contacts, education } = cvtest.user.newData
     const titleKeys = Object.keys(title)
     const contactKeys = Object.keys(contacts)
     const educationKeys = Object.keys(education)
-    // const skillsKeys = Object.keys(skills)
 
     const newTitle = {}
     const newContact = {}
     const newEducation = {}
     // const newSkills = {}
     const objArray = Array.isArray(obj) ? obj : [obj]
-
-    const updSkills = skills.map((skill) => {
-      const edited = objArray.find((o) => o._id === skill._id)
-      return edited ? { ...skill, ...edited } : skill
-    })
 
     Object.entries(obj).forEach(([key, value]) => {
       if (titleKeys.includes(key)) newTitle[key] = value
@@ -114,7 +108,7 @@ const store = (set) => ({
               title: { ...title, ...newTitle },
               contacts: { ...contacts, ...newContact },
               education: { ...education, ...newEducation },
-              skills: updSkills,
+              skills: objArray,
             },
           },
         },
@@ -128,6 +122,10 @@ const store = (set) => ({
     try {
       const cvResult = await cvdataup(data)
       set({ statusUpCv: cvResult.status })
+      if (cvResult && cvResult.status === 200) {
+        const result = await pullDataCv(data.email)
+        set({ cv: result })
+      }
       return cvResult
     } catch (error) {
       logError(error)
@@ -173,9 +171,14 @@ const store = (set) => ({
     }
   },
 
-  deleteSkillFromCv: async (cvId, skillId) => {
+  deleteSkillFromCv: async (cvId, skillId, email) => {
     try {
-      return await skillDelete(cvId, skillId)
+      const res = await skillDelete(cvId, skillId)
+      if (res && res.status === 200) {
+        const result = await pullDataCv(email)
+        set({ cv: result })
+      }
+      return res
     } catch (error) {
       logError(error)
       return null

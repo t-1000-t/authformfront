@@ -18,7 +18,7 @@ const CvPagePdf = () => {
       a.click()
       a.remove()
     } catch (error) {
-      logError('PDF fetch error:', error)
+      logError('PDF response error:', error)
     }
   }
 

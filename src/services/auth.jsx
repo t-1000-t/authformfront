@@ -45,7 +45,7 @@ export const useAuthHandler = () => {
   return handleAuthentication
 }
 
-export const cvdataup = async (data) => {
+export const cvDataUp = async (data) => {
   // data is object { data: '', email: 'goo@gmail.com' }
   const result = await instance.post('/api/auth/cvdata', data)
   return { data: result.data, status: result.status }
@@ -86,7 +86,7 @@ export const skillDelete = async (cvId, skillId) => {
   return { status, statusText }
 }
 
-export const signin = async (name, password) => {
+export const signIn = async (name, password) => {
   const response = await instance.post('/api/auth/login', {
     email: name,
     password,

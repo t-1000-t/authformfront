@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { Box, Button, Flex } from '@chakra-ui/react'
 import { MdOutlineNoteAdd, MdEditNote, MdOutlineDeleteForever } from 'react-icons/md'
+import { Box, Button, Flex } from '@chakra-ui/react'
+import useDetectChange from '../../../utils/hooks/useDetectChange'
 import useAuthStore from '../../../store/useAuthStore'
 import useModalEdit from '../../../utils/hooks/useModalEdit'
 import listItems from '../../../services/listItems'
@@ -21,13 +22,19 @@ const styleButton = {
 }
 
 const Skills = () => {
-  const { putCvInfo, cv, deleteSkillFromCv } = useAuthStore()
+  const { putCvInfo, cv, deleteSkillFromCv, setCurrentData } = useAuthStore()
   const initialRef = useRef(null)
   const { skills } = cv.user.newData
   const [activeIndex, setActiveIndex] = useState(null)
   const [localSkills, setLocalSkills] = useState([...skills])
 
   const { text, onClose, onOpen, onChange, isOpen } = useModalEdit(localSkills)
+
+  useDetectChange() // tracks currentData vs cv.user.newData.skills
+
+  useEffect(() => {
+    setCurrentData({ section: 'strSkills', localData: skills })
+  }, [skills])
 
   const handleSubmit = () => {
     const current = text[activeIndex]
@@ -37,11 +44,14 @@ const Skills = () => {
     }
 
     putCvInfo(text, cv).then(() => {
+      const updatedSkills = cv.user.newData.skills
+      setCurrentData({ section: 'strSkills', localData: updatedSkills })
       onClose()
     })
   }
 
   const handleEditClick = (index) => {
+    setCurrentData({ section: 'strSkills', localData: localSkills })
     setActiveIndex(index)
     onOpen()
   }
@@ -57,7 +67,7 @@ const Skills = () => {
     const updateSkills = [...localSkills, newSkill]
 
     setLocalSkills(updateSkills)
-    // putCvInfo(updateSkills, cv).then()
+    setCurrentData({ section: 'strSkills', localData: updateSkills })
   }
 
   const handleDelClick = useCallback(
@@ -70,7 +80,9 @@ const Skills = () => {
           logError(error('Error deleting skill', error))
         }
       } else {
-        setLocalSkills((prev) => prev.filter((_, i) => i !== index))
+        const newSkills = (prev) => prev.filter((_, i) => i !== index)
+        setLocalSkills(newSkills)
+        setCurrentData({ section: 'strSkills', localData: newSkills })
       }
     },
     [cv.user, deleteSkillFromCv],
@@ -78,6 +90,9 @@ const Skills = () => {
 
   useEffect(() => {
     setLocalSkills(skills) // if something change with skills we put into the store before it works UI only
+    if (activeIndex === null) {
+      setCurrentData({ section: 'strSkills', localData: skills })
+    }
   }, [skills])
 
   return (

@@ -4,9 +4,9 @@ import {
   logoutAuth,
   noteDelete,
   noteup,
-  signin,
+  signIn,
   signup,
-  cvdataup,
+  cvDataUp,
   cvUpPdf,
   pullDataCv,
   skillDelete,
@@ -51,6 +51,10 @@ const store = (set) => ({
       },
     },
   },
+  hasChanged: false,
+  setHasChanged: (value) => set({ hasChanged: value }),
+  currentData: { section: '', localData: null },
+  setCurrentData: (data) => set({ currentData: data }),
 
   signup: async ({ username, surname, email, password, role, message, avatar }) => {
     const { user, idAvatar } = await signup({
@@ -71,7 +75,7 @@ const store = (set) => ({
   },
 
   login: async (username, password) => {
-    const { accessToken, user } = await signin(username, password)
+    const { accessToken, user } = await signIn(username, password)
     const redirect = '/'
     set({
       user,
@@ -120,7 +124,7 @@ const store = (set) => ({
 
   pushCvText: async (data) => {
     try {
-      const cvResult = await cvdataup(data)
+      const cvResult = await cvDataUp(data)
       set({ statusUpCv: cvResult.status })
       if (cvResult && cvResult.status === 200) {
         const result = await pullDataCv(data.email)

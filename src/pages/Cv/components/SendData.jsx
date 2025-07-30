@@ -1,12 +1,14 @@
 import React from 'react'
 import { Button, Flex, Text, useToast, VStack } from '@chakra-ui/react'
+import Lottie from 'react-lottie-player'
 import promiseBasedToast from '../../../services/promiseBasedToast'
 import useAuthStore from '../../../store/useAuthStore'
 import { logError } from '../../../utils/services'
+import done from '../../../animations/Done.json'
 
 const SendData = () => {
   const toast = useToast({ position: 'top-right' })
-  const { accessToken, cv, user, pushCvText } = useAuthStore()
+  const { accessToken, cv, user, pushCvText, hasChanged } = useAuthStore()
 
   const handlerSendData = async (e) => {
     e.preventDefault()
@@ -36,7 +38,14 @@ const SendData = () => {
     <VStack spacing={3} align="stretch">
       <Flex justify="space-between">
         <Text>Save CV</Text>
-        <Button colorScheme="blue" onClick={handlerSendData}>
+        <Button
+          colorScheme="blue"
+          onClick={handlerSendData}
+          isDisabled={!hasChanged}
+          rightIcon={
+            hasChanged && <Lottie loop animationData={done} play={hasChanged} style={{ width: 50, height: 50 }} />
+          }
+        >
           Save
         </Button>
       </Flex>

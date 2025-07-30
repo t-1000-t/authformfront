@@ -1,10 +1,11 @@
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Box, Button, Flex } from '@chakra-ui/react'
 import { MdOutlineNoteAdd, MdEditNote, MdOutlineDeleteForever } from 'react-icons/md'
 import useAuthStore from '../../../store/useAuthStore'
 import useModalEdit from '../../../utils/hooks/useModalEdit'
 import listItems from '../../../services/listItems'
 import ModalEdit from './Modal/ModalEdit'
+import getObjectNoId from '../../../services/getObjectNoId'
 import { logError } from '../../../utils/services'
 
 const styleButton = {
@@ -14,6 +15,9 @@ const styleButton = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  border: '2px',
+  borderColor: 'gray.300',
+  shadow: 'md',
 }
 
 const Skills = () => {
@@ -21,8 +25,9 @@ const Skills = () => {
   const initialRef = useRef(null)
   const { skills } = cv.user.newData
   const [activeIndex, setActiveIndex] = useState(null)
+  const [localSkills, setLocalSkills] = useState([...skills])
 
-  const { text, onClose, onOpen, onChange, isOpen } = useModalEdit(skills)
+  const { text, onClose, onOpen, onChange, isOpen } = useModalEdit(localSkills)
 
   const handleSubmit = () => {
     const current = text[activeIndex]
@@ -31,7 +36,9 @@ const Skills = () => {
       return
     }
 
-    putCvInfo(text, cv).then(() => onClose())
+    putCvInfo(text, cv).then(() => {
+      onClose()
+    })
   }
 
   const handleEditClick = (index) => {
@@ -41,37 +48,45 @@ const Skills = () => {
 
   const handleAddClick = () => {
     const newSkill = {
+      // id: Math.random().toString(36).substring(2, 6),
       company: '...',
       task: '...',
       technologies: '...',
       responsibilities: '...',
     }
-    const updateSkills = [...skills, newSkill]
+    const updateSkills = [...localSkills, newSkill]
 
-    putCvInfo(updateSkills, cv).then()
+    setLocalSkills(updateSkills)
+    // putCvInfo(updateSkills, cv).then()
   }
 
   const handleDelClick = useCallback(
-    async (skillId) => {
-      const { _id, email } = cv.user
-      try {
-        await deleteSkillFromCv(_id, skillId, email).then((result) => {
-          return result
-        })
-      } catch (error) {
-        logError(error('Error deleting skill', error))
+    async (skill, index) => {
+      if (skill._id) {
+        const { _id, email } = cv.user
+        try {
+          await deleteSkillFromCv(_id, skill._id, email).then()
+        } catch (error) {
+          logError(error('Error deleting skill', error))
+        }
+      } else {
+        setLocalSkills((prev) => prev.filter((_, i) => i !== index))
       }
     },
     [cv.user, deleteSkillFromCv],
   )
 
+  useEffect(() => {
+    setLocalSkills(skills) // if something change with skills we put into the store before it works UI only
+  }, [skills])
+
   return (
     <Flex direction="column" w="100%" justifyContent="left" pt="20px">
-      {skills && <Box>Skills</Box>}
+      {localSkills && <Box>Skills</Box>}
       {activeIndex !== null && (
         <ModalEdit
           isOpen={isOpen}
-          text={text[activeIndex]}
+          text={getObjectNoId(text[activeIndex])}
           onSubmit={handleSubmit}
           onChange={(e) => onChange(e, activeIndex)}
           onClose={() => {
@@ -81,10 +96,8 @@ const Skills = () => {
           initialRef={initialRef}
         />
       )}
-      {skills.map((item, index) => {
-        const objNoId = Object.keys(item)
-          .filter((f) => f !== '_id')
-          .reduce((obj, key) => ({ ...obj, [key]: item[key] }), {})
+      {localSkills.map((item, index) => {
+        const objNoId = getObjectNoId(item)
 
         return (
           <Box key={item._id}>
@@ -96,7 +109,7 @@ const Skills = () => {
               <Button sx={styleButton} bg="green.50" p={2} size="sx" onClick={() => handleAddClick(index)}>
                 <MdOutlineNoteAdd />
               </Button>
-              <Button sx={styleButton} bg="red.50" p={2} size="sx" onClick={() => handleDelClick(item._id)}>
+              <Button sx={styleButton} bg="red.50" p={2} size="sx" onClick={() => handleDelClick(item, index)}>
                 <MdOutlineDeleteForever />
               </Button>
             </Flex>

@@ -8,18 +8,7 @@ import listItems from '../../../services/listItems'
 import ModalEdit from './Modal/ModalEdit'
 import getObjectNoId from '../../../services/getObjectNoId'
 import { logError } from '../../../utils/services'
-
-const styleButton = {
-  borderRadius: 'full',
-  w: '40px',
-  h: '40px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  border: '2px',
-  borderColor: 'gray.300',
-  shadow: 'md',
-}
+import styleButton from '../../../services/customStyles'
 
 const Skills = () => {
   const { putCvInfo, cv, deleteSkillFromCv, setCurrentData } = useAuthStore()

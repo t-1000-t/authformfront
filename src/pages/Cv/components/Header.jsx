@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react'
 import { Box, Button, Flex, Heading } from '@chakra-ui/react'
-import { FaRegEdit } from 'react-icons/fa'
+import { MdEditNote } from 'react-icons/md'
 import useAuthStore from '../../../store/useAuthStore'
 import ModalEdit from './Modal/ModalEdit'
 import useModalEdit from '../../../utils/hooks/useModalEdit'
 import useDetectChange from '../../../utils/hooks/useDetectChange'
+import styleButton from '../../../services/customStyles'
 
 const Header = () => {
   const { putCvInfo, cv, setCurrentData } = useAuthStore()
@@ -43,8 +44,8 @@ const Header = () => {
             {title.fullname}
           </Heading>
         </Box>
-        <Button size="xs" mt={4} onClick={onOpen} bg="white.50" _hover={{ bg: 'green.200' }}>
-          <FaRegEdit />
+        <Button sx={styleButton} m={3} size="sx" onClick={onOpen} bg="yellow.50" _hover={{ bg: 'green.200' }}>
+          <MdEditNote />
         </Button>
 
         <ModalEdit

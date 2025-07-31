@@ -1,16 +1,23 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Box, Button, Flex, Heading } from '@chakra-ui/react'
 import { FaRegEdit } from 'react-icons/fa'
 import useAuthStore from '../../../store/useAuthStore'
 import ModalEdit from './Modal/ModalEdit'
 import useModalEdit from '../../../utils/hooks/useModalEdit'
+import useDetectChange from '../../../utils/hooks/useDetectChange'
 
 const Header = () => {
-  const { putCvInfo, cv } = useAuthStore()
+  const { putCvInfo, cv, setCurrentData } = useAuthStore()
   const initialRef = useRef(null)
   const { title } = cv.user.newData
 
   const { isOpen, text, onOpen, onClose, onChange } = useModalEdit(title)
+
+  useDetectChange()
+
+  useEffect(() => {
+    setCurrentData({ section: 'strTitles', localData: title })
+  }, [title])
 
   const handleSubmit = () => {
     if (!text.posname || !text.fullname) {
@@ -18,7 +25,11 @@ const Header = () => {
       return
     }
 
-    putCvInfo(text, cv).then(() => onClose())
+    putCvInfo(text, cv).then(() => {
+      const updatedTitles = cv.user.newData.title
+      setCurrentData({ section: 'strTitles', localData: updatedTitles })
+      onClose()
+    })
   }
 
   return (

@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { isEqual } from 'lodash'
 import {
   logoutAuth,
   noteDelete,
@@ -85,7 +86,7 @@ const store = (set) => ({
   },
 
   putCvInfo: async (obj, cvtest) => {
-    const { title, contacts, education } = cvtest.user.newData
+    const { title, contacts, education, skills } = cvtest.user.newData
     const titleKeys = Object.keys(title)
     const contactKeys = Object.keys(contacts)
     const educationKeys = Object.keys(education)
@@ -93,8 +94,12 @@ const store = (set) => ({
     const newTitle = {}
     const newContact = {}
     const newEducation = {}
-    // const newSkills = {}
-    const objArray = Array.isArray(obj) ? obj : [obj]
+    let newSkills = skills
+
+    if (Array.isArray(obj)) {
+      const isSameStructure = isEqual(obj, skills)
+      newSkills = isSameStructure ? skills : obj
+    }
 
     Object.entries(obj).forEach(([key, value]) => {
       if (titleKeys.includes(key)) newTitle[key] = value
@@ -112,7 +117,7 @@ const store = (set) => ({
               title: { ...title, ...newTitle },
               contacts: { ...contacts, ...newContact },
               education: { ...education, ...newEducation },
-              skills: objArray,
+              skills: newSkills,
             },
           },
         },

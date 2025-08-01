@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import Header from './Header'
-import About from './About'
+import Title from './Title'
+import Contacts from './Contacts'
 import Education from './Education'
 import Skills from './Skills'
 import PetInProgress from './PetInProgress'
@@ -23,9 +23,9 @@ const Cv = () => {
   return (
     <A4Container>
       <SendData />
-      <Header />
+      <Title />
       <CardWrap>
-        <About />
+        <Contacts />
         <Education />
         <Skills />
         <PetInProgress />

@@ -7,7 +7,7 @@ import useModalEdit from '../../../utils/hooks/useModalEdit'
 import useDetectChange from '../../../utils/hooks/useDetectChange'
 import styleButton from '../../../services/customStyles'
 
-const Header = () => {
+const Title = () => {
   const { putCvInfo, cv, setCurrentData } = useAuthStore()
   const initialRef = useRef(null)
   const { title } = cv.user.newData
@@ -57,4 +57,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default Title

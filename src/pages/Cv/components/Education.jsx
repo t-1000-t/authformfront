@@ -1,11 +1,12 @@
 import React, { useRef } from 'react'
 import { Box, Button, Flex, Text } from '@chakra-ui/react'
-import { FaRegEdit } from 'react-icons/fa'
+import { MdEditNote } from 'react-icons/md'
 import ModalEdit from './Modal/ModalEdit'
 import useAuthStore from '../../../store/useAuthStore'
 import useModalEdit from '../../../utils/hooks/useModalEdit'
 import listItems from '../../../services/listItems'
 import useDetectChange from '../../../utils/hooks/useDetectChange'
+import styleButton from '../../../services/customStyles'
 
 const Education = () => {
   const { putCvInfo, cv, setCurrentData } = useAuthStore()
@@ -43,8 +44,8 @@ const Education = () => {
             initialRef={initialRef}
           />
         </Box>
-        <Button onClick={onOpen} size="xs" bg="blue.50" _hover={{ bg: 'green.200' }}>
-          <FaRegEdit />
+        <Button sx={styleButton} onClick={onOpen} size="sx" bg="yellow.50" _hover={{ bg: 'green.200' }}>
+          <MdEditNote />
         </Button>
       </Flex>
     </Flex>

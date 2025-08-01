@@ -28,6 +28,20 @@ const listItems = (obj) => {
       )
     }
 
+    // Make links clickable
+    if (name.toLowerCase().includes('own')) {
+      displayValue = (
+        <a
+          href={`https://${value}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: 'blue', textDecoration: 'underline' }}
+        >
+          {value}
+        </a>
+      )
+    }
+
     return (
       <Text key={name} mb="5px">
         <Text as="span" textDecoration="underline">

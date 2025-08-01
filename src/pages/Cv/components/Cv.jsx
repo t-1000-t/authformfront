@@ -4,7 +4,6 @@ import Contacts from './Contacts'
 import Education from './Education'
 import Skills from './Skills'
 import PetInProgress from './PetInProgress'
-import Experience from './Experience'
 import PetsOlds from './PetsOlds'
 
 import A4Container from '../Wrappers/A4Container'
@@ -27,9 +26,8 @@ const Cv = () => {
       <CardWrap>
         <Contacts />
         <Education />
-        <Skills />
         <PetInProgress />
-        <Experience />
+        <Skills />
         <PetsOlds />
       </CardWrap>
     </A4Container>

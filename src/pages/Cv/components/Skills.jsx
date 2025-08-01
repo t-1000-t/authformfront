@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { MdOutlineNoteAdd, MdEditNote, MdOutlineDeleteForever } from 'react-icons/md'
-import { Box, Button, Flex } from '@chakra-ui/react'
+import { Box, Button, Flex, Text } from '@chakra-ui/react'
 import useDetectChange from '../../../utils/hooks/useDetectChange'
 import useAuthStore from '../../../store/useAuthStore'
 import useModalEdit from '../../../utils/hooks/useModalEdit'
@@ -83,7 +83,16 @@ const Skills = () => {
 
   return (
     <Flex direction="column" w="100%" justifyContent="left" pt="20px">
-      {localSkills && <Box>Skills</Box>}
+      {localSkills && (
+        <Flex direction="column">
+          <Text as="b" fontSize="larger" pb="20px">
+            Commercial Experience
+          </Text>
+          <Text as="b" fontSize="larger" pb="10px">
+            Skills:
+          </Text>
+        </Flex>
+      )}
       {activeIndex !== null && (
         <ModalEdit
           isOpen={isOpen}

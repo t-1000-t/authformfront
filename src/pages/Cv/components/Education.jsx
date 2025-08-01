@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { Box, Button, Flex, Text } from '@chakra-ui/react'
 import { MdEditNote } from 'react-icons/md'
 import ModalEdit from './Modal/ModalEdit'
@@ -10,7 +10,6 @@ import styleButton from '../../../services/customStyles'
 
 const Education = () => {
   const { putCvInfo, cv, setCurrentData } = useAuthStore()
-  const initialRef = useRef(null)
   const { education } = cv.user.newData
   const { onClose, onOpen, onChange, text, isOpen } = useModalEdit(education)
   useDetectChange()
@@ -35,14 +34,7 @@ const Education = () => {
       <Flex>
         <Box>
           <Box>{listItems(education)}</Box>
-          <ModalEdit
-            isOpen={isOpen}
-            onSubmit={handleSubmit}
-            text={text}
-            onClose={onClose}
-            onChange={onChange}
-            initialRef={initialRef}
-          />
+          <ModalEdit isOpen={isOpen} onSubmit={handleSubmit} text={text} onClose={onClose} onChange={onChange} />
         </Box>
         <Button sx={styleButton} onClick={onOpen} size="sx" bg="yellow.50" _hover={{ bg: 'green.200' }}>
           <MdEditNote />

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import { Box, Button, Flex, Heading } from '@chakra-ui/react'
 import { MdEditNote } from 'react-icons/md'
 import useAuthStore from '../../../store/useAuthStore'
@@ -15,10 +15,6 @@ const Header = () => {
   const { isOpen, text, onOpen, onClose, onChange } = useModalEdit(title)
 
   useDetectChange()
-
-  useEffect(() => {
-    setCurrentData({ section: 'strTitles', localData: title })
-  }, [title])
 
   const handleSubmit = () => {
     if (!text.posname || !text.fullname) {

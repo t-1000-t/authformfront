@@ -6,6 +6,16 @@ const useDetectChange = () => {
   const { currentData, setHasChanged, cv } = useAuthStore()
 
   useEffect(() => {
+    if (currentData.section === 'strEducation') {
+      const currentTitles = cv?.user?.newData?.education ?? {}
+      const changed = !isEqual(currentData.localData, currentTitles)
+      setHasChanged(changed)
+    }
+    if (currentData.section === 'strContacts') {
+      const currentTitles = cv?.user?.newData?.contacts ?? {}
+      const changed = !isEqual(currentData.localData, currentTitles)
+      setHasChanged(changed)
+    }
     if (currentData.section === 'strTitles') {
       const currentTitles = cv?.user?.newData?.title ?? {}
       const changed = !isEqual(currentData.localData, currentTitles)

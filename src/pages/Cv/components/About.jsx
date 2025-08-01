@@ -5,13 +5,14 @@ import ModalEdit from './Modal/ModalEdit'
 import useAuthStore from '../../../store/useAuthStore'
 import useModalEdit from '../../../utils/hooks/useModalEdit'
 import listItems from '../../../services/listItems'
+import useDetectChange from '../../../utils/hooks/useDetectChange'
 
 const About = () => {
-  const { putCvInfo, cv } = useAuthStore()
+  const { putCvInfo, cv, setCurrentData } = useAuthStore()
   const initialRef = useRef(null)
   const { contacts } = cv.user.newData
-
   const { onClose, onOpen, onChange, text, isOpen } = useModalEdit(contacts)
+  useDetectChange()
 
   const handleSubmit = () => {
     if (!text.email || !text.linkedin || !text.location || !text.languages) {
@@ -19,7 +20,10 @@ const About = () => {
       return
     }
 
-    putCvInfo(text, cv).then(() => onClose())
+    putCvInfo(text, cv).then(() => {
+      setCurrentData({ section: 'strContacts', localData: contacts })
+      onClose()
+    })
   }
 
   return (

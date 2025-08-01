@@ -5,13 +5,14 @@ import ModalEdit from './Modal/ModalEdit'
 import useAuthStore from '../../../store/useAuthStore'
 import useModalEdit from '../../../utils/hooks/useModalEdit'
 import listItems from '../../../services/listItems'
+import useDetectChange from '../../../utils/hooks/useDetectChange'
 
 const Education = () => {
-  const { putCvInfo, cv } = useAuthStore()
+  const { putCvInfo, cv, setCurrentData } = useAuthStore()
   const initialRef = useRef(null)
   const { education } = cv.user.newData
-
   const { onClose, onOpen, onChange, text, isOpen } = useModalEdit(education)
+  useDetectChange()
 
   const handleSubmit = () => {
     if (!education.diploma || !education.course) {
@@ -19,7 +20,10 @@ const Education = () => {
       return
     }
 
-    putCvInfo(text, cv).then(() => onClose())
+    putCvInfo(text, cv).then(() => {
+      setCurrentData({ section: 'strEducation', localData: education })
+      onClose()
+    })
   }
 
   return (

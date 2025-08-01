@@ -15,15 +15,17 @@ const Skills = () => {
   const initialRef = useRef(null)
   const { skills } = cv.user.newData
   const [activeIndex, setActiveIndex] = useState(null)
+  const [boilerplateObj] = useState({
+    company: '...',
+    task: '...',
+    technologies: '...',
+    responsibilities: '...',
+  })
   const [localSkills, setLocalSkills] = useState([...skills])
 
   const { text, onClose, onOpen, onChange, isOpen } = useModalEdit(localSkills)
 
   useDetectChange() // tracks currentData vs cv.user.newData.skills
-
-  useEffect(() => {
-    setCurrentData({ section: 'strSkills', localData: skills })
-  }, [skills])
 
   const handleSubmit = () => {
     const current = text[activeIndex]
@@ -40,27 +42,24 @@ const Skills = () => {
   }
 
   const handleEditClick = (index) => {
-    setCurrentData({ section: 'strSkills', localData: localSkills })
     setActiveIndex(index)
     onOpen()
   }
 
   const handleAddClick = () => {
-    const newSkill = {
-      // id: Math.random().toString(36).substring(2, 6),
-      company: '...',
-      task: '...',
-      technologies: '...',
-      responsibilities: '...',
-    }
-    const updateSkills = [...localSkills, newSkill]
+    const updateSkills = [...localSkills, boilerplateObj]
 
     setLocalSkills(updateSkills)
-    setCurrentData({ section: 'strSkills', localData: updateSkills })
   }
 
   const handleDelClick = useCallback(
     async (skill, index) => {
+      const getCheckCurrentData = () => {
+        const newSkills = (prev) => prev.filter((_, i) => i !== index)
+        setLocalSkills(newSkills)
+        setCurrentData({ section: 'strSkills', localData: newSkills })
+      }
+
       if (skill._id) {
         const { _id, email } = cv.user
         try {
@@ -69,9 +68,7 @@ const Skills = () => {
           logError(error('Error deleting skill', error))
         }
       } else {
-        const newSkills = (prev) => prev.filter((_, i) => i !== index)
-        setLocalSkills(newSkills)
-        setCurrentData({ section: 'strSkills', localData: newSkills })
+        getCheckCurrentData()
       }
     },
     [cv.user, deleteSkillFromCv],

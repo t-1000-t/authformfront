@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Box, Button, Container, Input, Text, VStack } from '@chakra-ui/react'
 import Lottie from 'react-lottie-player'
-import axios from '../../../utils/axios'
-import { logError } from '../../../utils/services'
 import loadingb2f5ea from '../../../animations/loadingb2f5ea.json'
+import useAuthStore from '../../../store/useAuthStore'
 
 const Check = () => {
+  const { getDataViolitySearching } = useAuthStore()
   const [searchTerm, setSearchTerm] = useState('')
   const [lastSearchTerm, setLastSearchTerm] = useState('')
   const [searchResult, setSearchResult] = useState(null)
@@ -16,12 +16,10 @@ const Check = () => {
 
     setIsSearching(true)
     setLastSearchTerm(searchTerm)
-    axios
-      .get(`/api/search?query=${encodeURIComponent(searchTerm)}`)
+    getDataViolitySearching(searchTerm)
       .then((response) => {
-        setSearchResult(response.data)
+        setSearchResult(response)
       })
-      .catch((error) => logError(error))
       .finally(() => setIsSearching(false))
   }
 

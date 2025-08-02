@@ -12,7 +12,7 @@ import {
   pullDataCv,
   skillDelete,
 } from '../services/auth'
-import { removeTokenHeader } from '../utils/axios'
+import axios, { removeTokenHeader } from '../utils/axios'
 import { logError } from '../utils/services'
 
 const store = (set) => ({
@@ -21,6 +21,7 @@ const store = (set) => ({
   redirect: null,
   list: null,
   statusUpCv: null,
+
   cv: {
     user: {
       userId: '...',
@@ -158,6 +159,16 @@ const store = (set) => ({
       set({ cv: result })
     } catch (error) {
       logError(error)
+    }
+  },
+
+  getDataViolitySearching: async (search) => {
+    try {
+      const result = await axios.get(`/api/search?query=${encodeURIComponent(search)}`)
+      return result.data
+    } catch (e) {
+      logError(e)
+      return null
     }
   },
 

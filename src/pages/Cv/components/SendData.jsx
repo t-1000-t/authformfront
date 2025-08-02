@@ -4,7 +4,7 @@ import Lottie from 'react-lottie-player'
 import promiseBasedToast from '../../../services/promiseBasedToast'
 import useAuthStore from '../../../store/useAuthStore'
 import { logError } from '../../../utils/services'
-import done from '../../../animations/Done.json'
+import done from '../../../animations/done.json'
 
 const SendData = () => {
   const toast = useToast({ position: 'top-right' })

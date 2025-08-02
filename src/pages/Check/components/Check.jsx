@@ -1,18 +1,20 @@
 import React, { useState } from 'react'
 import { Box, Button, Container, Input, Text, VStack } from '@chakra-ui/react'
+import Lottie from 'react-lottie-player'
 import axios from '../../../utils/axios'
 import { logError } from '../../../utils/services'
+import loadingb2f5ea from '../../../animations/loadingb2f5ea.json'
 
 const Check = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [lastSearchTerm, setLastSearchTerm] = useState('')
   const [searchResult, setSearchResult] = useState(null)
-  const [isSearching, setIsSeraching] = useState(false)
+  const [isSearching, setIsSearching] = useState(false)
 
   const handleSearch = () => {
-    if (isSearching || searchTerm === lastSearchTerm) return
+    if (isSearching && searchTerm === lastSearchTerm) return
 
-    setIsSeraching(true)
+    setIsSearching(true)
     setLastSearchTerm(searchTerm)
     axios
       .get(`/api/search?query=${encodeURIComponent(searchTerm)}`)
@@ -20,7 +22,7 @@ const Check = () => {
         setSearchResult(response.data)
       })
       .catch((error) => logError(error))
-      .finally(() => setIsSeraching(false))
+      .finally(() => setIsSearching(false))
   }
 
   const handleKeyDown = (e) => {
@@ -43,8 +45,22 @@ const Check = () => {
           focusBorderColor="blue.500"
           ref={() => {}}
         />
-        <Button colorScheme="blue" onClick={handleSearch}>
-          Search
+        <Button
+          leftIcon={
+            isSearching && (
+              <Lottie
+                loop
+                animationData={loadingb2f5ea}
+                color="turquoise"
+                play={isSearching}
+                style={{ width: 50, height: 50 }}
+              />
+            )
+          }
+          colorScheme="teal"
+          onClick={handleSearch}
+        >
+          <Text color="teal.100">Search</Text>
         </Button>
       </VStack>
 

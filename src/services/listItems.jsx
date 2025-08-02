@@ -1,5 +1,6 @@
 import React from 'react'
 import { Text } from '@chakra-ui/react'
+import getFirstBigLetter from './getFirstBigLetter'
 
 const listItems = (obj) => {
   return Object.entries(obj).map(([name, value]) => {
@@ -44,8 +45,8 @@ const listItems = (obj) => {
 
     return (
       <Text key={name} mb="5px">
-        <Text as="span" textDecoration="underline">
-          {name}
+        <Text as="span">
+          <i>{getFirstBigLetter(name)}</i>
         </Text>
         :&nbsp;{displayValue}
       </Text>

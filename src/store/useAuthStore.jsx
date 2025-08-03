@@ -19,9 +19,8 @@ const store = (set) => ({
   accessToken: null,
   user: null,
   redirect: null,
-  list: null,
+  listUp: null,
   statusUpCv: null,
-
   cv: {
     user: {
       userId: '...',
@@ -172,6 +171,16 @@ const store = (set) => ({
     }
   },
 
+  getDataNotes: async (mail) => {
+    try {
+      const response = await axios.get('/api/auth/notes', { params: { email: mail } })
+      return response.data
+    } catch (e) {
+      logError(e)
+      return null
+    }
+  },
+
   cvPdfUp: async (data) => {
     try {
       await cvUpPdf(data)
@@ -184,7 +193,7 @@ const store = (set) => ({
   noteText: async (data) => {
     try {
       const list = await noteup(data)
-      set({ list: list.notes })
+      set({ listUp: list.notes })
       return list
     } catch (error) {
       logError(error)
@@ -216,7 +225,7 @@ const store = (set) => ({
   },
 
   setNoteList: (notes) => {
-    set({ list: notes })
+    set({ listUp: notes })
   },
 
   logout: async (id) => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import {
   Box,
   Button,
@@ -15,31 +15,33 @@ import {
 } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { MdCheckCircle } from 'react-icons/md'
-import axios from '../../../utils/axios'
 import useAuthStore from '../../../store/useAuthStore'
 import { logError } from '../../../utils/services'
 
 const MotionButton = motion(Button)
 
 const Notes = () => {
-  const { noteText, deleteNote, accessToken, user, list, setNoteList } = useAuthStore()
+  const { getDataNotes, noteText, deleteNote, accessToken, user, listUp, setNoteList } = useAuthStore()
+  const { email } = user.userData
   const [value, setValue] = useState('')
 
   // Define fetchNotes function using useCallback
   const getNotes = useCallback(async () => {
     try {
-      const response = await axios.get('/api/auth/notes', { params: { email: user?.userData?.email } })
-      setNoteList(response.data.notes)
+      const result = await getDataNotes(email).then()
+      setNoteList(result.notes)
+      return result
     } catch (error) {
       logError(error)
+      return null
     }
-  }, [user?.userData?.email, setNoteList])
+  }, [email, setNoteList])
 
   useEffect(() => {
-    if (user?.userData?.email) {
+    if (email) {
       getNotes().then()
     }
-  }, [user?.userData?.email, getNotes]) // Include fetchNotes in the dependency array
+  }, [email, getNotes]) // Include fetchNotes in the dependency array
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -107,7 +109,7 @@ const Notes = () => {
         </Box>
       </form>
       <List spacing={3}>
-        {list?.toReversed().map((item) => {
+        {listUp?.toReversed().map((item) => {
           return (
             <ListItem key={item._id}>
               <Flex>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Button, Container, Input, Text, VStack } from '@chakra-ui/react'
 import Lottie from 'react-lottie-player'
 import loadingb2f5ea from '../../../animations/loadingb2f5ea.json'
@@ -10,17 +10,19 @@ const Check = () => {
   const [lastSearchTerm, setLastSearchTerm] = useState('')
   const [searchResult, setSearchResult] = useState(null)
   const [isSearching, setIsSearching] = useState(false)
+  const [isRepeat, setIsRepeat] = useState(false)
 
   const handleSearch = () => {
-    if (isSearching && searchTerm === lastSearchTerm) return
-
+    if (isSearching || searchTerm.trim() === lastSearchTerm.trim()) return
     setIsSearching(true)
-    setLastSearchTerm(searchTerm)
-    getDataViolitySearching(searchTerm)
-      .then((response) => {
-        setSearchResult(response)
-      })
-      .finally(() => setIsSearching(false))
+    setLastSearchTerm(searchTerm.trim())
+    if (searchTerm.trim()) {
+      getDataViolitySearching(searchTerm)
+        .then((response) => {
+          setSearchResult(response)
+        })
+        .finally(() => setIsSearching(false))
+    }
   }
 
   const handleKeyDown = (e) => {
@@ -28,6 +30,10 @@ const Check = () => {
       handleSearch()
     }
   }
+
+  useEffect(() => {
+    setIsRepeat(searchTerm.trim() === lastSearchTerm.trim() || isSearching)
+  }, [searchTerm, lastSearchTerm])
 
   return (
     <Container maxW="container.md" py={8}>
@@ -58,7 +64,7 @@ const Check = () => {
           colorScheme="teal"
           onClick={handleSearch}
         >
-          <Text color="teal.100">Search</Text>
+          <Text color={isRepeat ? 'red.100' : 'teal.100'}>Search</Text>
         </Button>
       </VStack>
 

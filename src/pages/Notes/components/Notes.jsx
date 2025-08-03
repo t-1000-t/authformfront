@@ -26,7 +26,7 @@ const Notes = () => {
   const [value, setValue] = useState('')
 
   // Define fetchNotes function using useCallback
-  const fetchNotes = useCallback(async () => {
+  const getNotes = useCallback(async () => {
     try {
       const response = await axios.get('/api/auth/notes', { params: { email: user?.userData?.email } })
       setNoteList(response.data.notes)
@@ -37,11 +37,11 @@ const Notes = () => {
 
   useEffect(() => {
     if (user?.userData?.email) {
-      fetchNotes().then()
+      getNotes().then()
     }
-  }, [user?.userData?.email, fetchNotes]) // Include fetchNotes in the dependency array
+  }, [user?.userData?.email, getNotes]) // Include fetchNotes in the dependency array
 
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     if (!accessToken) {
@@ -69,10 +69,17 @@ const Notes = () => {
     try {
       const result = await deleteNote(id)
       if (result.status === 200 && result.statusText === 'OK') {
-        fetchNotes().then()
+        getNotes().then()
       }
     } catch (error) {
       logError(error)
+    }
+  }
+
+  const handleCombineKeysDownUp = (e) => {
+    if (e.key === 'Enter' && e.shiftKey) {
+      e.preventDefault()
+      handleSubmit(e).then()
     }
   }
 
@@ -85,6 +92,7 @@ const Notes = () => {
           </Heading>
           <FormControl>
             <Textarea
+              onKeyDown={handleCombineKeysDownUp}
               value={value}
               placeholder="Please, write some note"
               onChange={(e) => setValue(e.target.value)}

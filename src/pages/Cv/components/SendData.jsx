@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Flex, Text, useToast, VStack } from '@chakra-ui/react'
 import Lottie from 'react-lottie-player'
-import promiseBasedToast from '../../../services/promiseBasedToast'
+import { promiseBasedToast } from '../../../services/promiseBasedToast'
 import useAuthStore from '../../../store/useAuthStore'
 import { logError } from '../../../utils/services'
 import done from '../../../animations/done.json'

@@ -18,7 +18,7 @@ import { motion } from 'framer-motion'
 import { MdCheckCircle } from 'react-icons/md'
 import useAuthStore from '../../../store/useAuthStore'
 import { logError } from '../../../utils/services'
-import promiseBasedToast from '../../../services/promiseBasedToast'
+import { promiseBasedToast, promiseBasedToastDel } from '../../../services/promiseBasedToast'
 
 const MotionButton = motion(Button)
 
@@ -70,17 +70,21 @@ const Notes = () => {
     }
   }
 
-  async function handleDelete(id) {
+  function handleDelete(id) {
     if (!accessToken) {
       logError('Access token not available')
       return
     }
 
     try {
-      const result = await deleteNote(id)
-      if (result.status === 200 && result.statusText === 'OK') {
-        getNotes().then()
-      }
+      const promise = deleteNote(id).then((result) => {
+        if (result.status === 200 && result.statusText === 'OK') {
+          getNotes().then()
+        }
+      })
+      promiseBasedToastDel(toast, promise)
+
+      logError('Note deleted')
     } catch (error) {
       logError(error)
     }

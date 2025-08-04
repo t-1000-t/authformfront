@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { MdOutlineNoteAdd, MdEditNote, MdOutlineDeleteForever } from 'react-icons/md'
-import { Box, Button, Flex, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Text, useToast } from '@chakra-ui/react'
 import useDetectChange from '../../../utils/hooks/useDetectChange'
 import useAuthStore from '../../../store/useAuthStore'
 import useModalEdit from '../../../utils/hooks/useModalEdit'
@@ -9,9 +9,11 @@ import ModalEdit from './Modal/ModalEdit'
 import getObjectNoId from '../../../services/getObjectNoId'
 import { logError } from '../../../utils/services'
 import styleButton from '../../../services/customStyles'
+import { promiseBasedToastDel } from '../../../services/promiseBasedToast'
 
 const Skills = () => {
   const { putCvInfo, cv, deleteSkillFromCv, setCurrentData } = useAuthStore()
+  const toast = useToast({ position: 'top-right' })
   const initialRef = useRef(null)
   const { skills } = cv.user.newData
   const [activeIndex, setActiveIndex] = useState(null)
@@ -53,7 +55,7 @@ const Skills = () => {
   }
 
   const handleDelClick = useCallback(
-    async (skill, index) => {
+    (skill, index) => {
       const getCheckCurrentData = () => {
         const newSkills = (prev) => prev.filter((_, i) => i !== index)
         setLocalSkills(newSkills)
@@ -63,7 +65,15 @@ const Skills = () => {
       if (skill._id) {
         const { _id, email } = cv.user
         try {
-          await deleteSkillFromCv(_id, skill._id, email).then()
+          const promise = deleteSkillFromCv(_id, skill._id, email).then((result) => {
+            if (!result) {
+              return Promise.reject(new Error('Invalid response from server'))
+            }
+            return result
+          })
+          promiseBasedToastDel(toast, promise)
+
+          logError('Skill deleted')
         } catch (error) {
           logError(error('Error deleting skill', error))
         }

@@ -65,7 +65,7 @@ export const cvUpPdf = async (data) => {
 export const noteup = async (data) => {
   // data is object { text: '', email: 'goo@gmail.com' }
   const result = await instance.post('/api/auth/notes', data)
-  return result.data
+  return { data: result.data, status: result.status }
 }
 
 export const pullDataCv = async (str) => {

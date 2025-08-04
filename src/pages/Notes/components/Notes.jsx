@@ -12,16 +12,19 @@ import {
   Spacer,
   Stack,
   Textarea,
+  useToast,
 } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { MdCheckCircle } from 'react-icons/md'
 import useAuthStore from '../../../store/useAuthStore'
 import { logError } from '../../../utils/services'
+import promiseBasedToast from '../../../services/promiseBasedToast'
 
 const MotionButton = motion(Button)
 
 const Notes = () => {
   const { getDataNotes, noteText, deleteNote, accessToken, user, listUp, setNoteList } = useAuthStore()
+  const toast = useToast({ position: 'top-right' })
   const { email } = user.userData
   const [value, setValue] = useState('')
 
@@ -43,7 +46,7 @@ const Notes = () => {
     }
   }, [email, getNotes]) // Include fetchNotes in the dependency array
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
 
     if (!accessToken) {
@@ -52,10 +55,15 @@ const Notes = () => {
     }
 
     try {
-      await noteText({ text: value, email: user.userData.email }) // Assuming noteText sends the note to the server
-      logError('Note sent successfully')
+      const promise = noteText({ text: value, email: user.userData.email }).then((result) => {
+        if (!result || !result.data) {
+          return Promise.reject(new Error('Invalid response from server'))
+        }
+        return result
+      })
+      promiseBasedToast(toast, promise)
 
-      // Clear the textarea after successfully sending the note
+      logError('Note sent successfully')
       setValue('')
     } catch (error) {
       logError(error)
@@ -109,29 +117,30 @@ const Notes = () => {
         </Box>
       </form>
       <List spacing={3}>
-        {listUp?.toReversed().map((item) => {
-          return (
-            <ListItem key={item._id}>
-              <Flex>
-                <Box>
-                  <ListIcon as={MdCheckCircle} color="green.500" />
-                  {item.text}
-                </Box>
-                <Spacer />
-                <Button
-                  size="sm"
-                  height="28px"
-                  width="100px"
-                  border="1px"
-                  borderColor="red.500"
-                  onClick={() => handleDelete(item._id)}
-                >
-                  Delete
-                </Button>
-              </Flex>
-            </ListItem>
-          )
-        })}
+        {listUp &&
+          listUp?.toReversed().map((item) => {
+            return (
+              <ListItem key={item._id}>
+                <Flex>
+                  <Box>
+                    <ListIcon as={MdCheckCircle} color="green.500" />
+                    {item.text}
+                  </Box>
+                  <Spacer />
+                  <Button
+                    size="sm"
+                    height="28px"
+                    width="100px"
+                    border="1px"
+                    borderColor="red.500"
+                    onClick={() => handleDelete(item._id)}
+                  >
+                    Delete
+                  </Button>
+                </Flex>
+              </ListItem>
+            )
+          })}
       </List>
     </Container>
   )

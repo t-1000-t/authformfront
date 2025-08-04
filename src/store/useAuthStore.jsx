@@ -193,7 +193,7 @@ const store = (set) => ({
   noteText: async (data) => {
     try {
       const list = await noteup(data)
-      set({ listUp: list.notes })
+      set({ listUp: list.data.notes })
       return list
     } catch (error) {
       logError(error)

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Button, Container, Input, Text, VStack } from '@chakra-ui/react'
+import { Box, Button, Container, Input, Text, VStack, Tooltip } from '@chakra-ui/react'
 import Lottie from 'react-lottie-player'
 import loadingb2f5ea from '../../../animations/loadingb2f5ea.json'
 import useAuthStore from '../../../store/useAuthStore'
 
-const Check = () => {
+const Search = () => {
   const { getDataViolitySearching } = useAuthStore()
   const [searchTerm, setSearchTerm] = useState('')
   const [lastSearchTerm, setLastSearchTerm] = useState('')
@@ -49,23 +49,34 @@ const Check = () => {
           focusBorderColor="blue.500"
           ref={() => {}}
         />
-        <Button
-          leftIcon={
-            isSearching && (
-              <Lottie
-                loop
-                animationData={loadingb2f5ea}
-                color="turquoise"
-                play={isSearching}
-                style={{ width: 50, height: 50 }}
-              />
-            )
+        <Tooltip
+          isDisabled={!isRepeat || isSearching}
+          hasArrow
+          label={
+            searchTerm.trim() ? 'You have got a list for this word!' : 'You can type any words in the field, please'
           }
-          colorScheme="teal"
-          onClick={handleSearch}
+          bg="yellow.600"
+          placement="auto-start"
         >
-          <Text color={isRepeat ? 'red.100' : 'teal.100'}>Search</Text>
-        </Button>
+          <Button
+            leftIcon={
+              isSearching && (
+                <Lottie
+                  loop
+                  animationData={loadingb2f5ea}
+                  color="turquoise"
+                  play={isSearching}
+                  style={{ width: 50, height: 50 }}
+                />
+              )
+            }
+            isDisabled={isRepeat && !isSearching}
+            colorScheme="teal"
+            onClick={handleSearch}
+          >
+            <Text color={isRepeat ? 'red.100' : 'teal.100'}>Search</Text>
+          </Button>
+        </Tooltip>
       </VStack>
 
       {/* Search Results */}
@@ -88,4 +99,4 @@ const Check = () => {
   )
 }
 
-export default Check
+export default Search

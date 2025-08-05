@@ -1,16 +1,16 @@
 import React from 'react'
 import { Box } from '@chakra-ui/react'
 import Page from '../../components/Page'
-import Check from './components/Check'
+import Search from './components/Search'
 
-const CheckDefault = () => {
+const SearchDefault = () => {
   return (
     <Page>
       <Box bg="white">
-        <Check />
+        <Search />
       </Box>
     </Page>
   )
 }
 
-export default CheckDefault
+export default SearchDefault

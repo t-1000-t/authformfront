@@ -20,7 +20,7 @@ const SendData = () => {
 
     try {
       const promise = pushCvText({ newData: cv.user.newData, email: user?.userData.email }).then((result) => {
-        // Check if result is valid
+        // Search if result is valid
         if (!result || !result.data) {
           return Promise.reject(new Error('Invalid response from server'))
         }

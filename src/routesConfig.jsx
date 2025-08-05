@@ -26,7 +26,7 @@ const routesConfig = [
     layout: GuestLayout,
     path: '/check',
     guard: GuestGuard,
-    component: lazy(() => import('./pages/Check')),
+    component: lazy(() => import('./pages/Search')),
     id: '0x2',
   },
   {

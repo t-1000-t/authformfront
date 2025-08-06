@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Stack, Icon, Text, useBreakpointValue } from '@chakra-ui/react'
+import { Stack, Icon, Text, useBreakpointValue } from '@chakra-ui/react'
 import {
   FaHome,
   FaStickyNote,
@@ -12,6 +12,7 @@ import {
 } from 'react-icons/fa'
 import { TbFileCv } from 'react-icons/tb'
 import { GrGamepad } from 'react-icons/gr'
+import Container from './Container'
 import useAuthStore from '../store/useAuthStore'
 import TextLink from './TextLink' // Import your reusable TextLink components
 
@@ -38,7 +39,7 @@ const GuestFooter = () => {
   }
 
   return (
-    <Container as={Stack} py={4} bg="teal.500" maxW="1440px" rounded={{ md: '2xl' }}>
+    <Container as={Stack} py={4} bg="teal.500" rounded={{ md: '2xl' }} bottom="0" width="100%">
       <Stack direction="row" justify="center" align="center" spacing={6} color="black">
         {links.map(({ to, label, icon }) => (
           <TextLink key={to} to={to}>

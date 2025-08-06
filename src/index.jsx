@@ -14,6 +14,14 @@ window.process = process
 const root = createRoot(document.getElementById('root'))
 
 const theme = extendTheme({
+  styles: {
+    global: {
+      'html, body': {
+        minHeight: '100vh',
+        overflowX: 'hidden',
+      },
+    },
+  },
   fonts: {
     heading: "'Roboto', sans-serif",
     body: "'Montserrat', sans-serif",

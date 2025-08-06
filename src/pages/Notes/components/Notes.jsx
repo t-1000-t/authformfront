@@ -2,7 +2,6 @@ import React, { useState, useCallback, useEffect } from 'react'
 import {
   Box,
   Button,
-  Container,
   Flex,
   FormControl,
   Heading,
@@ -17,6 +16,7 @@ import {
 import { motion } from 'framer-motion'
 import { MdCheckCircle } from 'react-icons/md'
 import useAuthStore from '../../../store/useAuthStore'
+import Container from '../../../layouts/Container'
 import { logError } from '../../../utils/services'
 import { promiseBasedToast, promiseBasedToastDel } from '../../../services/promiseBasedToast'
 
@@ -98,7 +98,7 @@ const Notes = () => {
   }
 
   return (
-    <Container maxW="6xl" py={24} px={{ base: 6, md: 12 }}>
+    <Container minH="calc(100vh - 200px)" maxW="6xl" py={14} px={{ base: 6, md: 12 }}>
       <form onSubmit={handleSubmit}>
         <Box position="relative" maxW="850px" mx="auto" mb={{ base: 4, md: 16 }}>
           <Heading fontSize={{ base: '3xl', md: '4xl', lg: '6xl' }} textAlign="center" color="#204E78">

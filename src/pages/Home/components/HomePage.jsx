@@ -17,11 +17,11 @@ const HomePage = () => {
 
   return (
     <Container
-      position="relative"
       mb={{ base: 36, md: 0 }}
-      minH="calc(100vh - 160px)"
+      minH="calc(100vh - 200px)" // Adjust based on your header/footer height
       display="flex"
       alignItems="center"
+      justifyContent="center"
     >
       <Stack direction={{ base: 'column-reverse', md: 'row' }} spacing={{ base: 8, md: 16 }} w="full" align="center">
         <Flex flex={1} p={{ base: 4, md: 8 }} pl={0} direction="column" justify="center" mt={16}>
@@ -51,6 +51,7 @@ const HomePage = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             px={8}
+            transition={{ type: 'spring', stiffness: 400, damping: 10 }}
           >
             Make Now
           </MotionButton>
@@ -63,7 +64,7 @@ const HomePage = () => {
             fullbackSrc="/images/typing_on_board_600x525.jpg"
             width="100%"
             height="100%"
-            maxH="500px"
+            maxH="450px"
             borderRadius="lg"
             loading="eager" // Prioritize loading
           />

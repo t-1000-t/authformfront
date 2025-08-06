@@ -93,7 +93,7 @@ const Notes = () => {
   const handleCombineKeysDownUp = (e) => {
     if (e.key === 'Enter' && e.shiftKey) {
       e.preventDefault()
-      handleSubmit(e).then()
+      handleSubmit(e)
     }
   }
 
@@ -120,32 +120,34 @@ const Notes = () => {
           </Stack>
         </Box>
       </form>
-      <List spacing={3}>
-        {listUp &&
-          listUp?.toReversed().map((item) => {
-            return (
-              <ListItem key={item._id}>
-                <Flex>
-                  <Box>
-                    <ListIcon as={MdCheckCircle} color="green.500" />
-                    {item.text}
-                  </Box>
-                  <Spacer />
-                  <Button
-                    size="sm"
-                    height="28px"
-                    width="100px"
-                    border="1px"
-                    borderColor="red.500"
-                    onClick={() => handleDelete(item._id)}
-                  >
-                    Delete
-                  </Button>
-                </Flex>
-              </ListItem>
-            )
-          })}
-      </List>
+      <Box maxH="130px" overflowY="auto" pr="20px">
+        <List spacing={3}>
+          {listUp &&
+            listUp?.toReversed().map((item) => {
+              return (
+                <ListItem key={item._id}>
+                  <Flex>
+                    <Box>
+                      <ListIcon as={MdCheckCircle} color="green.500" />
+                      {item.text}
+                    </Box>
+                    <Spacer />
+                    <Button
+                      size="sm"
+                      height="28px"
+                      width="100px"
+                      border="1px"
+                      borderColor="red.500"
+                      onClick={() => handleDelete(item._id)}
+                    >
+                      Delete
+                    </Button>
+                  </Flex>
+                </ListItem>
+              )
+            })}
+        </List>
+      </Box>
     </Container>
   )
 }

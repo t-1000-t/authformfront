@@ -34,7 +34,7 @@ const GamePageP5 = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   const setup = (p, canvasParentRef) => {
-    p.createCanvas(920, 600, p.WEBGL).parent(canvasParentRef)
+    p.createCanvas(690, 450, p.WEBGL).parent(canvasParentRef)
     p.cursor(p.CROSS)
     fontRef.current = p.loadFont(robotoFont, () => {
       wallTexture.current = p.loadImage(brickImg, () => {

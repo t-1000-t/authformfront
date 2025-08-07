@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import Phaser from 'phaser'
-import { Box } from '@chakra-ui/react'
+import { Box, Container } from '@chakra-ui/react'
 
 class MyScene extends Phaser.Scene {
   preload() {
@@ -22,7 +22,7 @@ class MyScene extends Phaser.Scene {
     })
 
     // add the player sprite to the scene
-    this.player = this.add.sprite(400, 300, 'robot')
+    this.player = this.add.sprite(200, 150, 'robot')
     this.player.setScale(1.5) // double the size
     this.player.play('attack')
 
@@ -83,8 +83,8 @@ const GamePhaser = () => {
 
     const config = {
       type: Phaser.AUTO,
-      width: 800,
-      height: 600,
+      width: 600,
+      height: 450,
       parent: gameRef.current,
       scene: MyScene,
     }
@@ -96,7 +96,11 @@ const GamePhaser = () => {
     }
   }, [])
 
-  return <Box ref={gameRef} />
+  return (
+    <Container>
+      <Box ref={gameRef} />
+    </Container>
+  )
 }
 
 export default GamePhaser

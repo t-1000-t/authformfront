@@ -17,10 +17,11 @@ const CallMe = () => {
     answerCall,
     endCall,
     listUsers,
+    name,
   } = useCall()
 
   return (
-    <Box bg="#282c34" color="#fff" minH="100vh" py={10}>
+    <Box bg="#282c34" color="#fff" minH="calc=100vh-200px" py={10}>
       <Heading textAlign="center" mb={10}>
         Zoomish
       </Heading>
@@ -46,6 +47,7 @@ const CallMe = () => {
             callEnded={callEnded}
             answerCall={answerCall}
             endCall={endCall}
+            name={name}
           />
           <Spacer />
           <ListUsers

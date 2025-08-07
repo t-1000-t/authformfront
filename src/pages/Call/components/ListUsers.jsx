@@ -34,13 +34,13 @@ const ListUsers = React.memo(({ list, callAccepted, callEnded, callUser, endCall
     <VStack align="stretch">
       {usersList && usersList.length > 0 ? (
         usersList.map((user) => (
-          <Box key={user.id} p={4} borderWidth={1} borderRadius="lg" bg="white" color="black">
+          <Box key={user.id} p={1} borderWidth={1} borderRadius="lg" bg="white" color="black">
             <Text fontWeight="bold">
               {user.username} {user.surname}
             </Text>
             <Text>{user.email}</Text>
             <Text>{user.idSocketIO}</Text>
-            <VStack spacing={4} mb={8}>
+            <VStack spacing={4} mb={4}>
               {callAccepted && !callEnded && user.idSocketIO === socketId ? (
                 <Button colorScheme="red" leftIcon={<CloseIcon />} onClick={endCall}>
                   End Call

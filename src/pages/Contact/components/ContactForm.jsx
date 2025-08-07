@@ -88,7 +88,7 @@ const ContactForm = () => {
               name="message"
               placeholder="Message"
               mt={1}
-              rows={6}
+              rows={2}
               shadow="sm"
               focusBorderColor="brand.400"
               fontSize={{ sm: 'sm' }}

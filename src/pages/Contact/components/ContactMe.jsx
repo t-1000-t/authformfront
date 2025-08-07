@@ -22,9 +22,6 @@ const ContactMe = () => {
           Contact Me
         </Text>
       </Heading>
-      <Text textAlign="center" color="gray.500" fontSize="xl" p={2} fontWeight="semibold">
-        If you have any queries feel free to contact me.
-      </Text>
     </Container>
   )
 }

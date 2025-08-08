@@ -10,16 +10,18 @@ import {
   FaGamepad,
   FaDatabase,
 } from 'react-icons/fa'
+import { motion } from 'framer-motion'
 import { TbFileCv } from 'react-icons/tb'
 import { GrGamepad } from 'react-icons/gr'
 import Container from './Container'
 import useAuthStore from '../store/useAuthStore'
-import TextLink from './TextLink'
-import useElasticScroll from '../utils/hooks/useElasticScrool' // Import your reusable TextLink components
+import TextLink from './TextLink' // Import your reusable TextLink components
+
+const MotionStack = motion(Stack)
+const MotionBox = motion(Box)
 
 const GuestFooter = () => {
   const accessToken = useAuthStore((state) => state.accessToken)
-  const footerRef = useElasticScroll()
 
   // Determine whether to show text or just icons
   const showText = useBreakpointValue({ base: false, md: true })
@@ -44,34 +46,58 @@ const GuestFooter = () => {
   }
 
   return (
-    <Container as={Stack} py={4} bg="teal.500" rounded={{ md: '2xl' }} bottom="0" width="100%">
-      <Box
-        ref={footerRef}
-        overflowX="auto"
-        whiteSpace="nowrap"
-        sx={{
-          scrollBehavior: 'smooth',
-          scrollbarWidth: 'thin',
-          '&::-webkit-scrollbar': {
-            width: '6px',
-          },
-          '&::-webkit-scrollbar-thumb': {
-            backgroundColor: '#888',
-            borderRadius: '10px',
+    <Container
+      as={Stack}
+      py={4}
+      bg="teal.500"
+      rounded={{ md: '2xl' }}
+      bottom="0"
+      width="100%"
+      overflowX="auto"
+      sx={{
+        '&::-webkit-scrollbar': {
+          display: 'none',
+        },
+        scrollbarWidth: 'none',
+      }}
+    >
+      <MotionStack
+        direction="row"
+        justify="center"
+        align="center"
+        spacing={6}
+        color="black"
+        px={4}
+        initial="hidden"
+        animate="visible"
+        variants={{
+          visible: {
+            transition: {
+              staggerChildren: 0.07,
+            },
           },
         }}
       >
-        <Stack direction="row" justify="center" align="center" spacing={6} color="black">
-          {links.map(({ to, label, icon }) => (
-            <TextLink key={to} to={to}>
-              <Stack direction="column" align="center">
+        {links.map(({ to, label, icon }) => (
+          <MotionBox
+            key={to}
+            whileHover={{ scale: 1.25 }}
+            whileTap={{ scale: 0.9 }}
+            transition={{
+              type: 'spring',
+              stiffness: 300,
+              damping: 20,
+            }}
+          >
+            <TextLink to={to}>
+              <Stack direction="column" align="center" spacing={1}>
                 <Icon as={icon} boxSize={iconSize} />
                 {showText && <Text fontSize="sm">{label}</Text>}
               </Stack>
             </TextLink>
-          ))}
-        </Stack>
-      </Box>
+          </MotionBox>
+        ))}
+      </MotionStack>
     </Container>
   )
 }

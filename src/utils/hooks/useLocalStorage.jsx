@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { logError } from '../services'
 
 const useLocalStorage = (key, initialValue) => {
   // Get from local storage then parse stored json or return initialValue
@@ -7,7 +8,7 @@ const useLocalStorage = (key, initialValue) => {
       const item = localStorage.getItem(key)
       return item ? JSON.parse(item) : initialValue
     } catch (error) {
-      console.error(error)
+      logError(error)
       return initialValue
     }
   })
@@ -21,7 +22,7 @@ const useLocalStorage = (key, initialValue) => {
       setStoredValue(value)
       localStorage.setItem(key, JSON.stringify(value))
     } catch (error) {
-      console.error(error)
+      logError(error)
     }
   }
 

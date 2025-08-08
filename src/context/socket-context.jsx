@@ -11,7 +11,7 @@ const SocketProvider = ({ children }) => {
   const socket = useRef({})
   const [isConnecting, setIsConnecting] = useState(true)
   const [socketId, setSocketId] = useState('')
-  const user = useAuthStore((state) => state.user)
+  const { user } = useAuthStore()
 
   const connectSocket = useCallback(() => {
     setIsConnecting(true)

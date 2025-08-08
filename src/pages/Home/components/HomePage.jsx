@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import Container from '../../../layouts/Container'
 import useAuthStore from '../../../store/useAuthStore'
 import { notifyUser } from '../../../utils/services'
+import HighlightBox from '../../../utils/Styles/HighlightBox'
 
 const MotionButton = motion(Button)
 
@@ -29,35 +30,42 @@ const HomePage = () => {
             <Heading
               as="h1"
               fontSize={{ base: '3xl', sm: '4x1', md: '5xl', lg: '6xl' }}
-              color="teal.800"
+              color="brand.800"
               lineHeight="1.2"
               mb={4}
             >
               Testing the AUTH form
             </Heading>
-            <Text fontSize={{ base: 'md', lg: 'xl' }} color="teal.600">
+            <Text fontSize={{ base: 'md', lg: 'xl' }} color="brand.700">
               Just fill out the request form, please
             </Text>
           </Box>
-          <MotionButton
-            as={Link}
-            to="/signup"
-            colorScheme="teal"
-            size={isMobile ? 'md' : 'lg'}
-            width={{ base: 'full', sm: 'auto' }}
-            maxWidth="380px"
-            height={{ base: '48px', md: '64px' }}
-            fontSize={{ base: 'xl', md: '2x1' }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            px={8}
-            transition={{ type: 'spring', stiffness: 400, damping: 10 }}
-          >
-            Make Now
-          </MotionButton>
+          <HighlightBox as={MotionButton}>
+            <MotionButton
+              as={Link}
+              to="/signup"
+              bg="brand.500"
+              color="white"
+              _hover={{ bg: 'brand.600' }}
+              _active={{ bg: 'brand.700' }}
+              borderRadius="lg"
+              size={isMobile ? 'md' : 'lg'}
+              width={{ base: 'full' }}
+              height={{ base: '48px', md: '64px' }}
+              fontSize={{ base: 'xl', md: '2xl' }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+            >
+              Make Now
+            </MotionButton>
+          </HighlightBox>
         </Flex>
         <Flex flex={1} justify="center" align="center" position="relative" overflow="hidden">
           <Image
+            bg="accent.500"
+            p={0.5}
+            borderRadius="lg"
             alt="Login image"
             objectFit="cover"
             src="/images/typing_on_board_1919x1679.jpg"
@@ -65,7 +73,6 @@ const HomePage = () => {
             width="100%"
             height="100%"
             maxH="450px"
-            borderRadius="lg"
             loading="eager" // Prioritize loading
           />
         </Flex>

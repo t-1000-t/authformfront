@@ -26,6 +26,23 @@ const theme = extendTheme({
     heading: "'Roboto', sans-serif",
     body: "'Montserrat', sans-serif",
   },
+  colors: {
+    brand: {
+      50: '#e0f7f7',
+      100: '#b3e6e6',
+      200: '#80d3d3',
+      300: '#4dbfbe',
+      400: '#26aeae',
+      500: '#369999', // Primary
+      600: '#2d7f7f',
+      700: '#266666',
+      800: '#1e4c4c',
+      900: '#143333',
+    },
+    accent: {
+      500: '#FF6B61', // Complementary for contrast
+    },
+  },
 })
 
 root.render(

@@ -1,3 +1,4 @@
+import React from 'react'
 import { IconButton, Tooltip } from '@chakra-ui/react'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 import useSwapTheme from './hooks/useSwapTheme'

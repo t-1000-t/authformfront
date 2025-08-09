@@ -1,6 +1,6 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+import { ChakraProvider, ColorModeScript, extendTheme } from '@chakra-ui/react'
 import './index.css'
 import process from 'process'
 
@@ -11,14 +11,22 @@ import { SocketProvider } from './context/socket-context'
 // Polyfill process object
 window.process = process
 
+const config = {
+  initialColorMode: 'system', // 'light' | 'dark' | 'system'
+  useSystemColorMode: true,
+}
+
 const root = createRoot(document.getElementById('root'))
 
 const theme = extendTheme({
+  config,
   styles: {
     global: {
       'html, body': {
         minHeight: '100vh',
         overflowX: 'hidden',
+        bg: 'bg',
+        color: 'fg',
       },
     },
   },
@@ -43,14 +51,25 @@ const theme = extendTheme({
       500: '#FF6B61', // Complementary for contrast
     },
   },
+  // Use semantic tokens so bg/text swap automatically in dark mode
+  semanticTokens: {
+    colors: {
+      bg: { default: 'white', _dark: 'gray.900' },
+      fg: { default: 'gray.800', _dark: 'gray.500' },
+    },
+  },
 })
 
 root.render(
-  <ChakraProvider theme={theme}>
-    <BrowserRouter>
-      <SocketProvider>
-        <App />
-      </SocketProvider>
-    </BrowserRouter>
-  </ChakraProvider>,
+  <>
+    {/* Prevents color flash on first paint */}
+    <ColorModeScript initialColorMode={config.initialColorMode} />
+    <ChakraProvider theme={theme}>
+      <BrowserRouter>
+        <SocketProvider>
+          <App />
+        </SocketProvider>
+      </BrowserRouter>
+    </ChakraProvider>
+  </>,
 )

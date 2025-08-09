@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import useAuthStore from '../store/useAuthStore'
 import Container from './Container'
+import ThemeToggleButton from '../utils/ThemeToggleButton'
 // import useLocalStorage from '../utils/hooks/useLocalStorage'
 
 const MotionButton = motion(Button)
@@ -62,7 +63,6 @@ const GuestNavLogout = ({ name, idUserName }) => {
         px={4}
         borderBottom="1px solid"
         borderColor="gray.200"
-        bg="white"
         borderRadius="lg"
         boxShadow="sm"
         flexWrap="wrap"
@@ -73,6 +73,7 @@ const GuestNavLogout = ({ name, idUserName }) => {
             <Image src="/images/motherland.svg" h={{ base: 10, md: 16 }} alt="Logo" draggable={false} />
           </Flex>
         </Link>
+        <ThemeToggleButton />
         <Stack
           direction={{ base: 'column', md: 'row' }}
           spacing={{ base: 3, md: 4 }}
@@ -124,7 +125,7 @@ const GuestNavLogout = ({ name, idUserName }) => {
                   name={name}
                   src={`https://i.pravatar.cc/150?u=${idUserName}`}
                   border="2px solid"
-                  borderColor="brand.500"
+                  // borderColor="brand.500"
                 />
                 <Text fontWeight="semibold" fontSize={{ base: 'md', md: 'lg' }} whiteSpace="nowrap">
                   {name},

@@ -18,12 +18,7 @@ const GuestLayout = (props) => {
   }, [accessToken])
 
   return (
-    <Box
-      minHeight="100vh"
-      display="flex"
-      flexDirection="column"
-      // overflow="hidden"
-    >
+    <Box minHeight="100vh" display="flex" flexDirection="column">
       <Box flexBasis="auto" flexGrow="1" flexShrink="1">
         {!isAccessToken && !user?.idAvatar ? (
           <GuestNav />

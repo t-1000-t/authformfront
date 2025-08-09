@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Button, Flex, Stack, Image, useBreakpointValue } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import Container from './Container'
+import ThemeToggleButton from '../utils/ThemeToggleButton'
 
 const MotionButton = motion(Button)
 
@@ -30,7 +31,7 @@ const GuestNav = () => {
             <Image src="/images/motherland.svg" h={{ base: 10, md: 16 }} alt="Logo" draggable={false} />
           </Flex>
         </Link>
-
+        <ThemeToggleButton />
         {/* Buttons */}
         <Stack direction="row" spacing={4} align="center" mt={{ base: 4, md: 0 }} flexWrap="wrap">
           <MotionButton

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Flex, Text, useToast, VStack } from '@chakra-ui/react'
+import { Button, Flex, Text, Tooltip, useToast, VStack } from '@chakra-ui/react'
 import Lottie from 'react-lottie-player'
 import { promiseBasedToast } from '../../../services/promiseBasedToast'
 import useAuthStore from '../../../store/useAuthStore'
@@ -38,16 +38,18 @@ const SendData = () => {
     <VStack spacing={3} align="stretch">
       <Flex justify="space-between">
         <Text>Save CV</Text>
-        <Button
-          colorScheme="blue"
-          onClick={handlerSendData}
-          isDisabled={!hasChanged}
-          rightIcon={
-            hasChanged && <Lottie loop animationData={done} play={hasChanged} style={{ width: 50, height: 50 }} />
-          }
-        >
-          Save
-        </Button>
+        <Tooltip label={!hasChanged && 'Any text must be changed before saving!'} placement="left-start">
+          <Button
+            colorScheme="blue"
+            onClick={handlerSendData}
+            isDisabled={!hasChanged}
+            rightIcon={
+              hasChanged && <Lottie loop animationData={done} play={hasChanged} style={{ width: 50, height: 50 }} />
+            }
+          >
+            Save
+          </Button>
+        </Tooltip>
       </Flex>
     </VStack>
   )

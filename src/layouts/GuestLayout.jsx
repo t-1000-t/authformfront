@@ -6,6 +6,8 @@ import GuestFooter from './GuestFooter'
 import useAuthStore from '../store/useAuthStore'
 import GuestNavLogout from './GuestNavLogout'
 
+const FOOTER_HEIGHT_PX = 80
+
 const GuestLayout = (props) => {
   const accessToken = useAuthStore((state) => state.accessToken)
   const user = useAuthStore((state) => state?.user?.userData)
@@ -19,16 +21,18 @@ const GuestLayout = (props) => {
 
   return (
     <Box minHeight="100vh" display="flex" flexDirection="column">
-      <Box flexBasis="auto" flexGrow="1" flexShrink="1">
+      <Box as="header">
         {!isAccessToken && !user?.idAvatar ? (
           <GuestNav />
         ) : (
           <GuestNavLogout name={user?.username} idUserName={user?.idAvatar} />
         )}
       </Box>
-      <main>{children}</main>
-      <Box flexShrink={0}>
-        <GuestFooter />
+      <Box as="main" flexShrink="1 1 auto" overflow="auto" pb={`${FOOTER_HEIGHT_PX}px`}>
+        {children}
+      </Box>
+      <Box>
+        <GuestFooter footerHeight={FOOTER_HEIGHT_PX} />
       </Box>
     </Box>
   )

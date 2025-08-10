@@ -20,7 +20,7 @@ import TextLink from './TextLink' // Import your reusable TextLink components
 const MotionStack = motion(Stack)
 const MotionBox = motion(Box)
 
-const GuestFooter = () => {
+const GuestFooter = ({ footerHeight }) => {
   const accessToken = useAuthStore((state) => state.accessToken)
 
   // Determine whether to show text or just icons
@@ -54,6 +54,11 @@ const GuestFooter = () => {
       bottom="0"
       width="100%"
       overflowX="auto"
+      position="fixed"
+      left="0"
+      right="0"
+      zIndex="banner"
+      height={`${footerHeight}px`}
       sx={{
         '&::-webkit-scrollbar': {
           display: 'none',

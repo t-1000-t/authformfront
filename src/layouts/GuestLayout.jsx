@@ -21,14 +21,14 @@ const GuestLayout = (props) => {
 
   return (
     <Box minHeight="100vh" display="flex" flexDirection="column">
-      <Box as="header">
+      <Box as="header" flexShrink={0}>
         {!isAccessToken && !user?.idAvatar ? (
           <GuestNav />
         ) : (
           <GuestNavLogout name={user?.username} idUserName={user?.idAvatar} />
         )}
       </Box>
-      <Box as="main" flexShrink="1 1 auto" overflow="auto" pb={`${FOOTER_HEIGHT_PX}px`}>
+      <Box as="main" flex="1 1 auto" minH={0} pb="80px">
         {children}
       </Box>
       <Box>

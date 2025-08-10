@@ -22,71 +22,61 @@ import { promiseBasedToast, promiseBasedToastDel } from '../../../services/promi
 
 const MotionButton = motion(Button)
 
+// Keep this in sync with the value used by your GuestLayout/GuestFooter
+const FOOTER_HEIGHT_PX = 80
+
 const Notes = () => {
   const { getDataNotes, noteText, deleteNote, accessToken, user, listUp, setNoteList } = useAuthStore()
   const toast = useToast({ position: 'top-right' })
-  const { email } = user.userData
+  const email = user?.userData?.email
   const [value, setValue] = useState('')
 
-  // Define fetchNotes function using useCallback
   const getNotes = useCallback(async () => {
     try {
-      const result = await getDataNotes(email).then()
+      const result = await getDataNotes(email)
       setNoteList(result.notes)
       return result
     } catch (error) {
       logError(error)
       return null
     }
-  }, [email, setNoteList])
+  }, [email, getDataNotes, setNoteList])
 
   useEffect(() => {
-    if (email) {
-      getNotes().then()
-    }
-  }, [email, getNotes]) // Include fetchNotes in the dependency array
+    if (email) getNotes()
+  }, [email, getNotes])
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
-    if (!accessToken) {
-      logError('Access token not available')
-      return
-    }
+    if (!accessToken) return logError('Access token not available')
 
     try {
-      const promise = noteText({ text: value, email: user.userData.email }).then((result) => {
-        if (!result || !result.data) {
-          return Promise.reject(new Error('Invalid response from server'))
-        }
+      const promise = noteText({ text: value, email }).then((result) => {
+        if (!result || !result.data) return Promise.reject(new Error('Invalid response from server'))
         return result
       })
       promiseBasedToast(toast, promise)
-
-      logError('Note sent successfully')
       setValue('')
+      return null
     } catch (error) {
       logError(error)
+      return null
     }
   }
 
-  function handleDelete(id) {
-    if (!accessToken) {
-      logError('Access token not available')
-      return
-    }
+  const handleDelete = (id) => {
+    if (!accessToken) return logError('Access token not available')
 
     try {
       const promise = deleteNote(id).then((result) => {
-        if (result.status === 200 && result.statusText === 'OK') {
-          getNotes().then()
-        }
+        if (result.status === 200 && result.statusText === 'OK') getNotes()
+        return result
       })
       promiseBasedToastDel(toast, promise)
-
-      logError('Note deleted')
+      return null
     } catch (error) {
       logError(error)
+      return null
     }
   }
 
@@ -98,7 +88,16 @@ const Notes = () => {
   }
 
   return (
-    <Container minH="calc(100vh - 200px)" maxW="6xl" py={14} px={{ base: 6, md: 12 }}>
+    <Container
+      // Make this page a flex column that can shrink, so the list area can become a scroller
+      display="flex"
+      flexDirection="column"
+      h="100%"
+      minH={0} // <— important in flex layouts
+      maxW="6xl"
+      py={14}
+      px={{ base: 6, md: 12 }}
+    >
       <form onSubmit={handleSubmit}>
         <Box position="relative" maxW="850px" mx="auto" mb={{ base: 4, md: 16 }}>
           <Heading fontSize={{ base: '3xl', md: '4xl', lg: '6xl' }} textAlign="center" color="#204E78">
@@ -120,32 +119,39 @@ const Notes = () => {
           </Stack>
         </Box>
       </form>
-      <Box maxH="130px" overflowY="auto" pr="20px">
+
+      {/* This Box is the ONLY scroller on the page for the notes list */}
+      <Box
+        mt={4}
+        flex="1 1 auto"
+        minH={0} // <— lets it shrink and overflow in flex
+        overflowY="auto"
+        pr="20px"
+        pb={`${FOOTER_HEIGHT_PX}px`} // <— prevents last items hiding behind the fixed footer
+        sx={{ overscrollBehavior: 'contain' }}
+      >
         <List spacing={3}>
-          {listUp &&
-            listUp?.toReversed().map((item) => {
-              return (
-                <ListItem key={item._id}>
-                  <Flex>
-                    <Box>
-                      <ListIcon as={MdCheckCircle} color="green.500" />
-                      {item.text}
-                    </Box>
-                    <Spacer />
-                    <Button
-                      size="sm"
-                      height="28px"
-                      width="100px"
-                      border="1px"
-                      borderColor="red.500"
-                      onClick={() => handleDelete(item._id)}
-                    >
-                      Delete
-                    </Button>
-                  </Flex>
-                </ListItem>
-              )
-            })}
+          {listUp?.toReversed().map((item) => (
+            <ListItem key={item._id}>
+              <Flex>
+                <Box>
+                  <ListIcon as={MdCheckCircle} color="green.500" />
+                  {item.text}
+                </Box>
+                <Spacer />
+                <Button
+                  size="sm"
+                  height="28px"
+                  width="100px"
+                  border="1px"
+                  borderColor="red.500"
+                  onClick={() => handleDelete(item._id)}
+                >
+                  Delete
+                </Button>
+              </Flex>
+            </ListItem>
+          ))}
         </List>
       </Box>
     </Container>

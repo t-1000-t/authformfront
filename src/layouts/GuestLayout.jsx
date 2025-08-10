@@ -25,8 +25,8 @@ const GuestLayout = (props) => {
         ) : (
           <GuestNavLogout name={user?.username} idUserName={user?.idAvatar} />
         )}
-        <main>{children}</main>
       </Box>
+      <main>{children}</main>
       <Box flexShrink={0}>
         <GuestFooter />
       </Box>

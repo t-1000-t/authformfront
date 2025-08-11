@@ -23,21 +23,6 @@ const RoutesRender = () => {
             </Suspense>,
           )}
           exact={route.exact}
-          // element={
-          //   <Suspense fallback={<LoadingScreen />}>
-          //     {route.guard && ( // Apply guard if present
-          //       <route.guard>
-          //         {route.layout ? ( // Apply layout if present
-          //           <route.layout>
-          //             <route.component />
-          //           </route.layout>
-          //         ) : (
-          //           <route.component />
-          //         )}
-          //       </route.guard>
-          //     )}
-          //   </Suspense>
-          // }
         />
       ))}
     </Routes>

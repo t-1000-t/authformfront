@@ -16,7 +16,8 @@ const MotionButton = motion(Button)
 const FOOTER_HEIGHT_PX = 80
 
 const Notes = () => {
-  const { getDataNotes, noteText, deleteNote, accessToken, user, listUp, setNoteList } = useAuthStore()
+  const { getDataNotes, noteText, deleteNote, accessToken, user, listUp, setNoteList, hasChangeGlobalLoading } =
+    useAuthStore()
   const toast = useToast({ position: 'top-right' })
   const email = user?.userData?.email
   const [value, setValue] = useState('')
@@ -31,12 +32,13 @@ const Notes = () => {
       const result = await getDataNotes(email)
       const { notes } = result
       setNoteList(notes)
+      hasChangeGlobalLoading(true)
       return result
     } catch (error) {
       logError(error)
       return null
     }
-  }, [email, getDataNotes, setNoteList])
+  }, [email, getDataNotes])
 
   useEffect(() => {
     if (email) getNotes().then()
@@ -61,11 +63,13 @@ const Notes = () => {
   }
 
   const handleDelete = (id) => {
+    hasChangeGlobalLoading(false)
     if (!accessToken) return logError('Access token not available')
 
     try {
       const promise = deleteNote(id).then((result) => {
         if (result.status === 200 && result.statusText === 'OK') getNotes().then()
+
         return result
       })
       promiseBasedToastDel(toast, promise)
@@ -153,25 +157,6 @@ const Notes = () => {
             <List spacing={1}>
               {viewList.map((item) => (
                 <SortableNoteItem key={item._id} item={item} onDelete={() => handleDelete(item._id)} />
-                // <ListItem key={item._id}>
-                //   <Flex>
-                //     <Box>
-                //       <ListIcon as={MdCheckCircle} color="green.500" />
-                //       {item.text}
-                //     </Box>
-                //     <Spacer />
-                //     <Button
-                //       size="sm"
-                //       height="28px"
-                //       width="100px"
-                //       border="1px"
-                //       borderColor="red.500"
-                //       onClick={() => handleDelete(item._id)}
-                //     >
-                //       Delete
-                //     </Button>
-                //   </Flex>
-                // </ListItem>
               ))}
             </List>
           </SortableContext>

@@ -62,6 +62,7 @@ const store = (set) => ({
   setHasChanged: (value) => set({ hasChanged: value }),
   currentData: { section: '', localData: null },
   setCurrentData: (data) => set({ currentData: data }),
+  isGlobalLoading: false,
 
   signup: async ({ username, surname, email, password, role, message, avatar }) => {
     const { user, idAvatar } = await signup({
@@ -174,11 +175,16 @@ const store = (set) => ({
   getDataNotes: async (mail) => {
     try {
       const response = await axios.get('/api/auth/notes', { params: { email: mail } })
+
       return response.data
     } catch (e) {
       logError(e)
       return null
     }
+  },
+
+  hasChangeGlobalLoading: (isBool) => {
+    set({ isGlobalLoading: isBool })
   },
 
   cvPdfUp: async (data) => {

@@ -1,24 +1,14 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import {
-  Box,
-  Button,
-  Flex,
-  FormControl,
-  Heading,
-  List,
-  ListIcon,
-  ListItem,
-  Spacer,
-  Stack,
-  Textarea,
-  useToast,
-} from '@chakra-ui/react'
+import { Box, Button, FormControl, Heading, List, Stack, Textarea, useToast } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
-import { MdCheckCircle } from 'react-icons/md'
+import { DndContext, useSensors, useSensor, PointerSensor, KeyboardSensor, closestCenter } from '@dnd-kit/core'
+import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers'
+import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import useAuthStore from '../../../store/useAuthStore'
 import Container from '../../../layouts/Container'
 import { logError } from '../../../utils/services'
 import { promiseBasedToast, promiseBasedToastDel } from '../../../services/promiseBasedToast'
+import SortableNoteItem from './SortableNoteItem'
 
 const MotionButton = motion(Button)
 
@@ -34,7 +24,8 @@ const Notes = () => {
   const getNotes = useCallback(async () => {
     try {
       const result = await getDataNotes(email)
-      setNoteList(result.notes)
+      const { notes } = result
+      setNoteList(notes)
       return result
     } catch (error) {
       logError(error)
@@ -43,7 +34,7 @@ const Notes = () => {
   }, [email, getDataNotes, setNoteList])
 
   useEffect(() => {
-    if (email) getNotes()
+    if (email) getNotes().then()
   }, [email, getNotes])
 
   const handleSubmit = (e) => {
@@ -130,29 +121,52 @@ const Notes = () => {
         pb={`${FOOTER_HEIGHT_PX}px`} // <— prevents last items hiding behind the fixed footer
         sx={{ overscrollBehavior: 'contain' }}
       >
-        <List spacing={3}>
-          {listUp?.toReversed().map((item) => (
-            <ListItem key={item._id}>
-              <Flex>
-                <Box>
-                  <ListIcon as={MdCheckCircle} color="green.500" />
-                  {item.text}
-                </Box>
-                <Spacer />
-                <Button
-                  size="sm"
-                  height="28px"
-                  width="100px"
-                  border="1px"
-                  borderColor="red.500"
-                  onClick={() => handleDelete(item._id)}
-                >
-                  Delete
-                </Button>
-              </Flex>
-            </ListItem>
-          ))}
-        </List>
+        <DndContext
+          sensors={useSensors(
+            useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
+            useSensor(KeyboardSensor),
+          )}
+          collisionDetection={closestCenter}
+          modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+          onDragEnd={({ active, over }) => {
+            if (!over || active.id === over.id) return
+            const items = listUp ?? []
+            const oldIndex = items.findIndex((n) => n.id === active.id)
+            const newIndex = items.findIndex((n) => n.id === over.id)
+            if (oldIndex === -1 || newIndex === -1) return
+            const reordered = arrayMove(items, oldIndex, newIndex)
+            setNoteList(reordered)
+
+            // TODO (optional): persist to backend here with reordered.map(n => n._id)
+          }}
+        >
+          <SortableContext items={(listUp ?? []).map((n) => n._id)} strategy={verticalListSortingStrategy}>
+            <List spacing={3}>
+              {listUp?.toReversed().map((item) => (
+                <SortableNoteItem key={item._id} item={item} onDelete={() => handleDelete(item._id)} />
+                // <ListItem key={item._id}>
+                //   <Flex>
+                //     <Box>
+                //       <ListIcon as={MdCheckCircle} color="green.500" />
+                //       {item.text}
+                //     </Box>
+                //     <Spacer />
+                //     <Button
+                //       size="sm"
+                //       height="28px"
+                //       width="100px"
+                //       border="1px"
+                //       borderColor="red.500"
+                //       onClick={() => handleDelete(item._id)}
+                //     >
+                //       Delete
+                //     </Button>
+                //   </Flex>
+                // </ListItem>
+              ))}
+            </List>
+          </SortableContext>
+        </DndContext>
       </Box>
     </Container>
   )

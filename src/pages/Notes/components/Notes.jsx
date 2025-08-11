@@ -32,7 +32,7 @@ const Notes = () => {
       const result = await getDataNotes(email)
       const { notes } = result
       setNoteList(notes)
-      hasChangeGlobalLoading(true)
+      hasChangeGlobalLoading(true) // TODO It Appears any time after del row Notes
       return result
     } catch (error) {
       logError(error)
@@ -86,8 +86,6 @@ const Notes = () => {
       handleSubmit(e)
     }
   }
-
-  // const view = [...(listUp ?? [])].toReversed()
 
   return (
     <Container
@@ -146,9 +144,7 @@ const Notes = () => {
             const newIndex = items.findIndex((n) => n._id === over.id)
             if (oldIndex === -1 || newIndex === -1) return
             const reorderedView = arrayMove(items, oldIndex, newIndex)
-            // console.log('reorderedView', reorderedView)
             setViewList(reorderedView)
-            // setNoteList(reorderedView)
 
             // TODO (optional): persist to backend here with reordered.map(n => n._id)
           }}

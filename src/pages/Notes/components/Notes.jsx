@@ -20,7 +20,11 @@ const Notes = () => {
   const toast = useToast({ position: 'top-right' })
   const email = user?.userData?.email
   const [value, setValue] = useState('')
-  // const [viewList, setViewList] = useState([])
+  const [viewList, setViewList] = useState([])
+
+  useEffect(() => {
+    setViewList([...(listUp ?? [])].toReversed())
+  }, [listUp])
 
   const getNotes = useCallback(async () => {
     try {
@@ -32,7 +36,7 @@ const Notes = () => {
       logError(error)
       return null
     }
-  }, [email, getDataNotes, setNoteList, listUp])
+  }, [email, getDataNotes, setNoteList])
 
   useEffect(() => {
     if (email) getNotes().then()
@@ -79,7 +83,7 @@ const Notes = () => {
     }
   }
 
-  const view = [...(listUp ?? [])].toReversed()
+  // const view = [...(listUp ?? [])].toReversed()
 
   return (
     <Container
@@ -133,20 +137,21 @@ const Notes = () => {
           modifiers={[restrictToVerticalAxis, restrictToParentElement]}
           onDragEnd={({ active, over }) => {
             if (!over || active.id === over.id) return
-            const items = view ?? []
+            const items = viewList ?? []
             const oldIndex = items.findIndex((n) => n._id === active.id)
             const newIndex = items.findIndex((n) => n._id === over.id)
             if (oldIndex === -1 || newIndex === -1) return
             const reorderedView = arrayMove(items, oldIndex, newIndex)
             // console.log('reorderedView', reorderedView)
-            setNoteList(reorderedView)
+            setViewList(reorderedView)
+            // setNoteList(reorderedView)
 
             // TODO (optional): persist to backend here with reordered.map(n => n._id)
           }}
         >
-          <SortableContext items={view.map((n) => n._id)} strategy={verticalListSortingStrategy}>
+          <SortableContext items={viewList.map((n) => n._id)} strategy={verticalListSortingStrategy}>
             <List spacing={1}>
-              {view.map((item) => (
+              {viewList.map((item) => (
                 <SortableNoteItem key={item._id} item={item} onDelete={() => handleDelete(item._id)} />
                 // <ListItem key={item._id}>
                 //   <Flex>

@@ -20,6 +20,7 @@ const Notes = () => {
   const toast = useToast({ position: 'top-right' })
   const email = user?.userData?.email
   const [value, setValue] = useState('')
+  // const [viewList, setViewList] = useState([])
 
   const getNotes = useCallback(async () => {
     try {
@@ -31,7 +32,7 @@ const Notes = () => {
       logError(error)
       return null
     }
-  }, [email, getDataNotes, setNoteList])
+  }, [email, getDataNotes, setNoteList, listUp])
 
   useEffect(() => {
     if (email) getNotes().then()
@@ -60,7 +61,7 @@ const Notes = () => {
 
     try {
       const promise = deleteNote(id).then((result) => {
-        if (result.status === 200 && result.statusText === 'OK') getNotes()
+        if (result.status === 200 && result.statusText === 'OK') getNotes().then()
         return result
       })
       promiseBasedToastDel(toast, promise)
@@ -77,6 +78,8 @@ const Notes = () => {
       handleSubmit(e)
     }
   }
+
+  const view = [...(listUp ?? [])].toReversed()
 
   return (
     <Container
@@ -130,19 +133,20 @@ const Notes = () => {
           modifiers={[restrictToVerticalAxis, restrictToParentElement]}
           onDragEnd={({ active, over }) => {
             if (!over || active.id === over.id) return
-            const items = listUp ?? []
-            const oldIndex = items.findIndex((n) => n.id === active.id)
-            const newIndex = items.findIndex((n) => n.id === over.id)
+            const items = view ?? []
+            const oldIndex = items.findIndex((n) => n._id === active.id)
+            const newIndex = items.findIndex((n) => n._id === over.id)
             if (oldIndex === -1 || newIndex === -1) return
-            const reordered = arrayMove(items, oldIndex, newIndex)
-            setNoteList(reordered)
+            const reorderedView = arrayMove(items, oldIndex, newIndex)
+            // console.log('reorderedView', reorderedView)
+            setNoteList(reorderedView)
 
             // TODO (optional): persist to backend here with reordered.map(n => n._id)
           }}
         >
-          <SortableContext items={(listUp ?? []).map((n) => n._id)} strategy={verticalListSortingStrategy}>
-            <List spacing={3}>
-              {listUp?.toReversed().map((item) => (
+          <SortableContext items={view.map((n) => n._id)} strategy={verticalListSortingStrategy}>
+            <List spacing={1}>
+              {view.map((item) => (
                 <SortableNoteItem key={item._id} item={item} onDelete={() => handleDelete(item._id)} />
                 // <ListItem key={item._id}>
                 //   <Flex>

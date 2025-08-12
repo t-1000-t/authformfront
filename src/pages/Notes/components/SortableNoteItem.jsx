@@ -37,8 +37,6 @@ const SortableNoteItem = ({ item, onDelete }) => {
   }
 
   const statusMeta = STATUSES.find((s) => s.key === item.status)
-  console.log('menu', menu)
-  console.log('statusMeta', statusMeta)
 
   return (
     <ListItem ref={setNodeRef} style={style}>

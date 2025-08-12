@@ -147,7 +147,7 @@ const Notes = () => {
             const reorderedView = arrayMove(items, oldIndex, newIndex)
             setViewList(reorderedView)
             // store back in original order
-            setNoteList(reorderedView.slice().reverse())
+            // setNoteList(reorderedView.slice().reverse())
 
             // TODO: persist: api.patch('/notes/reorder', reorderedView.map(n => n._id))
           }}
@@ -155,12 +155,7 @@ const Notes = () => {
           <SortableContext items={viewList.map((n) => n._id)} strategy={verticalListSortingStrategy}>
             <List spacing={1}>
               {viewList.map((item) => (
-                <SortableNoteItem
-                  key={item._id}
-                  item={item}
-                  onDelete={() => handleDelete(item._id)}
-                  // handleChangeStatus={handleChangeStatus}
-                />
+                <SortableNoteItem key={item._id} item={item} onDelete={() => handleDelete(item._id)} />
               ))}
             </List>
           </SortableContext>

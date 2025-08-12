@@ -13,6 +13,7 @@ const SortableNoteItem = ({ item, onDelete }) => {
   })
 
   const [menu, setMenu] = useState({ open: false, x: 0, y: 0 })
+  const [statusRow, setStatusRow] = useState(null)
 
   const openMenu = (e) => {
     e.preventDefault()
@@ -29,14 +30,13 @@ const SortableNoteItem = ({ item, onDelete }) => {
     borderRadius: '12px',
   }
 
-  const handleSelectStatus = () => {
+  const handleSelectStatus = (stringStatus) => {
+    setStatusRow(STATUSES.find((s) => s.key === stringStatus))
     // TODO: call parent callback to persist
     // onChangeStatus?.(item._id, statusKey)
     // optionally update local UI if you keep local state
     closeMenu()
   }
-
-  const statusMeta = STATUSES.find((s) => s.key === item.status)
 
   return (
     <ListItem ref={setNodeRef} style={style}>
@@ -55,9 +55,9 @@ const SortableNoteItem = ({ item, onDelete }) => {
         />
 
         <Box flex="1" wordBreak="break-word" onClick={openMenu}>
-          {statusMeta && (
-            <Badge mr={2} colorScheme={statusMeta.colorScheme}>
-              {statusMeta.label}
+          {statusRow && (
+            <Badge mr={2} colorScheme={statusRow.colorScheme}>
+              {statusRow.label}
             </Badge>
           )}
           <ListIcon as={MdCheckCircle} color="green.500" />

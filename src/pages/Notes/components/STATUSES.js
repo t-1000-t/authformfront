@@ -1,6 +1,6 @@
 const STATUSES = [
   { key: 'done', label: 'Done', colorScheme: 'red' },
-  { key: 'inProgress', label: 'InProgress', colorScheme: 'orange' },
+  { key: 'inProgress', label: 'In Progress', colorScheme: 'orange' },
   { key: 'new', label: 'New', colorScheme: 'green' },
 ]
 

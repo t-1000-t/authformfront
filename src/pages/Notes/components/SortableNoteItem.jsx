@@ -17,8 +17,9 @@ const SortableNoteItem = React.memo(function SortableNoteItem({ item, onDelete, 
     e.preventDefault()
     setMenu({ open: true, x: e.clientX, y: e.clientY })
   }
-  const onClose = () => {
-    setMenu((m) => ({ ...m, open: false }))
+  const closeMenu = (e) => {
+    e.preventDefault()
+    setMenu({ open: false, x: 0, y: 0 })
   }
 
   const style = {
@@ -45,7 +46,7 @@ const SortableNoteItem = React.memo(function SortableNoteItem({ item, onDelete, 
           cursor="grab"
           _active={{ cursor: 'grabbing' }}
         />
-        <Box flex="1" wordBreak="break-word">
+        <Box flex="1" wordBreak="break-word" onClick={(e) => openMenu(e)}>
           <ListIcon as={MdCheckCircle} color="green.500" />
           {item.text}
         </Box>
@@ -63,7 +64,13 @@ const SortableNoteItem = React.memo(function SortableNoteItem({ item, onDelete, 
         </Button>
 
         {menu.open && (
-          <NoteContextMenu x={menu.x} y={menu.y} onOpen={openMenu} onClose={onClose} onSelect={handleChangeStatus} />
+          <NoteContextMenu
+            x={menu.x}
+            y={menu.y}
+            openMenu={openMenu}
+            closeMenu={closeMenu}
+            onSelect={handleChangeStatus}
+          />
         )}
       </Flex>
     </ListItem>

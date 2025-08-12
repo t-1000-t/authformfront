@@ -1,12 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, Button, Flex, IconButton, ListIcon, ListItem, Spacer } from '@chakra-ui/react'
 import { MdCheckCircle, MdOutlineRestoreFromTrash } from 'react-icons/md'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { GripVertical } from 'lucide-react'
+import NoteContextMenu from './NoteContextMenu'
 
-const SortableNoteItem = React.memo(function SortableNoteItem({ item, onDelete }) {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item._id })
+const SortableNoteItem = React.memo(function SortableNoteItem({ item, onDelete, handleChangeStatus }) {
+  const { setActivatorNodeRef, attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: item._id,
+  })
+
+  const [menu, setMenu] = useState({ open: false, x: 0, y: 0 })
+
+  const openMenu = (e) => {
+    e.preventDefault()
+    setMenu({ open: true, x: e.clientX, y: e.clientY })
+  }
+  const onClose = () => {
+    setMenu((m) => ({ ...m, open: false }))
+  }
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -22,12 +35,15 @@ const SortableNoteItem = React.memo(function SortableNoteItem({ item, onDelete }
       <Flex align="center" gap={1} p={1}>
         {/* Drag handle: keyboard + pointer */}
         <IconButton
+          ref={setActivatorNodeRef}
           aria-label="Drag to reorder"
-          variant="ghost"
+          variant="solid"
           size="sm"
           {...attributes}
           {...listeners}
           icon={<GripVertical size={18} />}
+          cursor="grab"
+          _active={{ cursor: 'grabbing' }}
         />
         <Box flex="1" wordBreak="break-word">
           <ListIcon as={MdCheckCircle} color="green.500" />
@@ -45,6 +61,10 @@ const SortableNoteItem = React.memo(function SortableNoteItem({ item, onDelete }
         >
           Delete
         </Button>
+
+        {menu.open && (
+          <NoteContextMenu x={menu.x} y={menu.y} onOpen={openMenu} onClose={onClose} onSelect={handleChangeStatus} />
+        )}
       </Flex>
     </ListItem>
   )

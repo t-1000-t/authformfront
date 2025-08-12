@@ -87,6 +87,17 @@ const Notes = () => {
     }
   }
 
+  const handleChangeStatus = React.useCallback(
+    (id, status) => {
+      // 1) Update UI immediately
+      setNoteList((prev) => (prev ?? []).map((n) => (n._id === id ? { ...n, status } : n)))
+
+      // 2) Persist to backend (pseudo)
+      // await api.patch(`/notes/${id}`, { status }).catch(() => getNotes())
+    },
+    [setNoteList],
+  )
+
   return (
     <Container
       // Make this page a flex column that can shrink, so the list area can become a scroller
@@ -152,7 +163,12 @@ const Notes = () => {
           <SortableContext items={viewList.map((n) => n._id)} strategy={verticalListSortingStrategy}>
             <List spacing={1}>
               {viewList.map((item) => (
-                <SortableNoteItem key={item._id} item={item} onDelete={() => handleDelete(item._id)} />
+                <SortableNoteItem
+                  key={item._id}
+                  item={item}
+                  onDelete={() => handleDelete(item._id)}
+                  handleChangeStatus={handleChangeStatus}
+                />
               ))}
             </List>
           </SortableContext>

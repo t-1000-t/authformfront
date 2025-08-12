@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { Box, Button, Flex, IconButton, ListIcon, ListItem, Spacer } from '@chakra-ui/react'
+import { Badge, Box, Button, Flex, IconButton, ListIcon, ListItem, Spacer } from '@chakra-ui/react'
 import { MdCheckCircle, MdOutlineRestoreFromTrash } from 'react-icons/md'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { GripVertical } from 'lucide-react'
 import NoteContextMenu from './NoteContextMenu'
+import STATUSES from './STATUSES'
 
-const SortableNoteItem = React.memo(function SortableNoteItem({ item, onDelete, handleChangeStatus }) {
+const SortableNoteItem = ({ item, onDelete }) => {
   const { setActivatorNodeRef, attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: item._id,
   })
@@ -17,10 +18,7 @@ const SortableNoteItem = React.memo(function SortableNoteItem({ item, onDelete, 
     e.preventDefault()
     setMenu({ open: true, x: e.clientX, y: e.clientY })
   }
-  const closeMenu = (e) => {
-    e.preventDefault()
-    setMenu({ open: false, x: 0, y: 0 })
-  }
+  const closeMenu = () => setMenu((m) => ({ ...m, open: false }))
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -30,6 +28,17 @@ const SortableNoteItem = React.memo(function SortableNoteItem({ item, onDelete, 
     background: isDragging ? 'rgba(0,0,0,0.02)' : undefined,
     borderRadius: '12px',
   }
+
+  const handleSelectStatus = () => {
+    // TODO: call parent callback to persist
+    // onChangeStatus?.(item._id, statusKey)
+    // optionally update local UI if you keep local state
+    closeMenu()
+  }
+
+  const statusMeta = STATUSES.find((s) => s.key === item.status)
+  console.log('menu', menu)
+  console.log('statusMeta', statusMeta)
 
   return (
     <ListItem ref={setNodeRef} style={style}>
@@ -46,7 +55,13 @@ const SortableNoteItem = React.memo(function SortableNoteItem({ item, onDelete, 
           cursor="grab"
           _active={{ cursor: 'grabbing' }}
         />
-        <Box flex="1" wordBreak="break-word" onClick={(e) => openMenu(e)}>
+
+        <Box flex="1" wordBreak="break-word" onClick={openMenu}>
+          {statusMeta && (
+            <Badge mr={2} colorScheme={statusMeta.colorScheme}>
+              {statusMeta.label}
+            </Badge>
+          )}
           <ListIcon as={MdCheckCircle} color="green.500" />
           {item.text}
         </Box>
@@ -69,12 +84,12 @@ const SortableNoteItem = React.memo(function SortableNoteItem({ item, onDelete, 
             y={menu.y}
             openMenu={openMenu}
             closeMenu={closeMenu}
-            onSelect={handleChangeStatus}
+            onSelect={handleSelectStatus}
           />
         )}
       </Flex>
     </ListItem>
   )
-})
+}
 
 export default SortableNoteItem

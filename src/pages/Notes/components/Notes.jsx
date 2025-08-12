@@ -38,7 +38,7 @@ const Notes = () => {
       logError(error)
       return null
     }
-  }, [email, getDataNotes])
+  }, [email, getDataNotes, setNoteList, hasChangeGlobalLoading])
 
   useEffect(() => {
     if (email) getNotes().then()
@@ -62,22 +62,22 @@ const Notes = () => {
     }
   }
 
-  const handleDelete = (id) => {
-    hasChangeGlobalLoading(false)
+  const handleDelete = async (id) => {
     if (!accessToken) return logError('Access token not available')
-
+    hasChangeGlobalLoading(true)
     try {
-      const promise = deleteNote(id).then((result) => {
-        if (result.status === 200 && result.statusText === 'OK') getNotes().then()
-
-        return result
-      })
+      const promise = deleteNote(id)
+        .then((result) => {
+          if (result.status === 200) return getNotes()
+          return result
+        })
+        .finally(() => hasChangeGlobalLoading(false))
       promiseBasedToastDel(toast, promise)
-      return null
-    } catch (error) {
-      logError(error)
-      return null
+    } catch (e) {
+      hasChangeGlobalLoading(false)
+      logError(e)
     }
+    return null
   }
 
   const handleCombineKeysDownUp = (e) => {
@@ -86,17 +86,6 @@ const Notes = () => {
       handleSubmit(e)
     }
   }
-
-  const handleChangeStatus = React.useCallback(
-    (id, status) => {
-      // 1) Update UI immediately
-      setNoteList((prev) => (prev ?? []).map((n) => (n._id === id ? { ...n, status } : n)))
-
-      // 2) Persist to backend (pseudo)
-      // await api.patch(`/notes/${id}`, { status }).catch(() => getNotes())
-    },
-    [setNoteList],
-  )
 
   return (
     <Container
@@ -154,10 +143,13 @@ const Notes = () => {
             const oldIndex = items.findIndex((n) => n._id === active.id)
             const newIndex = items.findIndex((n) => n._id === over.id)
             if (oldIndex === -1 || newIndex === -1) return
+
             const reorderedView = arrayMove(items, oldIndex, newIndex)
             setViewList(reorderedView)
+            // store back in original order
+            setNoteList(reorderedView.slice().reverse())
 
-            // TODO (optional): persist to backend here with reordered.map(n => n._id)
+            // TODO: persist: api.patch('/notes/reorder', reorderedView.map(n => n._id))
           }}
         >
           <SortableContext items={viewList.map((n) => n._id)} strategy={verticalListSortingStrategy}>
@@ -167,7 +159,7 @@ const Notes = () => {
                   key={item._id}
                   item={item}
                   onDelete={() => handleDelete(item._id)}
-                  handleChangeStatus={handleChangeStatus}
+                  // handleChangeStatus={handleChangeStatus}
                 />
               ))}
             </List>

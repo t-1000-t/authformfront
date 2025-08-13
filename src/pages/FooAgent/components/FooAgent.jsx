@@ -25,9 +25,7 @@ const FooAgent = () => {
       // })
       const res = await callFooAgent({ q, num: 3 })
 
-      console.log('res', res)
       const { data } = res
-      console.log('data', data)
       if (!res.statusText === 'ok') throw new Error(data.error || 'Request failed')
       setResults(data.results || [])
     } catch (err) {

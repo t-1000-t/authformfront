@@ -107,6 +107,14 @@ const routesConfig = [
     component: lazy(() => import('./pages/Cv')),
     id: '0x03',
   },
+  {
+    exact: false,
+    path: '/fooagent',
+    layout: GuestLayout,
+    guard: GuestGuard,
+    component: lazy(() => import('./pages/FooAgent')),
+    id: '0x04',
+  },
 ]
 
 export default routesConfig

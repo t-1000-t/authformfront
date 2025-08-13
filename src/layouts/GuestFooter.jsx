@@ -9,6 +9,7 @@ import {
   FaPhone,
   FaGamepad,
   FaDatabase,
+  FaRobot,
 } from 'react-icons/fa'
 import { motion } from 'framer-motion'
 import { TbFileCv } from 'react-icons/tb'
@@ -32,6 +33,7 @@ const GuestFooter = ({ footerHeight }) => {
   const links = [
     { to: '/', label: 'Home', icon: FaHome },
     { to: '/notes', label: 'Notes', icon: FaStickyNote },
+    { to: '/fooagent', label: 'FooAgent', icon: FaRobot },
     { to: '/contact', label: 'Contact', icon: FaAddressCard },
     { to: '/p5', label: 'Game P5', icon: FaGamepad },
     { to: '/phas', label: 'Game Phas', icon: GrGamepad },

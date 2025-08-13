@@ -153,4 +153,6 @@ export const logoutAuth = async (id) => {
   })
 }
 
-export default useAuthHandler
+export const fooAgent = async (id) => {
+  await instance.post('/api/auth/foobot', { userId: id })
+}

@@ -11,6 +11,7 @@ import {
   cvUpPdf,
   pullDataCv,
   skillDelete,
+  fooAgent,
 } from '../services/auth'
 import axios, { removeTokenHeader } from '../utils/axios'
 import { logError } from '../utils/services'
@@ -251,6 +252,14 @@ const store = (set) => ({
 
   setToken: (token) => {
     set({ accessToken: token })
+  },
+
+  callFooAgent: async (id) => {
+    try {
+      await fooAgent(id).then()
+    } catch (e) {
+      logError(e)
+    }
   },
 })
 

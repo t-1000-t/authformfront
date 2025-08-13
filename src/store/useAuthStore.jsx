@@ -254,12 +254,8 @@ const store = (set) => ({
     set({ accessToken: token })
   },
 
-  callFooAgent: async (id) => {
-    try {
-      await fooAgent(id).then()
-    } catch (e) {
-      logError(e)
-    }
+  callFooAgent: ({ q, num }) => {
+    return fooAgent({ q, num })
   },
 })
 

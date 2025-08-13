@@ -153,6 +153,6 @@ export const logoutAuth = async (id) => {
   })
 }
 
-export const fooAgent = async (id) => {
-  await instance.post('/api/auth/foobot', { userId: id })
+export const fooAgent = async ({ q, num }) => {
+  return await instance.post('/api/auth/foobot', { q, num })
 }

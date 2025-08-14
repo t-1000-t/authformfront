@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Box, Button, Flex, Text } from '@chakra-ui/react'
 import { MdEditNote } from 'react-icons/md'
 import useAuthStore from '../../../store/useAuthStore'
@@ -11,17 +11,17 @@ import useDetectChange from '../../../utils/hooks/useDetectChange'
 const Competencies = () => {
   const { cv, putCvInfo, setCurrentData } = useAuthStore()
   const { competencies } = cv.user.newData
-  const [boilerplateObj] = useState({
-    languages: '...',
-    ide: '...',
-    vcs: '...',
-    platform: '...',
-    tracking: '...',
-    db: '...',
-    technologies: '...',
-  })
+  // const [boilerplateObj] = useState({
+  //   languages: '...',
+  //   ide: '...',
+  //   vcs: '...',
+  //   platform: '...',
+  //   tracking: '...',
+  //   db: '...',
+  //   technologies: '...',
+  // })
   console.log('competencies', competencies)
-  const { text, onClose, onOpen, onChange, isOpen } = useModalEdit(boilerplateObj)
+  const { text, onClose, onOpen, onChange, isOpen } = useModalEdit(competencies)
 
   useDetectChange()
 
@@ -40,7 +40,7 @@ const Competencies = () => {
     }
 
     putCvInfo(text, cv).then(() => {
-      setCurrentData({ section: 'strCompetencies', localData: boilerplateObj })
+      setCurrentData({ section: 'strCompetencies', localData: competencies })
       onClose()
     })
   }
@@ -52,7 +52,7 @@ const Competencies = () => {
       </Text>
       <Flex>
         <Box>
-          <Box>{listItems(boilerplateObj)}</Box>
+          <Box>{listItems(competencies)}</Box>
           <ModalEdit isOpen={isOpen} onSubmit={handleSubmit} text={text} onClose={onClose} onChange={onChange} />
         </Box>
         <Button sx={styleButton} onClick={onOpen} size="sx" bg="yellow.50" _hover={{ bg: 'green.200' }}>

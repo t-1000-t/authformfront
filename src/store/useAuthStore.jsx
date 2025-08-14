@@ -48,6 +48,15 @@ const store = (set) => ({
           technologies: '...',
           responsibilities: '...',
         },
+        competencies: {
+          languages: '...',
+          ide: '...',
+          vcs: '...',
+          platform: '...',
+          tracking: '...',
+          db: '...',
+          technologies: '...',
+        },
         skills: [
           {
             company: '...',
@@ -94,16 +103,18 @@ const store = (set) => ({
   },
 
   putCvInfo: async (obj, cvtest) => {
-    const { title, pet, contacts, education, skills } = cvtest.user.newData
+    const { title, pet, contacts, education, skills, competencies } = cvtest.user.newData
     const petKeys = Object.keys(pet)
     const titleKeys = Object.keys(title)
     const contactKeys = Object.keys(contacts)
     const educationKeys = Object.keys(education)
+    const competenciesKeys = Object.keys(competencies)
 
     const newPet = {}
     const newTitle = {}
     const newContact = {}
     const newEducation = {}
+    const newCompetencies = {}
     let newSkills = skills
 
     if (Array.isArray(obj)) {
@@ -116,6 +127,7 @@ const store = (set) => ({
       if (titleKeys.includes(key)) newTitle[key] = value
       if (contactKeys.includes(key)) newContact[key] = value
       if (educationKeys.includes(key)) newEducation[key] = value
+      if (competenciesKeys.includes(key)) newCompetencies[key] = value
       // if (skillsKeys.includes(key)) newSkills[key] = value
     })
 
@@ -129,6 +141,7 @@ const store = (set) => ({
               title: { ...title, ...newTitle },
               contacts: { ...contacts, ...newContact },
               education: { ...education, ...newEducation },
+              competencies: { ...competencies, ...newCompetencies },
               skills: newSkills,
             },
           },

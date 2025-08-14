@@ -31,7 +31,12 @@ const useDetectChange = () => {
       const changed = !isEqual(currentData.localData, currentSkills)
       setHasChanged(changed)
     }
-  }, [currentData, cv?.user?.newData?.skills])
+    if (currentData.section === 'strCompetencies') {
+      const currentCompetencies = cv?.user?.newData?.competencies ?? []
+      const changed = !isEqual(currentData.localData, currentCompetencies)
+      setHasChanged(changed)
+    }
+  }, [currentData, cv?.user?.newData])
 }
 
 export default useDetectChange

@@ -93,16 +93,12 @@ const Skills = () => {
 
   return (
     <Flex direction="column" w="100%" justifyContent="left" pt="20px">
-      {localSkills && (
-        <Flex direction="column">
-          <Text as="b" fontSize="larger" pb="20px">
-            Commercial Experience
-          </Text>
-          <Text as="b" fontSize="larger" pb="10px">
-            Skills:
-          </Text>
-        </Flex>
-      )}
+      <Flex direction="column">
+        <Text as="b" fontSize="larger" pb="20px">
+          Commercial Experience:
+        </Text>
+      </Flex>
+
       {activeIndex !== null && (
         <ModalEdit
           isOpen={isOpen}

@@ -18,11 +18,6 @@ const FooAgent = () => {
 
     setLoading(true)
     try {
-      // const res = await fetch(`${API_BASE}/api/foobot`, {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ q, num: 3 }),
-      // })
       const res = await callFooAgent({ q, num: 3 })
 
       console.log('res', res)

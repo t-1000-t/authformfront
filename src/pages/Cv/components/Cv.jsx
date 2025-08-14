@@ -10,6 +10,7 @@ import A4Container from '../Wrappers/A4Container'
 import CardWrap from '../Wrappers/CardWrap'
 import SendData from './SendData'
 import useAuthStore from '../../../store/useAuthStore'
+import Competencies from './Competencies'
 
 const Cv = () => {
   const { user, getCvInfo } = useAuthStore()
@@ -26,6 +27,7 @@ const Cv = () => {
       <CardWrap>
         <Contacts />
         <Education />
+        <Competencies />
         <PetInProgress />
         <Skills />
         <PetsOlds />

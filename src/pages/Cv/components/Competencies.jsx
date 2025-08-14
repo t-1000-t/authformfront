@@ -20,7 +20,7 @@ const Competencies = () => {
   //   db: '...',
   //   technologies: '...',
   // })
-  console.log('competencies', competencies)
+
   const { text, onClose, onOpen, onChange, isOpen } = useModalEdit(competencies)
 
   useDetectChange()

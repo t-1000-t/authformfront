@@ -3,7 +3,6 @@ import { Text } from '@chakra-ui/react'
 import getFirstBigLetter from './getFirstBigLetter'
 
 const listItems = (obj) => {
-  console.log('obj', obj)
   return Object.entries(obj).map(([name, value]) => {
     let displayValue = value
 

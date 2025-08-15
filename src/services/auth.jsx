@@ -156,3 +156,7 @@ export const logoutAuth = async (id) => {
 export const fooAgent = ({ q, num }) => {
   return instance.post('/api/auth/foobot', { q, num })
 }
+
+export const tgSend = ({ chatId, t, mode }) => {
+  return instance.post('/api/auth/tg/send', { chatId, t, mode })
+}

@@ -43,6 +43,7 @@ module.exports = {
     ],
     'no-underscore-dangle': ['error', { allow: ['_id'] }],
     'spaced-comment': ['warn', 'always', { markers: ['/'] }],
+    'consistent-return': ['error', { treatUndefinedAsUnspecified: true }],
   },
   settings: {
     react: {

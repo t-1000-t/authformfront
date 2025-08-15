@@ -12,6 +12,7 @@ import {
   pullDataCv,
   skillDelete,
   fooAgent,
+  tgSend,
 } from '../services/auth'
 import axios, { removeTokenHeader } from '../utils/axios'
 import { logError } from '../utils/services'
@@ -269,6 +270,10 @@ const store = (set) => ({
 
   callFooAgent: ({ q, num }) => {
     return fooAgent({ q, num })
+  },
+
+  getRichChat: ({ chatId, t, mode }) => {
+    return tgSend({ chatId, t, mode })
   },
 })
 

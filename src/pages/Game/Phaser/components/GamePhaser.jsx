@@ -79,7 +79,7 @@ const GamePhaser = () => {
   const gameRef = useRef(null)
 
   useEffect(() => {
-    if (!gameRef.current) return undefined
+    if (!gameRef.current) return () => {}
 
     const config = {
       type: Phaser.AUTO,

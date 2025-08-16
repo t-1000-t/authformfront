@@ -13,6 +13,7 @@ import {
   skillDelete,
   fooAgent,
   tgSend,
+  chatBotId,
 } from '../services/auth'
 import axios, { removeTokenHeader } from '../utils/axios'
 import { logError } from '../utils/services'
@@ -23,6 +24,7 @@ const store = (set) => ({
   redirect: null,
   listUp: null,
   statusUpCv: null,
+  botData: {},
   cv: {
     user: {
       userId: '...',
@@ -150,6 +152,19 @@ const store = (set) => ({
       })
     } catch (error) {
       logError(error)
+    }
+  },
+
+  pushChatBotId: async (data) => {
+    try {
+      const resultChatId = await chatBotId(data)
+      if (resultChatId && resultChatId.status === 200) {
+        set({ botData: resultChatId?.data })
+      }
+      return resultChatId.data
+    } catch (error) {
+      logError(error)
+      return null
     }
   },
 

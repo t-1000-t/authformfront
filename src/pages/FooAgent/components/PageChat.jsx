@@ -21,19 +21,22 @@ import useAuthStore from '../../../store/useAuthStore'
 
 const PageChat = () => {
   const { socket } = useSocket()
-  const { getRichChat } = useAuthStore()
+  const { getRichChat, botData, user, pushChatBotId } = useAuthStore()
 
   // live feed state
   const [events, setEvents] = useState([])
 
   // send form state
-  const [chatId, setChatId] = useState(null) // e.g. 123456789
+  const [chatBotId, setChatBotId] = useState(null) // e.g. 123456789
   const [text, setText] = useState('Hello from web!')
   const [parseMode, setParseMode] = useState('Markdown') // or 'HTML'
   const [sending, setSending] = useState(false)
   const [sendError, setSendError] = useState('')
   const [sendOk, setSendOk] = useState(false)
+  const email = user?.userData?.email
+  const { bot } = botData
 
+  // console.log('bot', bot)
   useEffect(() => {
     if (!socket) return () => {}
 
@@ -53,12 +56,18 @@ const PageChat = () => {
     }
   }, [socket])
 
+  const submitCurrentChatId = (data) => {
+    pushChatBotId(data).then(() => {
+      // console.log('res', res?.bot?.chatId)
+    })
+  }
+
   const sendToTelegram = async (e) => {
     e.preventDefault()
     setSendOk(false)
     setSendError('')
 
-    const trimmedChatId = String(chatId).trim()
+    const trimmedChatId = String(chatBotId).trim()
     if (!trimmedChatId) {
       setSendError('chat_id is required (numeric Telegram chat id).')
       return
@@ -87,9 +96,14 @@ const PageChat = () => {
       <Stack gap={6}>
         <Heading size="md">Telegram Bot — Live Feed</Heading>
         <Text fontSize="sm" opacity={0.7}>
-          CHAT
+          Current CHAT ID in the DB {bot?.chatId}
         </Text>
-
+        <Button onClick={() => submitCurrentChatId({ chatBotId, email })}>Save Chat ID</Button>
+        <Input
+          placeholder="chat_id (e.g. 123456789)"
+          value={chatBotId}
+          onChange={(e) => setChatBotId(e.target.value)}
+        />
         {/* Send to Telegram form */}
         <Box p={4} borderWidth="1px" borderRadius="lg">
           <Heading size="sm" mb={3}>
@@ -99,8 +113,8 @@ const PageChat = () => {
             <Stack gap={3}>
               <Input
                 placeholder="chat_id (e.g. 123456789)"
-                value={chatId}
-                onChange={(e) => setChatId(e.target.value)}
+                value={chatBotId}
+                onChange={(e) => setChatBotId(e.target.value)}
               />
               <Select value={parseMode} onChange={(e) => setParseMode(e.target.value)}>
                 <option value="Markdown">Markdown</option>

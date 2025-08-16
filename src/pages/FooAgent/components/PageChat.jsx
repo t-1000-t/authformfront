@@ -21,22 +21,20 @@ import useAuthStore from '../../../store/useAuthStore'
 
 const PageChat = () => {
   const { socket } = useSocket()
-  const { getRichChat, botData, user, pushChatBotId } = useAuthStore()
+  const { getRichChat, user, pushChatBotId, getChatBotId } = useAuthStore()
 
   // live feed state
   const [events, setEvents] = useState([])
-
   // send form state
-  const [chatBotId, setChatBotId] = useState(null) // e.g. 123456789
+  const [chatBotId, setChatBotId] = useState(0) // e.g. 123456789
+  const [currentChatBotId, setCurrentChatBotId] = useState(0)
   const [text, setText] = useState('Hello from web!')
   const [parseMode, setParseMode] = useState('Markdown') // or 'HTML'
   const [sending, setSending] = useState(false)
   const [sendError, setSendError] = useState('')
   const [sendOk, setSendOk] = useState(false)
   const email = user?.userData?.email
-  const { bot } = botData
 
-  // console.log('bot', bot)
   useEffect(() => {
     if (!socket) return () => {}
 
@@ -56,9 +54,15 @@ const PageChat = () => {
     }
   }, [socket])
 
+  useEffect(() => {
+    getChatBotId({ email }).then((res) => {
+      setCurrentChatBotId(res.botData.find((el) => el.email === email).chatId)
+    })
+  }, [])
+
   const submitCurrentChatId = (data) => {
-    pushChatBotId(data).then(() => {
-      // console.log('res', res?.bot?.chatId)
+    pushChatBotId(data).then((res) => {
+      setCurrentChatBotId(res?.bot?.chatId)
     })
   }
 
@@ -96,7 +100,7 @@ const PageChat = () => {
       <Stack gap={6}>
         <Heading size="md">Telegram Bot — Live Feed</Heading>
         <Text fontSize="sm" opacity={0.7}>
-          Current CHAT ID in the DB {bot?.chatId}
+          Current CHAT ID in the DB {currentChatBotId}
         </Text>
         <Button onClick={() => submitCurrentChatId({ chatBotId, email })}>Save Chat ID</Button>
         <Input

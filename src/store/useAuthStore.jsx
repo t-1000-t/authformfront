@@ -14,6 +14,7 @@ import {
   fooAgent,
   tgSend,
   chatBotId,
+  getBotId,
 } from '../services/auth'
 import axios, { removeTokenHeader } from '../utils/axios'
 import { logError } from '../utils/services'
@@ -155,12 +156,25 @@ const store = (set) => ({
     }
   },
 
+  getChatBotId: async (email) => {
+    try {
+      const resultGetId = await getBotId(email)
+      if (resultGetId && resultGetId.status === 200) {
+        set({ botData: resultGetId?.data })
+        return resultGetId?.data
+      }
+      return () => {}
+    } catch (e) {
+      logError(e)
+      return null
+    }
+  },
+
   pushChatBotId: async (data) => {
     try {
       const resultChatId = await chatBotId(data)
-      if (resultChatId && resultChatId.status === 200) {
-        set({ botData: resultChatId?.data })
-      }
+      if (!resultChatId && !resultChatId.status === 200) return resultChatId
+      set({ botData: resultChatId?.data })
       return resultChatId.data
     } catch (error) {
       logError(error)

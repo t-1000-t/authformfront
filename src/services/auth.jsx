@@ -62,6 +62,11 @@ export const cvUpPdf = async (data) => {
   return response.data
 }
 
+export const getBotId = (email) => {
+  // email is object { email: test@net.com }
+  return instance.get('/api/auth/tg/chat', { params: email })
+}
+
 export const chatBotId = (data) => {
   // data is object { chatId: number, email: test@net.com }
   return instance.post('/api/auth/tg/chat', data)

@@ -14,7 +14,7 @@ const PageRequestAgent = () => {
     e.preventDefault()
     setSendOk(false)
     setSendError('')
-    console.log('Click')
+
     setSending(true)
     setSending(false)
   }

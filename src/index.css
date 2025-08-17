@@ -9,3 +9,6 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+@supports not (scrollbar-gutter: stable) {
+  body { overflow-y: scroll; } /* reserves vertical scrollbar space */
+}

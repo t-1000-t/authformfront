@@ -22,6 +22,8 @@ const theme = extendTheme({
   config,
   styles: {
     global: {
+      ':root': { scrollbarGutter: 'stable both-edges' }, // <-- reserve gutter
+
       'html, body': {
         minHeight: '100vh',
         overflowX: 'hidden',
@@ -29,6 +31,8 @@ const theme = extendTheme({
         color: 'fg',
       },
     },
+    // keep a full-height baseline to avoid jumps on short pages
+    'html, body, #root': { height: '100%' },
   },
   fonts: {
     heading: "'Roboto', sans-serif",

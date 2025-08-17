@@ -4,10 +4,10 @@ import Container from '../../../layouts/Container'
 
 const PageRequestAgent = () => {
   return (
-    <Container maxWidth="md">
+    <Container>
       <Stack gap={6}>
         <Flex>
-          <Box>Agent</Box>
+          <Box minW="528.617px">Agent</Box>
         </Flex>
       </Stack>
     </Container>

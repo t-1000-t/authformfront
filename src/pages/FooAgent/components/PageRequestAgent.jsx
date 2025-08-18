@@ -13,7 +13,7 @@ const PageRequestAgent = () => {
   const [sending, setSending] = useState(false)
   const [sendError, setSendError] = useState('')
   const [sendOk, setSendOk] = useState(false)
-  const currentId = botData.bot.chatId
+  const currentId = botData?.bot?.chatId
 
   const searchToInternet = async (e) => {
     e.preventDefault()

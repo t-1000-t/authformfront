@@ -56,7 +56,7 @@ const PageChat = () => {
 
   useEffect(() => {
     if (!botData) return
-    setChatBotId(botData.bot.chatId)
+    setChatBotId(botData?.bot?.chatId)
   }, [botData])
 
   const submitCurrentChatId = (data) => {

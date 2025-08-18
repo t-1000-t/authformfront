@@ -170,3 +170,7 @@ export const fooAgent = ({ q, num }) => {
 export const tgSend = ({ chatId, t, mode }) => {
   return instance.post('/api/auth/tg/send', { chatId, t, mode })
 }
+
+export const searchAgent = (data) => {
+  return instance.post('/api/auth/agent/search', data)
+}

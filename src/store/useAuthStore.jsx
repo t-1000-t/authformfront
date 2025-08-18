@@ -15,6 +15,7 @@ import {
   tgSend,
   chatBotId,
   getBotId,
+  searchAgent,
 } from '../services/auth'
 import axios, { removeTokenHeader } from '../utils/axios'
 import { logError } from '../utils/services'
@@ -194,6 +195,15 @@ const store = (set) => ({
     } catch (error) {
       logError(error)
       return null
+    }
+  },
+
+  pushDataAgentSearch: async (data) => {
+    try {
+      return await searchAgent(data)
+    } catch (error) {
+      logError(error)
+      return () => {}
     }
   },
 

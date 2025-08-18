@@ -4,8 +4,8 @@ import { Flex, Box, Stack, Input, Heading, Button, Text } from '@chakra-ui/react
 import Container from '../../../layouts/Container'
 import useAuthStore from '../../../store/useAuthStore'
 
-const PageRequestAgent = ({ currentChatBotId }) => {
-  const { pushDataAgentSearch } = useAuthStore()
+const PageRequestAgent = () => {
+  const { pushDataAgentSearch, botData } = useAuthStore()
   const [stateUrl, setStateUrl] = useState('')
   const [statePosition, setStatePosition] = useState('')
   const [stateCountry, setStateCountry] = useState('')
@@ -13,6 +13,7 @@ const PageRequestAgent = ({ currentChatBotId }) => {
   const [sending, setSending] = useState(false)
   const [sendError, setSendError] = useState('')
   const [sendOk, setSendOk] = useState(false)
+  const currentId = botData.bot.chatId
 
   const searchToInternet = async (e) => {
     e.preventDefault()
@@ -28,7 +29,7 @@ const PageRequestAgent = ({ currentChatBotId }) => {
         town: stateTown,
         num: 5,
         toTelegram: true, // set false if you only want JSON back
-        // chat_id: 123456789, // optional; if omitted, backend can use ADMIN_CHAT_ID
+        chat_id: currentId, // optional; if omitted, backend can use ADMIN_CHAT_ID
       }
       const res = pushDataAgentSearch(body).then()
       const { data } = await res
@@ -51,7 +52,7 @@ const PageRequestAgent = ({ currentChatBotId }) => {
               Agent to searching in the Internet
             </Heading>
             <Text fontSize="sm" opacity={0.7} mb={4}>
-              Current CHAT ID in the DB {currentChatBotId}
+              Current CHAT_ID from the DB {currentId}
             </Text>
             <form onSubmit={searchToInternet}>
               <Stack gap={3}>

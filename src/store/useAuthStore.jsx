@@ -26,7 +26,7 @@ const store = (set) => ({
   redirect: null,
   listUp: null,
   statusUpCv: null,
-  botData: {},
+  botData: null,
   cv: {
     user: {
       userId: '...',
@@ -171,6 +171,10 @@ const store = (set) => ({
     }
   },
 
+  getRichChat: ({ chatId, t, mode }) => {
+    return tgSend({ chatId, t, mode })
+  },
+
   pushChatBotId: async (data) => {
     try {
       const resultChatId = await chatBotId(data)
@@ -309,10 +313,6 @@ const store = (set) => ({
 
   callFooAgent: ({ q, num }) => {
     return fooAgent({ q, num })
-  },
-
-  getRichChat: ({ chatId, t, mode }) => {
-    return tgSend({ chatId, t, mode })
   },
 })
 

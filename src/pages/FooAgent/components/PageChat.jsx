@@ -15,19 +15,19 @@ import {
   Button,
   Select,
 } from '@chakra-ui/react'
+// import { isArray } from 'lodash'
 import Container from '../../../layouts/Container'
 import { useSocket } from '../../../context/socket-context'
 import useAuthStore from '../../../store/useAuthStore'
 
-const PageChat = ({ currentChatBotId }) => {
+const PageChat = () => {
   const { socket } = useSocket()
-  const { getRichChat, user, pushChatBotId } = useAuthStore()
+  const { getRichChat, user, pushChatBotId, botData } = useAuthStore()
 
   // live feed state
   const [events, setEvents] = useState([])
   // send form state
   const [chatBotId, setChatBotId] = useState(0) // e.g. 123456789
-
   const [text, setText] = useState('Hello from web!')
   const [parseMode, setParseMode] = useState('Markdown') // or 'HTML'
   const [sending, setSending] = useState(false)
@@ -54,10 +54,13 @@ const PageChat = ({ currentChatBotId }) => {
     }
   }, [socket])
 
+  useEffect(() => {
+    if (!botData) return
+    setChatBotId(botData.bot.chatId)
+  }, [botData])
+
   const submitCurrentChatId = (data) => {
-    pushChatBotId(data).then((res) => {
-      setChatBotId(res?.bot?.chatId)
-    })
+    pushChatBotId(data).then()
   }
 
   const sendToTelegram = async (e) => {
@@ -94,7 +97,7 @@ const PageChat = ({ currentChatBotId }) => {
       <Stack gap={6}>
         <Heading size="md">Telegram Bot — Live Feed</Heading>
         <Text fontSize="sm" opacity={0.7}>
-          Current CHAT ID in the DB {currentChatBotId}
+          Current CHAT ID in the DB {chatBotId}
         </Text>
         <Button onClick={() => submitCurrentChatId({ chatBotId, email })}>Save Chat ID</Button>
         <Input

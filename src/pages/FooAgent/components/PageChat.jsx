@@ -19,15 +19,15 @@ import Container from '../../../layouts/Container'
 import { useSocket } from '../../../context/socket-context'
 import useAuthStore from '../../../store/useAuthStore'
 
-const PageChat = () => {
+const PageChat = ({ currentChatBotId }) => {
   const { socket } = useSocket()
-  const { getRichChat, user, pushChatBotId, getChatBotId } = useAuthStore()
+  const { getRichChat, user, pushChatBotId } = useAuthStore()
 
   // live feed state
   const [events, setEvents] = useState([])
   // send form state
   const [chatBotId, setChatBotId] = useState(0) // e.g. 123456789
-  const [currentChatBotId, setCurrentChatBotId] = useState(0)
+
   const [text, setText] = useState('Hello from web!')
   const [parseMode, setParseMode] = useState('Markdown') // or 'HTML'
   const [sending, setSending] = useState(false)
@@ -54,15 +54,9 @@ const PageChat = () => {
     }
   }, [socket])
 
-  useEffect(() => {
-    getChatBotId({ email }).then((res) => {
-      setCurrentChatBotId(res.botData.find((el) => el.email === email).chatId)
-    })
-  }, [])
-
   const submitCurrentChatId = (data) => {
     pushChatBotId(data).then((res) => {
-      setCurrentChatBotId(res?.bot?.chatId)
+      setChatBotId(res?.bot?.chatId)
     })
   }
 

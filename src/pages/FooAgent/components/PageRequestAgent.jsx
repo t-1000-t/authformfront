@@ -4,7 +4,7 @@ import { Flex, Box, Stack, Input, Heading, Button, Text } from '@chakra-ui/react
 import Container from '../../../layouts/Container'
 import useAuthStore from '../../../store/useAuthStore'
 
-const PageRequestAgent = () => {
+const PageRequestAgent = ({ currentChatBotId }) => {
   const { pushDataAgentSearch } = useAuthStore()
   const [stateUrl, setStateUrl] = useState('')
   const [statePosition, setStatePosition] = useState('')
@@ -50,6 +50,9 @@ const PageRequestAgent = () => {
             <Heading size="sm" mb={3}>
               Agent to searching in the Internet
             </Heading>
+            <Text fontSize="sm" opacity={0.7} mb={4}>
+              Current CHAT ID in the DB {currentChatBotId}
+            </Text>
             <form onSubmit={searchToInternet}>
               <Stack gap={3}>
                 <Input

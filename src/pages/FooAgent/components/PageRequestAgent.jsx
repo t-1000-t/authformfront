@@ -1,11 +1,24 @@
 // src/pages/RequestAgent/PageRequestAgent.jsx
 import React, { useState } from 'react'
-import { Flex, Box, Stack, Input, Heading, Button, Text } from '@chakra-ui/react'
+import {
+  Flex,
+  Box,
+  Stack,
+  Input,
+  Heading,
+  Button,
+  Text,
+  Select,
+  FormControl,
+  FormLabel,
+  Switch,
+} from '@chakra-ui/react'
 import Container from '../../../layouts/Container'
 import useAuthStore from '../../../store/useAuthStore'
 
 const PageRequestAgent = () => {
   const { pushDataAgentSearch, botData } = useAuthStore()
+  const [toggleUrl, setToggleUrl] = useState(false)
   const [stateUrl, setStateUrl] = useState('')
   const [statePosition, setStatePosition] = useState('')
   const [stateCountry, setStateCountry] = useState('')
@@ -54,13 +67,34 @@ const PageRequestAgent = () => {
             <Text fontSize="sm" opacity={0.7} mb={4}>
               Current CHAT_ID from the DB {currentId}
             </Text>
+
+            <FormControl display="flex" alignItems="center" m={2}>
+              <FormLabel htmlFor="email-alerts" mb="0">
+                Own URL
+              </FormLabel>
+              <Switch id="url-alerts" onChange={() => setToggleUrl(!toggleUrl)} />
+            </FormControl>
             <form onSubmit={searchToInternet}>
               <Stack gap={3}>
-                <Input
-                  placeholder="Enter URL (e.g. https://ie.indeed.com)"
-                  value={stateUrl}
-                  onChange={(e) => setStateUrl(e.target.value)}
-                />
+                {toggleUrl ? (
+                  <Input
+                    placeholder="Enter your own URL (e.g. https://ie.indeed.com)"
+                    value={stateUrl}
+                    onChange={(e) => setStateUrl(e.target.value)}
+                  />
+                ) : (
+                  <Select value={stateUrl} onChange={(e) => setStateUrl(e.target.value)}>
+                    <option value="https://ie.indeed.com">IE.Indeed.com</option>
+                    <option value="https://www.irishjobs.ie">IrishJobs.ie</option>
+                    <option value="https://www.jobs.ie">Jobs.ie</option>
+                    <option value="https://www.linkedin.com">LinkedIn.com</option>
+                    <option value="https://www.glassdoor.ie">GlassDoor.ie</option>
+                    <option value="https://publicjobs.ie">PublicJobs.ie</option>
+                    <option value="https://www.localgovernmentjobs.ie">LocalGovernmentJobs.ie</option>
+                    <option value="https://europa.eu">Europa.eu</option>
+                    <option value="https://www.jobalert.ie">JobAlert.ie</option>
+                  </Select>
+                )}
                 <Input
                   placeholder="Enter position (e.g. Frontend Developer)"
                   value={statePosition}

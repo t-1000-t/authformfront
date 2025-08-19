@@ -20,7 +20,7 @@ const DefaultFooAgent = () => {
       <Flex>
         <Flex direction="column" gap={4} w="full">
           <Container>
-            <FormControl display="flex" alignItems="center" w="fit-content" gap={2}>
+            <FormControl display="flex" alignItems="center" w="fit-content" gap={2} m={2}>
               <FormLabel htmlFor="toggle-agent-view" mb="0">
                 Request Agent view
               </FormLabel>

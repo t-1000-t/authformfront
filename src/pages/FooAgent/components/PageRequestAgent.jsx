@@ -87,12 +87,10 @@ const PageRequestAgent = () => {
                     <option value="https://ie.indeed.com">IE.Indeed.com</option>
                     <option value="https://www.irishjobs.ie">IrishJobs.ie</option>
                     <option value="https://www.jobs.ie">Jobs.ie</option>
-                    <option value="https://www.linkedin.com">LinkedIn.com</option>
                     <option value="https://www.glassdoor.ie">GlassDoor.ie</option>
                     <option value="https://publicjobs.ie">PublicJobs.ie</option>
-                    <option value="https://www.localgovernmentjobs.ie">LocalGovernmentJobs.ie</option>
-                    <option value="https://europa.eu">Europa.eu</option>
                     <option value="https://www.jobalert.ie">JobAlert.ie</option>
+                    <option value="https://www.linkedin.com">LinkedIn.com</option>
                   </Select>
                 )}
                 <Input

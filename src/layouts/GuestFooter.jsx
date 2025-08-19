@@ -33,18 +33,19 @@ const GuestFooter = ({ footerHeight }) => {
   const links = [
     { to: '/', label: 'Home', icon: FaHome },
     { to: '/notes', label: 'Notes', icon: FaStickyNote },
-    { to: '/fooagent', label: 'FooAgent', icon: FaRobot },
     { to: '/contact', label: 'Contact', icon: FaAddressCard },
     { to: '/p5', label: 'Game P5', icon: FaGamepad },
     { to: '/phas', label: 'Game Phas', icon: GrGamepad },
-    { to: '/search', label: 'Search', icon: FaCheck },
+
     { to: '/mysql_db', label: 'DB', icon: FaDatabase },
     { to: '/about', label: 'About', icon: FaInfoCircle },
   ]
 
   if (accessToken) {
+    links.splice(-2, 0, { to: '/search', label: 'Search', icon: FaCheck })
     links.splice(-1, 0, { to: '/call', label: 'Call', icon: FaPhone })
     links.splice(1, 0, { to: '/cv', label: 'CV', icon: TbFileCv })
+    links.splice(2, 0, { to: '/fooagent', label: 'FooAgent', icon: FaRobot })
   }
 
   return (

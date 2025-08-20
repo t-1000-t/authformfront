@@ -36,7 +36,6 @@ const GuestFooter = ({ footerHeight }) => {
     { to: '/contact', label: 'Contact', icon: FaAddressCard },
     { to: '/p5', label: 'Game P5', icon: FaGamepad },
     { to: '/phas', label: 'Game Phas', icon: GrGamepad },
-
     { to: '/mysql_db', label: 'DB', icon: FaDatabase },
     { to: '/about', label: 'About', icon: FaInfoCircle },
   ]

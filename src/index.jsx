@@ -2,11 +2,9 @@
 import React, { useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ChakraProvider, ColorModeScript, extendTheme } from '@chakra-ui/react'
-// ✅ device detection
 import { isMobile, isTablet } from 'react-device-detect'
 import './index.css'
 import process from 'process'
-
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import { SocketProvider } from './context/socket-context'
@@ -19,8 +17,8 @@ const colorConfig = {
   useSystemColorMode: true,
 }
 
-/** Common / base theme */
-const baseTheme = extendTheme({
+// ---------- Base theme OVERRIDES (plain object) ----------
+const baseOverrides = {
   config: colorConfig,
   styles: {
     global: {
@@ -31,8 +29,8 @@ const baseTheme = extendTheme({
         bg: 'bg',
         color: 'fg',
       },
+      'html, body, #root': { height: '100%' },
     },
-    'html, body, #root': { height: '100%' },
   },
   fonts: {
     heading: "'Roboto', sans-serif",
@@ -59,7 +57,6 @@ const baseTheme = extendTheme({
       fg: { default: 'gray.800', _dark: 'gray.500' },
     },
   },
-  // You can also define breakpoints for responsive props:
   breakpoints: {
     sm: '30em', // 480px
     md: '48em', // 768px
@@ -67,29 +64,17 @@ const baseTheme = extendTheme({
     xl: '80em', // 1280px
     '2xl': '96em', // 1536px
   },
-})
+}
 
-/** Device-specific overrides */
-// Keep these minimal: spacing, sizes, radii, and a few component defaults.
+// ---------- Device-specific overrides ----------
 const mobileOverrides = {
-  sizes: {
-    container: { sm: '100%', md: '100%' },
-  },
+  sizes: { container: { sm: '100%', md: '100%' } },
   radii: { md: '14px', lg: '18px', xl: '22px' },
   space: { 1: '0.25rem', 2: '0.5rem', 3: '0.75rem', 4: '1rem' },
-  fonts: {
-    // slightly larger body on small screens for legibility
-    body: "'Montserrat', sans-serif",
-  },
   components: {
     Container: { baseStyle: { px: 4, maxW: 'container.sm' } },
     Button: { defaultProps: { size: 'md' } },
-    Heading: {
-      sizes: {
-        xl: { fontSize: ['2xl'] },
-        lg: { fontSize: ['xl'] },
-      },
-    },
+    Heading: { sizes: { xl: { fontSize: ['2xl'] }, lg: { fontSize: ['xl'] } } },
   },
 }
 
@@ -104,49 +89,45 @@ const desktopOverrides = {
   components: {
     Container: { baseStyle: { px: 8, maxW: 'container.lg' } },
     Button: { defaultProps: { size: 'md' } },
-    Heading: {
-      sizes: {
-        xl: { fontSize: ['3xl'] },
-        lg: { fontSize: ['2xl'] },
-      },
-    },
+    Heading: { sizes: { xl: { fontSize: ['3xl'] }, lg: { fontSize: ['2xl'] } } },
   },
 }
 
-// Pick overrides based on device
-let deviceTheme
-
-if (isMobile) {
-  console.log('1')
-  deviceTheme = mobileOverrides
-} else if (isTablet) {
-  console.log('2')
-  deviceTheme = tabletOverrides
-} else {
-  console.log('3')
-  deviceTheme = desktopOverrides
+// ---------- iPadOS fix + device helper ----------
+const isIpadOSLike = () => {
+  if (typeof navigator === 'undefined') return false
+  const ua = navigator.userAgent || ''
+  const macTouch = /Macintosh/.test(ua) && navigator.maxTouchPoints > 1
+  const coarsePointer =
+    typeof window !== 'undefined' &&
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(pointer: coarse)').matches
+  return macTouch || (coarsePointer && /Macintosh|iPad/i.test(ua))
 }
 
-// Final theme = base + overrides
-const theme = extendTheme(baseTheme, deviceTheme)
+const getDeviceType = () => {
+  if (isMobile) return 'mobile'
+  if (isTablet || isIpadOSLike()) return 'tablet'
+  return 'desktop'
+}
+
+// ---------- Pick overrides and build final theme ----------
+const deviceType = getDeviceType()
+console.log('deviceType', deviceType)
+let deviceOverrides = desktopOverrides
+if (deviceType === 'mobile') deviceOverrides = mobileOverrides
+else if (deviceType === 'tablet') deviceOverrides = tabletOverrides
+
+const theme = extendTheme(baseOverrides, deviceOverrides)
 
 function DeviceAttr({ children }) {
-  // Optional: add a data attribute so you can target CSS if needed
   useEffect(() => {
-    let device = 'desktop'
-    if (isMobile) {
-      device = 'mobile'
-    } else if (isTablet) {
-      device = 'tablet'
-    }
-    document.documentElement.setAttribute('data-device', device)
+    document.documentElement.setAttribute('data-device', deviceType)
   }, [])
-
   return children
 }
 
 const root = createRoot(document.getElementById('root'))
-
 root.render(
   <>
     <ColorModeScript initialColorMode={colorConfig.initialColorMode} />

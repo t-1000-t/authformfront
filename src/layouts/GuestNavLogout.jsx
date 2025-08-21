@@ -11,21 +11,27 @@ import {
   Highlight,
   Avatar,
   Tooltip,
+  Link as ChakraLink,
+  MenuItem,
+  MenuList,
+  MenuButton,
+  Menu,
 } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { ChevronDown } from 'lucide-react'
 import useAuthStore from '../store/useAuthStore'
 import Container from './Container'
 import ThemeToggleButton from '../utils/ThemeToggleButton'
 // import useLocalStorage from '../utils/hooks/useLocalStorage'
 
-const MotionButton = motion(Button)
+// const MotionButton = motion(Button)
 const MotionBox = motion.div
 
 // eslint-disable-next-line react/prop-types
 const GuestNavLogout = ({ name, idUserName }) => {
   const { logout, user, isGlobalLoading } = useAuthStore()
-  const [isLoading, setIsLoading] = useState(false)
+  // const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
   const [openTooltip, setOpenTooltip] = useState(false)
 
@@ -39,7 +45,7 @@ const GuestNavLogout = ({ name, idUserName }) => {
   }, [user?.username, isGlobalLoading])
 
   const handleLogOut = async () => {
-    setIsLoading(true)
+    // setIsLoading(true)
     setError(false)
     const { id } = user.userData
 
@@ -49,7 +55,7 @@ const GuestNavLogout = ({ name, idUserName }) => {
       const msg = err.response?.data?.message || err.message
       setError(msg)
     } finally {
-      setIsLoading(false)
+      // setIsLoading(false)
     }
   }
 
@@ -68,11 +74,11 @@ const GuestNavLogout = ({ name, idUserName }) => {
         flexWrap="wrap"
       >
         {/* Logo */}
-        <Link to="/">
+        <ChakraLink as={RouterLink} to="/">
           <Flex align="center">
             <Image src="/images/motherland.svg" h={{ base: 10, md: 16 }} alt="Logo" draggable={false} />
           </Flex>
-        </Link>
+        </ChakraLink>
         <ThemeToggleButton />
         <Stack
           direction={{ base: 'column', md: 'row' }}
@@ -119,41 +125,25 @@ const GuestNavLogout = ({ name, idUserName }) => {
                 </MotionBox>
               }
             >
-              <Flex align="center" gap={3}>
-                <Avatar
-                  size="md"
-                  name={name}
-                  src={`https://i.pravatar.cc/150?u=${idUserName}`}
-                  border="2px solid"
-                  // borderColor="brand.500"
-                />
-                <Text fontWeight="semibold" fontSize={{ base: 'md', md: 'lg' }} whiteSpace="nowrap">
-                  {name},
-                </Text>
-              </Flex>
+              <Menu>
+                <MenuButton as={Button} variant="ghost" rightIcon={<ChevronDown size={16} />} px={{ base: 2, md: 3 }}>
+                  <Flex align="center" gap={3}>
+                    <Avatar size="sm" name={name} src={`https://i.pravatar.cc/150?u=${idUserName}`} />
+                    <Text fontWeight="semibold" fontSize={{ base: 'md', md: 'lg' }}>
+                      {name}
+                    </Text>
+                  </Flex>
+                </MenuButton>
+
+                <MenuList>
+                  <MenuItem as={RouterLink} to="/">
+                    Home
+                  </MenuItem>
+                  <MenuItem onClick={handleLogOut}>Logout</MenuItem>
+                </MenuList>
+              </Menu>
             </Tooltip>
           )}
-
-          {/* Logout Button */}
-          <MotionButton
-            as={Link}
-            to="/"
-            bg="brand.500"
-            color="white"
-            _hover={{ bg: 'brand.600' }}
-            _active={{ bg: 'brand.700' }}
-            borderRadius="lg"
-            px={{ base: 4, md: 6 }}
-            py={{ base: 2, md: 4 }}
-            fontSize={{ base: 'md', md: 'lg' }}
-            isLoading={isLoading}
-            onClick={handleLogOut}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 10 }}
-          >
-            Logout
-          </MotionButton>
         </Stack>
 
         {/* Error Message */}

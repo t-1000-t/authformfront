@@ -54,7 +54,6 @@ const GuestFooter = ({ footerHeight }) => {
       bg="teal.500"
       rounded={{ md: '2xl' }}
       bottom="0"
-      width="100%"
       overflowX="auto"
       position="fixed"
       left="0"

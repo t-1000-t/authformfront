@@ -1,5 +1,6 @@
 import React from 'react'
-import { Box, Container, Flex, Heading, Spacer } from '@chakra-ui/react'
+import { Box, Flex, Heading, Spacer } from '@chakra-ui/react'
+import Container from '../../../layouts/Container'
 import VideoBox from './VideoBox'
 import CallControls from './CallControls'
 import useCall from '../../../utils/hooks/useCall'
@@ -25,7 +26,7 @@ const CallMe = () => {
       <Heading textAlign="center" mb={10}>
         Zoomish
       </Heading>
-      <Container centerContent maxW="container.md">
+      <Container>
         <Flex direction="row" w="full" wrap="wrap" justifyContent="center">
           <Flex mb={8} position="relative">
             {stream && (

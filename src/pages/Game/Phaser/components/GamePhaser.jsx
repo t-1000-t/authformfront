@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import Phaser from 'phaser'
-import { Box, Container } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
+import Container from '../../../../layouts/Container'
 
 class MyScene extends Phaser.Scene {
   preload() {

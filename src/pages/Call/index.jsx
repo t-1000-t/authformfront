@@ -1,13 +1,13 @@
 import React from 'react'
-import { Box, Container } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
+import Container from '../../layouts/Container'
 import Page from '../../components/Page'
-
 import CallMe from './components/CallMe'
 
 const CallDefault = () => {
   return (
     <Page>
-      <Container maxW="2xl">
+      <Container>
         <Box bg="white" padding="4">
           <CallMe />
         </Box>

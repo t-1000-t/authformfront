@@ -1,9 +1,10 @@
 import React from 'react'
-import { Box, Container, Heading, Text } from '@chakra-ui/react'
+import { Box, Heading, Text } from '@chakra-ui/react'
+import Container from '../../../layouts/Container'
 
 const AboutMe = () => {
   return (
-    <Container maxW="6xl" py={24} px={{ base: 6, md: 12 }}>
+    <Container>
       <Box position="relative" maxW="850px" mx="auto" mb={{ base: 4, md: 16 }}>
         <Heading fontSize={{ base: '3xl', md: '4xl', lg: '6xl' }} textAlign="center" color="#204E78">
           About Me

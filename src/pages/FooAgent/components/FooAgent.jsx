@@ -32,7 +32,7 @@ const FooAgent = () => {
 
   return (
     <Container>
-      <Stack gap={4} minW="577px">
+      <Stack gap={4}>
         <Heading size="lg">FOO</Heading>
 
         <form onSubmit={onSearch}>

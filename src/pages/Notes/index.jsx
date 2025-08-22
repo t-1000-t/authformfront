@@ -1,5 +1,6 @@
 import React from 'react'
-import { Box, Container } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
+import Container from '../../layouts/Container'
 import Page from '../../components/Page'
 import Notes from './components/Notes'
 import useAuthStore from '../../store/useAuthStore'

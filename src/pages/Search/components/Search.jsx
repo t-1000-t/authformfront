@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Button, Container, Input, Text, VStack, Tooltip } from '@chakra-ui/react'
+import { Box, Button, Input, Text, VStack, Tooltip } from '@chakra-ui/react'
 import Lottie from 'react-lottie-player'
+import Container from '../../../layouts/Container'
 import loadingb2f5ea from '../../../animations/loadingb2f5ea.json'
 import useAuthStore from '../../../store/useAuthStore'
 
@@ -36,8 +37,7 @@ const Search = () => {
   }, [searchTerm, lastSearchTerm])
 
   return (
-    <Container maxW="container.md" py={8}>
-      {/* Search Input */}
+    <Container>
       <VStack spacing={4}>
         <Input
           type="text"

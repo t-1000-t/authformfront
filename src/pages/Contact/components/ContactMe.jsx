@@ -1,9 +1,10 @@
 import React from 'react'
-import { Container, Heading, Text, useBreakpointValue } from '@chakra-ui/react'
+import { Heading, Text, useBreakpointValue } from '@chakra-ui/react'
+import Container from '../../../layouts/Container'
 
 const ContactMe = () => {
   return (
-    <Container maxW="5xl" py={12} px={{ base: 6, md: 12 }}>
+    <Container>
       <Heading fontSize={{ base: '3xl', md: '4xl', lg: '6xl' }} textAlign="center">
         <Text
           as="span"

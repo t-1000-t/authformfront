@@ -20,6 +20,7 @@ import useAuthStore from '../../../store/useAuthStore'
 const PageRequestAgent = () => {
   const { pushDataAgentSearch, botData } = useAuthStore()
   const [toggleUrl, setToggleUrl] = useState(false)
+  const [stateNum, setStateNum] = useState(5)
   const [stateUrl, setStateUrl] = useState('')
   const [statePosition, setStatePosition] = useState('')
   const [stateCountry, setStateCountry] = useState('')
@@ -44,7 +45,7 @@ const PageRequestAgent = () => {
         position: statePosition,
         country: stateCountry,
         town: stateTown,
-        num: 5,
+        num: stateNum,
         toTelegram: true, // set false if you only want JSON back
         chat_id: currentId, // optional; if omitted, backend can use ADMIN_CHAT_ID
       }
@@ -111,6 +112,18 @@ const PageRequestAgent = () => {
               value={stateTown}
               onChange={(e) => setStateTown(e.target.value)}
             />
+            <Select value={stateNum} onChange={(e) => setStateNum(e.target.value)}>
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={4}>4</option>
+              <option value={5}>5</option>
+              <option value={6}>6</option>
+              <option value={7}>7</option>
+              <option value={8}>8</option>
+              <option value={9}>9</option>
+              <option value={10}>10</option>
+            </Select>
             <Stack direction="row" align="center">
               <Button type="submit" isLoading={sending}>
                 Send

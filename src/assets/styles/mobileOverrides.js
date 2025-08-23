@@ -5,7 +5,7 @@ const mobileOverrides = {
   space: { 1: '0.25rem', 2: '0.5rem', 3: '0.75rem', 4: '1rem' },
   components: {
     Container: { baseStyle: { px: 4, maxW: 'container.sm' } },
-    Button: { defaultProps: { size: 'xs' } },
+    Button: { defaultProps: { size: 'lg' } },
     Heading: { sizes: { xl: { fontSize: ['2xl'] }, lg: { fontSize: ['xl'] } } },
     // MenuItem: { bgcolor: 'yellow.800', _dark: 'gray.500' },
     Link: {

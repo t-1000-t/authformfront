@@ -1,6 +1,19 @@
 // src/pages/RequestAgent/PageRequestAgent.jsx
-import React, { useState } from 'react'
-import { Stack, Input, Heading, Button, Text, Select, FormControl, FormLabel, Switch } from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
+import {
+  Text,
+  Link,
+  Stack,
+  Input,
+  Heading,
+  Button,
+  Select,
+  FormControl,
+  FormLabel,
+  Switch,
+  OrderedList,
+  ListItem,
+} from '@chakra-ui/react'
 import Container from '../../../layouts/Container'
 import useAuthStore from '../../../store/useAuthStore'
 
@@ -14,7 +27,10 @@ const PageRequestAgent = () => {
   const [sending, setSending] = useState(false)
   const [sendError, setSendError] = useState('')
   const [sendOk, setSendOk] = useState(false)
+  const [requestResults, setRequestResults] = useState({})
   const currentId = botData?.bot?.chatId
+
+  useEffect(() => {}, [])
 
   const searchToInternet = async (e) => {
     e.preventDefault()
@@ -34,6 +50,7 @@ const PageRequestAgent = () => {
       }
       const res = pushDataAgentSearch(body).then()
       const { data } = await res
+      setRequestResults(data)
       if (!res.status === 'ok') throw new Error(data.error || 'Request failed')
       setSendOk(true)
       // Optionally: display returned results in the UI
@@ -46,7 +63,7 @@ const PageRequestAgent = () => {
 
   return (
     <Container>
-      <Stack gap={6}>
+      <Stack gap={6} mb={6}>
         <Heading size="sm" mb={3}>
           Agent to searching in the Internet
         </Heading>
@@ -104,6 +121,27 @@ const PageRequestAgent = () => {
           </Stack>
         </form>
       </Stack>
+      {requestResults && (
+        <Heading size="sm" mb={3}>
+          {requestResults.query}
+        </Heading>
+      )}
+
+      {requestResults?.results?.length > 0 && (
+        <OrderedList>
+          {requestResults.results.map(({ pos, title, link }) => (
+            <ListItem key={pos}>
+              <Text as="span" mr={2}>
+                {title}
+              </Text>
+              <br />
+              <Link color="teal.500" href={link} isExternal>
+                {link}
+              </Link>
+            </ListItem>
+          ))}
+        </OrderedList>
+      )}
     </Container>
   )
 }

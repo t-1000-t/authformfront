@@ -44,7 +44,7 @@ const DefaultFooAgent = () => {
               isChecked={showRequestAgent}
               onChange={(e) => setShowRequestAgent(e.target.checked)}
               aria-label="Toggle between Request Agent and Chat views"
-              size={useBreakpointValue({ base: 'sm', md: 'md' })}
+              size={useBreakpointValue({ base: 'lg', md: 'lg' })}
             />
           </FormControl>
         </Flex>

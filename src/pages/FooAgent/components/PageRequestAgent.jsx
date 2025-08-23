@@ -1,18 +1,6 @@
 // src/pages/RequestAgent/PageRequestAgent.jsx
 import React, { useState } from 'react'
-import {
-  Flex,
-  Box,
-  Stack,
-  Input,
-  Heading,
-  Button,
-  Text,
-  Select,
-  FormControl,
-  FormLabel,
-  Switch,
-} from '@chakra-ui/react'
+import { Stack, Input, Heading, Button, Text, Select, FormControl, FormLabel, Switch } from '@chakra-ui/react'
 import Container from '../../../layouts/Container'
 import useAuthStore from '../../../store/useAuthStore'
 
@@ -59,66 +47,62 @@ const PageRequestAgent = () => {
   return (
     <Container>
       <Stack gap={6}>
-        <Flex>
-          <Box minW="528.617px" p={4} borderWidth="1px" borderRadius="lg">
-            <Heading size="sm" mb={3}>
-              Agent to searching in the Internet
-            </Heading>
-            <Text fontSize="sm" opacity={0.7} mb={4}>
-              Current CHAT_ID from the DB {currentId}
-            </Text>
+        <Heading size="sm" mb={3}>
+          Agent to searching in the Internet
+        </Heading>
+        <Text fontSize="sm" opacity={0.7} mb={4}>
+          Current CHAT_ID from the DB {currentId}
+        </Text>
 
-            <FormControl display="flex" alignItems="center" m={2}>
-              <FormLabel htmlFor="email-alerts" mb="0">
-                Own URL
-              </FormLabel>
-              <Switch id="url-alerts" onChange={() => setToggleUrl(!toggleUrl)} />
-            </FormControl>
-            <form onSubmit={searchToInternet}>
-              <Stack gap={3}>
-                {toggleUrl ? (
-                  <Input
-                    placeholder="Enter your own URL (e.g. https://ie.indeed.com)"
-                    value={stateUrl}
-                    onChange={(e) => setStateUrl(e.target.value)}
-                  />
-                ) : (
-                  <Select value={stateUrl} onChange={(e) => setStateUrl(e.target.value)}>
-                    <option value="https://ie.indeed.com">IE.Indeed.com</option>
-                    <option value="https://www.irishjobs.ie">IrishJobs.ie</option>
-                    <option value="https://www.jobs.ie">Jobs.ie</option>
-                    <option value="https://www.glassdoor.ie">GlassDoor.ie</option>
-                    <option value="https://publicjobs.ie">PublicJobs.ie</option>
-                    <option value="https://www.jobalert.ie">JobAlert.ie</option>
-                    <option value="https://www.linkedin.com">LinkedIn.com</option>
-                  </Select>
-                )}
-                <Input
-                  placeholder="Enter position (e.g. Frontend Developer)"
-                  value={statePosition}
-                  onChange={(e) => setStatePosition(e.target.value)}
-                />
-                <Input
-                  placeholder="Enter Country (e.g. Ireland)"
-                  value={stateCountry}
-                  onChange={(e) => setStateCountry(e.target.value)}
-                />
-                <Input
-                  placeholder="Enter Town (e.g. Dublin)"
-                  value={stateTown}
-                  onChange={(e) => setStateTown(e.target.value)}
-                />
-                <Stack direction="row" align="center">
-                  <Button type="submit" isLoading={sending}>
-                    Send
-                  </Button>
-                  {sendOk && <Text color="green.500">Sent ✅</Text>}
-                  {sendError && <Text color="red.500">{sendError}</Text>}
-                </Stack>
-              </Stack>
-            </form>
-          </Box>
-        </Flex>
+        <FormControl display="flex" alignItems="center" m={2}>
+          <FormLabel htmlFor="email-alerts" mb="0">
+            Own URL
+          </FormLabel>
+          <Switch id="url-alerts" onChange={() => setToggleUrl(!toggleUrl)} />
+        </FormControl>
+        <form onSubmit={searchToInternet}>
+          <Stack gap={3}>
+            {toggleUrl ? (
+              <Input
+                placeholder="Enter your own URL (e.g. https://ie.indeed.com)"
+                value={stateUrl}
+                onChange={(e) => setStateUrl(e.target.value)}
+              />
+            ) : (
+              <Select value={stateUrl} onChange={(e) => setStateUrl(e.target.value)}>
+                <option value="https://ie.indeed.com">IE.Indeed.com</option>
+                <option value="https://www.irishjobs.ie">IrishJobs.ie</option>
+                <option value="https://www.jobs.ie">Jobs.ie</option>
+                <option value="https://www.glassdoor.ie">GlassDoor.ie</option>
+                <option value="https://publicjobs.ie">PublicJobs.ie</option>
+                <option value="https://www.jobalert.ie">JobAlert.ie</option>
+                <option value="https://www.linkedin.com">LinkedIn.com</option>
+              </Select>
+            )}
+            <Input
+              placeholder="Enter position (e.g. Frontend Developer)"
+              value={statePosition}
+              onChange={(e) => setStatePosition(e.target.value)}
+            />
+            <Input
+              placeholder="Enter Country (e.g. Ireland)"
+              value={stateCountry}
+              onChange={(e) => setStateCountry(e.target.value)}
+            />
+            <Input
+              placeholder="Enter Town (e.g. Dublin)"
+              value={stateTown}
+              onChange={(e) => setStateTown(e.target.value)}
+            />
+            <Stack direction="row" align="center">
+              <Button type="submit" isLoading={sending}>
+                Send
+              </Button>
+              {sendOk && <Text color="green.500">Sent ✅</Text>}
+              {sendError && <Text color="red.500">{sendError}</Text>}
+            </Stack>
+          </Stack>
+        </form>
       </Stack>
     </Container>
   )

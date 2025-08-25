@@ -38,12 +38,10 @@ const getDeviceType = () => {
 
 // ---------- Pick overrides and build final theme ----------
 const deviceType = getDeviceType()
-console.log('deviceType', deviceType)
 let deviceOverrides = desktopOverrides
 if (deviceType === 'mobile') deviceOverrides = mobileOverrides
 else if (deviceType === 'tablet') deviceOverrides = tabletOverrides
 
-console.log('deviceOverrides', deviceOverrides)
 const theme = extendTheme(baseOverrides, deviceOverrides)
 
 function DeviceAttr({ children }) {

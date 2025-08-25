@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { MdOutlineNoteAdd, MdEditNote, MdOutlineDeleteForever } from 'react-icons/md'
 import { Box, Button, Flex, Text, useToast } from '@chakra-ui/react'
+import { isArray } from 'lodash'
 import useDetectChange from '../../../utils/hooks/useDetectChange'
 import useAuthStore from '../../../store/useAuthStore'
 import useModalEdit from '../../../utils/hooks/useModalEdit'
@@ -13,9 +14,9 @@ import { promiseBasedToastDel } from '../../../services/promiseBasedToast'
 
 const Skills = () => {
   const { putCvInfo, cv, deleteSkillFromCv, setCurrentData } = useAuthStore()
+  const { skills } = cv.user.newData
   const toast = useToast({ position: 'top-right' })
   const initialRef = useRef(null)
-  const { skills } = cv.user.newData
   const [activeIndex, setActiveIndex] = useState(null)
   const [boilerplateObj] = useState({
     company: '...',
@@ -85,7 +86,11 @@ const Skills = () => {
   )
 
   useEffect(() => {
-    setLocalSkills(skills) // if something change with skills we put into the store before it works UI only
+    // if something change with skills we put into the store before it works UI only
+    if (isArray(skills)) {
+      setLocalSkills(skills[0])
+    }
+    setLocalSkills(skills)
     if (activeIndex === null) {
       setCurrentData({ section: 'strSkills', localData: skills })
     }

@@ -89,12 +89,13 @@ const PageRequestAgent = () => {
             ) : (
               <Select value={stateUrl} onChange={(e) => setStateUrl(e.target.value)}>
                 <option value="https://ie.indeed.com">IE.Indeed.com</option>
-                <option value="https://www.irishjobs.ie">IrishJobs.ie</option>
-                <option value="https://www.jobs.ie">Jobs.ie</option>
-                <option value="https://www.glassdoor.ie">GlassDoor.ie</option>
+                <option value="https://irishjobs.ie">IrishJobs.ie</option>
+                <option value="https://ie.jooble.org">IE.Jooble.org</option>
+                <option value="https://jobs.ie">Jobs.ie</option>
+                <option value="https://glassdoor.ie">GlassDoor.ie</option>
                 <option value="https://publicjobs.ie">PublicJobs.ie</option>
-                <option value="https://www.jobalert.ie">JobAlert.ie</option>
-                <option value="https://www.linkedin.com">LinkedIn.com</option>
+                <option value="https://jobalert.ie">JobAlert.ie</option>
+                <option value="https://linkedin.com">LinkedIn.com</option>
               </Select>
             )}
             <Input

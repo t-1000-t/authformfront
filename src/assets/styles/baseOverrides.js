@@ -12,6 +12,12 @@ const baseOverrides = {
         bg: 'bg',
         color: 'fg',
       },
+      /* Hide scrollbar styles */
+      scrollbarWidth: 'none', // Firefox
+      msOverflowStyle: 'none', // IE + Edge
+      'html::-webkit-scrollbar, body::-webkit-scrollbar': {
+        display: 'none', // Chrome, Safari
+      },
       'html, body, #root': { height: '100%' },
     },
   },

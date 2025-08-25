@@ -1,5 +1,6 @@
 html {
   box-sizing: border-box;
+  scrollbar-width: none; /* Firefox */
 }
 *,
 *:before,
@@ -37,6 +38,9 @@ body {
   sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -ms-overflow-style: none; /* IE + old Edge */
+  /*overflow:hidden;*/
+  /*height: 99%;*/
 }
 
 code {
@@ -47,3 +51,7 @@ code {
   body { overflow-y: scroll; } /* reserves vertical scrollbar space */
 }
 
+/* Hide scrollbar for Chrome, Safari, Edge */
+::-webkit-scrollbar {
+  display: none;
+}

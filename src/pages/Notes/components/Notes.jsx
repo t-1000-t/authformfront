@@ -16,7 +16,7 @@ const MotionButton = motion(Button)
 const FOOTER_HEIGHT_PX = 80
 
 const Notes = () => {
-  const { getDataNotes, noteText, deleteNote, accessToken, user, listUp, setNoteList, hasChangeGlobalLoading } =
+  const { getDataNotes, noteText, deleteNote, accessToken, user, listUp, setNoteList, setGlobalLoading } =
     useAuthStore()
   const toast = useToast({ position: 'top-right' })
   const email = user?.userData?.email
@@ -32,13 +32,13 @@ const Notes = () => {
       const result = await getDataNotes(email)
       const { notes } = result
       setNoteList(notes)
-      hasChangeGlobalLoading(true) // TODO It Appears any time after del row Notes
+      setGlobalLoading(true) // TODO It Appears any time after del row Notes
       return result
     } catch (error) {
       logError(error)
       return null
     }
-  }, [email, getDataNotes, setNoteList, hasChangeGlobalLoading])
+  }, [email, getDataNotes, setNoteList, setGlobalLoading])
 
   useEffect(() => {
     if (email) getNotes().then()
@@ -64,17 +64,17 @@ const Notes = () => {
 
   const handleDelete = async (id) => {
     if (!accessToken) return logError('Access token not available')
-    hasChangeGlobalLoading(true)
+    setGlobalLoading(true)
     try {
       const promise = deleteNote(id)
         .then((result) => {
           if (result.status === 200) return getNotes()
           return result
         })
-        .finally(() => hasChangeGlobalLoading(false))
+        .finally(() => setGlobalLoading(false))
       promiseBasedToastDel(toast, promise)
     } catch (e) {
-      hasChangeGlobalLoading(false)
+      setGlobalLoading(false)
       logError(e)
     }
     return null

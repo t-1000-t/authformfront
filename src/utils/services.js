@@ -12,4 +12,16 @@ const notifyUser = (message) => {
   console.log('Notification:', message)
 }
 
-export { logError, notifyUser }
+const withNamedLoading = async (set, name, fn) => {
+  set((s) => ({ loading: { ...s.loading, [name]: true } }))
+  try {
+    return await fn()
+  } catch (error) {
+    logError(error)
+    return () => {}
+  } finally {
+    set((s) => ({ loading: { ...s.loading, [name]: false } }))
+  }
+}
+
+export { logError, notifyUser, withNamedLoading }

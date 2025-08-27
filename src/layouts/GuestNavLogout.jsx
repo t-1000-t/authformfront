@@ -30,22 +30,22 @@ const MotionBox = motion.div
 
 // eslint-disable-next-line react/prop-types
 const GuestNavLogout = ({ name, idUserName }) => {
-  const { logout, user, isGlobalLoading } = useAuthStore()
+  const { logout, user, loading, setGlobalLoading } = useAuthStore()
   // const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
   const [openTooltip, setOpenTooltip] = useState(false)
 
   useEffect(() => {
     let timer
-    if (user?.username && isGlobalLoading) {
+    if (user?.username && loading.global) {
       setOpenTooltip(true)
       timer = setTimeout(() => setOpenTooltip(false), 3000)
     }
     return () => clearTimeout(timer)
-  }, [user?.username, isGlobalLoading])
+  }, [user?.username, loading.global])
 
   const handleLogOut = async () => {
-    // setIsLoading(true)
+    setGlobalLoading(true)
     setError(false)
     const { id } = user.userData
 
@@ -55,7 +55,7 @@ const GuestNavLogout = ({ name, idUserName }) => {
       const msg = err.response?.data?.message || err.message
       setError(msg)
     } finally {
-      // setIsLoading(false)
+      setGlobalLoading(false)
     }
   }
 

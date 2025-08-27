@@ -4,17 +4,12 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
 import Container from '../../../layouts/Container'
-import useAuthStore from '../../../store/useAuthStore'
-import { notifyUser } from '../../../utils/services'
 import HighlightBox from '../../../utils/StylesBoxes/HighlightBox'
 
 const MotionButton = motion(Button)
 
 const HomePage = () => {
-  const accessToken = useAuthStore((state) => state.accessToken)
   const isMobile = useBreakpointValue({ base: true, md: false })
-
-  notifyUser('accessToken', accessToken)
 
   return (
     <Container

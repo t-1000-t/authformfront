@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import useAuthStore from '../../store/useAuthStore'
 // import { handleAuthentication } from '../../services/auth'
 import { setAxiosInterceptors } from '../../utils/axios'
-import LoadingScreen from '../LoadingScreen'
+import LoadingScreen from '../../services/LoadingScreen'
 
 // eslint-disable-next-line react/prop-types
 const Auth = ({ children }) => {

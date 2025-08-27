@@ -2,7 +2,7 @@ import React, { Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 
 import routesConfig from './routesConfig'
-import LoadingScreen from './components/LoadingScreen'
+import LoadingScreen from './services/LoadingScreen'
 
 const RoutesRender = () => {
   const compose = (route, node) => {

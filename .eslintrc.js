@@ -19,7 +19,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['react', 'prettier'],
+  plugins: ['react', 'import', 'prettier'],
   rules: {
     quotes: ['error', 'single', { avoidEscape: true }],
     'max-len': ['error', { code: 120 }],

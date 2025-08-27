@@ -18,7 +18,7 @@ import {
   searchAgent,
 } from '../services/auth'
 import axios, { removeTokenHeader } from '../utils/axios'
-import { logError } from '../utils/services'
+import { logError, withNamedLoading } from '../utils/services'
 
 const store = (set) => ({
   accessToken: null,
@@ -27,6 +27,7 @@ const store = (set) => ({
   listUp: null,
   statusUpCv: null,
   botData: null,
+  idAvatar: null,
   cv: {
     user: {
       userId: '...',
@@ -78,6 +79,12 @@ const store = (set) => ({
   currentData: { section: '', localData: null },
   setCurrentData: (data) => set({ currentData: data }),
   isGlobalLoading: false,
+  loading: {
+    global: false,
+    getDataNotes: false,
+    pushCvText: false,
+    pullDataCv: false,
+  },
 
   signup: async ({ username, surname, email, password, role, message, avatar }) => {
     const { user, idAvatar } = await signup({
@@ -187,19 +194,24 @@ const store = (set) => ({
     }
   },
 
-  pushCvText: async (data) => {
-    try {
-      const cvResult = await cvDataUp(data)
-      set({ statusUpCv: cvResult.status })
-      if (cvResult && cvResult.status === 200) {
-        const result = await pullDataCv(data.email)
-        set({ cv: result })
+  getDataNotes: (mail) =>
+    withNamedLoading(set, 'getDataNotes', async () => {
+      const { data } = await axios.get('/api/auth/notes', { params: { email: mail } })
+      return data
+    }),
+
+  pushCvText: async (text) => {
+    return withNamedLoading(set, 'pushCvText', async () => {
+      const data = await cvDataUp(text)
+      set({ statusUpCv: data.status })
+      if (data && data.status === 200) {
+        withNamedLoading(set, 'pullDataCv', async () => {
+          const res = await pullDataCv(text.email)
+          set({ cv: res })
+        })
       }
-      return cvResult
-    } catch (error) {
-      logError(error)
-      return null
-    }
+      return data
+    })
   },
 
   pushDataAgentSearch: async (data) => {
@@ -230,20 +242,7 @@ const store = (set) => ({
     }
   },
 
-  getDataNotes: async (mail) => {
-    try {
-      const response = await axios.get('/api/auth/notes', { params: { email: mail } })
-
-      return response.data
-    } catch (e) {
-      logError(e)
-      return null
-    }
-  },
-
-  hasChangeGlobalLoading: (isBool) => {
-    set({ isGlobalLoading: isBool })
-  },
+  setGlobalLoading: (flag) => set((s) => ({ loading: { ...s.loading, global: !!flag } })),
 
   cvPdfUp: async (data) => {
     try {

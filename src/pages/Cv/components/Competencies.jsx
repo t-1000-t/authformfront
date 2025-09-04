@@ -12,7 +12,7 @@ const Competencies = () => {
   const { cv, putCvInfo, setCurrentData } = useAuthStore()
   const { competencies } = cv.user.newData
   // const [boilerplateObj] = useState({
-  //   languages: '...',
+  //   language: '...',
   //   ide: '...',
   //   vcs: '...',
   //   platform: '...',
@@ -26,7 +26,7 @@ const Competencies = () => {
 
   const handleSubmit = () => {
     if (
-      !competencies.languages ||
+      !competencies.lang ||
       !competencies.ide ||
       !competencies.vcs ||
       !competencies.platform ||

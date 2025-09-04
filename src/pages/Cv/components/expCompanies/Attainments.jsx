@@ -11,7 +11,7 @@ const Attainments = () => {
         </Text>
         <br />
         <Text as="i" fontSize="lg">
-          Languages:
+          Language:
         </Text>
         &nbsp;JavaScript
         <br />

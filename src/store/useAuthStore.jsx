@@ -55,7 +55,7 @@ const store = (set) => ({
           responsibilities: '...',
         },
         competencies: {
-          languages: '...',
+          lang: '...',
           ide: '...',
           vcs: '...',
           platform: '...',

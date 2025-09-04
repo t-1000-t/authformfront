@@ -1,2 +1,140 @@
-"use strict";(self.webpackChunkauthform=self.webpackChunkauthform||[]).push([[358],{2358:(e,s,t)=>{t.r(s),t.d(s,{default:()=>k});var r=t(5043),a=t(2107),n=t(9379),c=t(45),l=t(579),i=t(3033),o=t(6417),d=t(4765),h=t(5003),u=t(5158),x=t(7971);const j=["className","layout"],[m,f]=(0,o.q)({name:"TableStylesContext",errorMessage:"useTableStyles returned is 'undefined'. Seems you forgot to wrap the components in \"<Table />\" "}),A=(0,h.R)((e,s)=>{const t=(0,u.o)("Table",e),r=(0,i.M)(e),{className:a,layout:o}=r,h=(0,c.A)(r,j);return(0,l.jsx)(m,{value:t,children:(0,l.jsx)(x.B.table,(0,n.A)({ref:s,__css:(0,n.A)({tableLayout:o},t.table),className:(0,d.cx)("chakra-table",a)},h))})});A.displayName="Table";const b=(0,h.R)((e,s)=>{const t=f();return(0,l.jsx)(x.B.thead,(0,n.A)((0,n.A)({},e),{},{ref:s,__css:t.thead}))}),y=(0,h.R)((e,s)=>{const t=f();return(0,l.jsx)(x.B.tr,(0,n.A)((0,n.A)({},e),{},{ref:s,__css:t.tr}))}),_=["isNumeric"],p=(0,h.R)((e,s)=>{let{isNumeric:t}=e,r=(0,c.A)(e,_);const a=f();return(0,l.jsx)(x.B.th,(0,n.A)((0,n.A)({},r),{},{ref:s,__css:a.th,"data-is-numeric":t}))}),N=(0,h.R)((e,s)=>{const t=f();return(0,l.jsx)(x.B.tbody,(0,n.A)((0,n.A)({},e),{},{ref:s,__css:t.tbody}))}),S=["isNumeric"],w=(0,h.R)((e,s)=>{let{isNumeric:t}=e,r=(0,c.A)(e,S);const a=f();return(0,l.jsx)(x.B.td,(0,n.A)((0,n.A)({},r),{},{ref:s,__css:a.td,"data-is-numeric":t}))});var T=t(6221);const g=()=>{const[e,s]=(0,r.useState)([]),[t,n]=(0,r.useState)(!0),[c,i]=(0,r.useState)(null);return(0,r.useEffect)(()=>{(async()=>{try{const e=await fetch("http://localhost:3005/api/users",{method:"GET"});if(!e.ok)throw new Error("HTTP error! status: ".concat(e.status));const t=await e.json();s(t)}catch(e){i(e.message)}finally{n(!1)}})().then()},[]),t?(0,l.jsx)(T.A,{children:"Loading..."}):c?(0,l.jsxs)(T.A,{children:["Error: ",c]}):(0,l.jsxs)(T.A,{children:[(0,l.jsx)(a.a,{mb:4,fontSize:"xl",fontWeight:"bold",children:"Users from MySQL Database"}),e.length>0?(0,l.jsxs)(A,{variant:"simple",children:[(0,l.jsx)(b,{children:(0,l.jsxs)(y,{children:[(0,l.jsx)(p,{children:"ID"}),(0,l.jsx)(p,{children:"Name"}),(0,l.jsx)(p,{children:"Email"}),(0,l.jsx)(p,{children:"Created At"})]})}),(0,l.jsx)(N,{children:e.map(e=>(0,l.jsxs)(y,{children:[(0,l.jsx)(w,{children:e.id}),(0,l.jsx)(w,{children:e.name}),(0,l.jsx)(w,{children:e.email}),(0,l.jsx)(w,{children:new Date(e.created_at).toLocaleString()})]},e.id))})]}):(0,l.jsx)(a.a,{children:"No users found in the database"})]})},k=()=>(0,l.jsx)(g,{})}}]);
+'use strict'
+;(self.webpackChunkauthform = self.webpackChunkauthform || []).push([
+  [358],
+  {
+    2358: (e, s, t) => {
+      ;(t.r(s), t.d(s, { default: () => k }))
+      var r = t(5043),
+        a = t(2107),
+        n = t(9379),
+        c = t(45),
+        l = t(579),
+        i = t(3033),
+        o = t(6417),
+        d = t(4765),
+        h = t(5003),
+        u = t(5158),
+        x = t(7971)
+      const j = ['className', 'layout'],
+        [m, f] = (0, o.q)({
+          name: 'TableStylesContext',
+          errorMessage:
+            'useTableStyles returned is \'undefined\'. Seems you forgot to wrap the components in "<Table />" ',
+        }),
+        A = (0, h.R)((e, s) => {
+          const t = (0, u.o)('Table', e),
+            r = (0, i.M)(e),
+            { className: a, layout: o } = r,
+            h = (0, c.A)(r, j)
+          return (0, l.jsx)(m, {
+            value: t,
+            children: (0, l.jsx)(
+              x.B.table,
+              (0, n.A)(
+                { ref: s, __css: (0, n.A)({ tableLayout: o }, t.table), className: (0, d.cx)('chakra-table', a) },
+                h,
+              ),
+            ),
+          })
+        })
+      A.displayName = 'Table'
+      const b = (0, h.R)((e, s) => {
+          const t = f()
+          return (0, l.jsx)(x.B.thead, (0, n.A)((0, n.A)({}, e), {}, { ref: s, __css: t.thead }))
+        }),
+        y = (0, h.R)((e, s) => {
+          const t = f()
+          return (0, l.jsx)(x.B.tr, (0, n.A)((0, n.A)({}, e), {}, { ref: s, __css: t.tr }))
+        }),
+        _ = ['isNumeric'],
+        p = (0, h.R)((e, s) => {
+          let { isNumeric: t } = e,
+            r = (0, c.A)(e, _)
+          const a = f()
+          return (0, l.jsx)(x.B.th, (0, n.A)((0, n.A)({}, r), {}, { ref: s, __css: a.th, 'data-is-numeric': t }))
+        }),
+        N = (0, h.R)((e, s) => {
+          const t = f()
+          return (0, l.jsx)(x.B.tbody, (0, n.A)((0, n.A)({}, e), {}, { ref: s, __css: t.tbody }))
+        }),
+        S = ['isNumeric'],
+        w = (0, h.R)((e, s) => {
+          let { isNumeric: t } = e,
+            r = (0, c.A)(e, S)
+          const a = f()
+          return (0, l.jsx)(x.B.td, (0, n.A)((0, n.A)({}, r), {}, { ref: s, __css: a.td, 'data-is-numeric': t }))
+        })
+      var T = t(6221)
+      const g = () => {
+          const [e, s] = (0, r.useState)([]),
+            [t, n] = (0, r.useState)(!0),
+            [c, i] = (0, r.useState)(null)
+          return (
+            (0, r.useEffect)(() => {
+              ;(async () => {
+                try {
+                  const e = await fetch('http://localhost:3005/api/users', { method: 'GET' })
+                  if (!e.ok) throw new Error('HTTP error! status: '.concat(e.status))
+                  const t = await e.json()
+                  s(t)
+                } catch (e) {
+                  i(e.message)
+                } finally {
+                  n(!1)
+                }
+              })().then()
+            }, []),
+            t
+              ? (0, l.jsx)(T.A, { children: 'Loading...' })
+              : c
+                ? (0, l.jsxs)(T.A, { children: ['Error: ', c] })
+                : (0, l.jsxs)(T.A, {
+                    children: [
+                      (0, l.jsx)(a.a, {
+                        mb: 4,
+                        fontSize: 'xl',
+                        fontWeight: 'bold',
+                        children: 'Users from MySQL Database',
+                      }),
+                      e.length > 0
+                        ? (0, l.jsxs)(A, {
+                            variant: 'simple',
+                            children: [
+                              (0, l.jsx)(b, {
+                                children: (0, l.jsxs)(y, {
+                                  children: [
+                                    (0, l.jsx)(p, { children: 'ID' }),
+                                    (0, l.jsx)(p, { children: 'Name' }),
+                                    (0, l.jsx)(p, { children: 'Email' }),
+                                    (0, l.jsx)(p, { children: 'Created At' }),
+                                  ],
+                                }),
+                              }),
+                              (0, l.jsx)(N, {
+                                children: e.map((e) =>
+                                  (0, l.jsxs)(
+                                    y,
+                                    {
+                                      children: [
+                                        (0, l.jsx)(w, { children: e.id }),
+                                        (0, l.jsx)(w, { children: e.name }),
+                                        (0, l.jsx)(w, { children: e.email }),
+                                        (0, l.jsx)(w, { children: new Date(e.created_at).toLocaleString() }),
+                                      ],
+                                    },
+                                    e.id,
+                                  ),
+                                ),
+                              }),
+                            ],
+                          })
+                        : (0, l.jsx)(a.a, { children: 'No users found in the database' }),
+                    ],
+                  })
+          )
+        },
+        k = () => (0, l.jsx)(g, {})
+    },
+  },
+])
 //# sourceMappingURL=358.40114aa1.chunk.js.map

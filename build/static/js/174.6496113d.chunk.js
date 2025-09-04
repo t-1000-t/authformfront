@@ -1,2 +1,32 @@
-"use strict";(self.webpackChunkauthform=self.webpackChunkauthform||[]).push([[174],{4793:(e,s,a)=>{a.r(s),a.d(s,{default:()=>u});a(5043);var h=a(2107),n=a(5371),r=a(3572),c=a(9081),i=a(9838),t=a(579);const u=()=>(0,t.jsx)(i.A,{children:(0,t.jsx)(n.s,{bg:"white",minH:"75vh",justify:"center",align:"center",children:(0,t.jsxs)(h.a,{children:[(0,t.jsx)(r._,{h:{base:48,md:64},src:"/images/mail_sent.svg"}),(0,t.jsx)(c.E,{mt:4,children:"Your message has been received. Thank you. "})]})})})}}]);
+'use strict'
+;(self.webpackChunkauthform = self.webpackChunkauthform || []).push([
+  [174],
+  {
+    4793: (e, s, a) => {
+      ;(a.r(s), a.d(s, { default: () => u }))
+      a(5043)
+      var h = a(2107),
+        n = a(5371),
+        r = a(3572),
+        c = a(9081),
+        i = a(9838),
+        t = a(579)
+      const u = () =>
+        (0, t.jsx)(i.A, {
+          children: (0, t.jsx)(n.s, {
+            bg: 'white',
+            minH: '75vh',
+            justify: 'center',
+            align: 'center',
+            children: (0, t.jsxs)(h.a, {
+              children: [
+                (0, t.jsx)(r._, { h: { base: 48, md: 64 }, src: '/images/mail_sent.svg' }),
+                (0, t.jsx)(c.E, { mt: 4, children: 'Your message has been received. Thank you. ' }),
+              ],
+            }),
+          }),
+        })
+    },
+  },
+])
 //# sourceMappingURL=174.6496113d.chunk.js.map

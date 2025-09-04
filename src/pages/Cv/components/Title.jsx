@@ -36,6 +36,7 @@ const Title = () => {
           <Heading as="h1" fontSize="24px" fontWeight="bold" mb="10px">
             {title.posname}
           </Heading>
+
           <Heading as="h2" fontSize="22px" fontWeight="bold">
             {title.fullname}
           </Heading>

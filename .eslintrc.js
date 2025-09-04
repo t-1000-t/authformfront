@@ -22,6 +22,7 @@ module.exports = {
   plugins: ['react', 'import', 'prettier'],
   rules: {
     quotes: ['error', 'single', { avoidEscape: true }],
+    'linebreak-style': ['error', 'unix'],
     'max-len': ['error', { code: 120 }],
     'comma-dangle': ['error', 'always-multiline'],
     indent: 'off',

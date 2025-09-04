@@ -122,17 +122,19 @@ const Skills = () => {
 
         return (
           <Box key={item._id}>
-            <Flex>
-              <Box>{listItems(objNoId)}</Box>
-              <Button sx={styleButton} size="sx" onClick={() => handleEditClick(index)} bg="yellow.50">
-                <MdEditNote />
-              </Button>
-              <Button sx={styleButton} bg="green.50" p={2} size="sx" onClick={() => handleAddClick(index)}>
-                <MdOutlineNoteAdd />
-              </Button>
-              <Button sx={styleButton} bg="red.50" p={2} size="sx" onClick={() => handleDelClick(item, index)}>
-                <MdOutlineDeleteForever />
-              </Button>
+            <Flex justifyContent="space-between" alignItems="center" mb="20px">
+              <Box m={1}>{listItems(objNoId)}</Box>
+              <Box>
+                <Button sx={styleButton} bg="yellow.50" size="sx" onClick={() => handleEditClick(index)}>
+                  <MdEditNote />
+                </Button>
+                <Button sx={styleButton} bg="green.50" size="sx" onClick={() => handleAddClick(index)}>
+                  <MdOutlineNoteAdd />
+                </Button>
+                <Button sx={styleButton} bg="red.50" size="sx" onClick={() => handleDelClick(item, index)}>
+                  <MdOutlineDeleteForever />
+                </Button>
+              </Box>
             </Flex>
           </Box>
         )

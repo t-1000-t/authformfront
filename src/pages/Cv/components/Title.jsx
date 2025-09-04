@@ -32,7 +32,7 @@ const Title = () => {
   return (
     <Box mb="20px">
       <Flex mb="20px" justifyContent="space-between" alignItems="flex-start">
-        <Box>
+        <Box m={1}>
           <Heading as="h1" fontSize="24px" fontWeight="bold" mb="10px">
             {title.posname}
           </Heading>

@@ -1,4 +1,4 @@
-function GuestGuard({ children }) {
+const GuestGuard = ({ children }) => {
   return children
 }
 

@@ -28,23 +28,26 @@ const Contacts = () => {
   }
 
   return (
-    <Flex w="100%" justifyContent="space-between" mt="20px">
-      <Flex>
-        <Box>{listItems(contacts)}</Box>
-        <ModalEdit
-          onSubmit={handleSubmit}
-          onChange={onChange}
-          onClose={onClose}
-          text={text}
-          isOpen={isOpen}
-          initialRef={initialRef}
-        />
-        <Button sx={styleButton} size="sx" mt={4} onClick={onOpen} bg="yellow.50" _hover={{ bg: 'green.200' }}>
-          <MdEditNote />
-        </Button>
+    <Flex w="100%" justifyContent="space-between">
+      <Flex w="70%" justifyContent="space-between">
+        <Box m={1}>{listItems(contacts)}</Box>
+        <Box>
+          <ModalEdit
+            onSubmit={handleSubmit}
+            onChange={onChange}
+            onClose={onClose}
+            text={text}
+            isOpen={isOpen}
+            initialRef={initialRef}
+          />
+          <Box>
+            <Button sx={styleButton} size="sx" onClick={onOpen} bg="yellow.50" _hover={{ bg: 'green.200' }}>
+              <MdEditNote />
+            </Button>
+          </Box>
+        </Box>
       </Flex>
-      {/* Right Column - Image */}
-      <Box>
+      <Box m={2}>
         <Image
           src="/images/I_19.jpg"
           alt="Vlad"

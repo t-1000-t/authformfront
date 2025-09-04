@@ -36,7 +36,7 @@ const SendData = () => {
 
   return (
     <VStack spacing={3} align="stretch">
-      <Flex justify="space-between">
+      <Flex justify="space-around">
         <Text>Save CV</Text>
         <Tooltip label={!hasChanged && 'Any text must be changed before saving!'} placement="left-start">
           <Button

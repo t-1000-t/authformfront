@@ -1,7 +1,7 @@
 const styleButton = {
   borderRadius: 'full',
-  w: '40px',
-  h: '40px',
+  w: '30px',
+  h: '30px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',

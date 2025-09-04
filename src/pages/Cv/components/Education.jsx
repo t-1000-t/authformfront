@@ -31,14 +31,16 @@ const Education = () => {
       <Text as="b" fontSize="larger" pb="10px">
         Education:
       </Text>
-      <Flex>
+      <Flex justify="space-between">
         <Box>
-          <Box>{listItems(education)}</Box>
+          <Box m={1}>{listItems(education)}</Box>
           <ModalEdit isOpen={isOpen} onSubmit={handleSubmit} text={text} onClose={onClose} onChange={onChange} />
         </Box>
-        <Button sx={styleButton} onClick={onOpen} size="sx" bg="yellow.50" _hover={{ bg: 'green.200' }}>
-          <MdEditNote />
-        </Button>
+        <Box>
+          <Button sx={styleButton} onClick={onOpen} size="sx" bg="yellow.50" _hover={{ bg: 'green.200' }}>
+            <MdEditNote />
+          </Button>
+        </Box>
       </Flex>
     </Flex>
   )

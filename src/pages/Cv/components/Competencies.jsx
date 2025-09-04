@@ -49,14 +49,16 @@ const Competencies = () => {
       <Text as="b" fontSize="larger" pb="10px">
         Competencies:
       </Text>
-      <Flex>
+      <Flex justifyContent="space-between">
         <Box>
-          <Box>{listItems(competencies)}</Box>
+          <Box m={1}>{listItems(competencies)}</Box>
           <ModalEdit isOpen={isOpen} onSubmit={handleSubmit} text={text} onClose={onClose} onChange={onChange} />
         </Box>
-        <Button sx={styleButton} onClick={onOpen} size="sx" bg="yellow.50" _hover={{ bg: 'green.200' }}>
-          <MdEditNote />
-        </Button>
+        <Box>
+          <Button sx={styleButton} onClick={onOpen} size="sx" bg="yellow.50" _hover={{ bg: 'green.200' }}>
+            <MdEditNote />
+          </Button>
+        </Box>
       </Flex>
     </Flex>
   )

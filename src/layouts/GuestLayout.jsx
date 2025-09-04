@@ -8,11 +8,10 @@ import GuestNavLogout from './GuestNavLogout'
 
 const FOOTER_HEIGHT_PX = 80
 
-const GuestLayout = (props) => {
+const GuestLayout = ({ children }) => {
   const accessToken = useAuthStore((state) => state.accessToken)
   const user = useAuthStore((state) => state?.user?.userData)
   // eslint-disable-next-line react/prop-types
-  const { children } = props
 
   const [isAccessToken, setIsAccessToken] = useState(null)
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { Box, Button, Flex, Heading } from '@chakra-ui/react'
 import { MdEditNote } from 'react-icons/md'
 import useAuthStore from '../../../store/useAuthStore'
@@ -11,6 +11,7 @@ const Title = () => {
   const { putCvInfo, cv, setCurrentData } = useAuthStore()
   const initialRef = useRef(null)
   const { title } = cv.user.newData
+  const [showEditNoteTitle, setShowEditNoteTitle] = useState(false)
 
   const { isOpen, text, onOpen, onClose, onChange } = useModalEdit(title)
 
@@ -31,7 +32,13 @@ const Title = () => {
 
   return (
     <Box mb="20px" w="100%">
-      <Flex mb="20px" justifyContent="space-between" alignItems="flex-start">
+      <Flex
+        mb="20px"
+        justifyContent="space-between"
+        alignItems="flex-start"
+        onMouseEnter={() => setShowEditNoteTitle(true)}
+        onMouseLeave={() => setShowEditNoteTitle(false)}
+      >
         <Box m={1}>
           <Heading as="h1" fontSize="24px" fontWeight="bold" mb="10px">
             {title.posname}
@@ -42,9 +49,11 @@ const Title = () => {
           </Heading>
         </Box>
         <Box>
-          <Button sx={styleButton} m={3} size="sx" onClick={onOpen} bg="yellow.50" _hover={{ bg: 'green.200' }}>
-            <MdEditNote />
-          </Button>
+          {showEditNoteTitle && (
+            <Button sx={styleButton} m={3} size="sx" onClick={onOpen} bg="yellow.50" _hover={{ bg: 'green.200' }}>
+              <MdEditNote />
+            </Button>
+          )}
         </Box>
       </Flex>
       <ModalEdit

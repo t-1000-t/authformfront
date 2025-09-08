@@ -30,7 +30,7 @@ const Title = () => {
   }
 
   return (
-    <Box mb="20px">
+    <Box mb="20px" w="100%">
       <Flex mb="20px" justifyContent="space-between" alignItems="flex-start">
         <Box m={1}>
           <Heading as="h1" fontSize="24px" fontWeight="bold" mb="10px">
@@ -41,19 +41,20 @@ const Title = () => {
             {title.fullname}
           </Heading>
         </Box>
-        <Button sx={styleButton} m={3} size="sx" onClick={onOpen} bg="yellow.50" _hover={{ bg: 'green.200' }}>
-          <MdEditNote />
-        </Button>
-
-        <ModalEdit
-          isOpen={isOpen}
-          onClose={onClose}
-          onSubmit={handleSubmit}
-          text={text}
-          onChange={onChange}
-          initialRef={initialRef}
-        />
+        <Box>
+          <Button sx={styleButton} m={3} size="sx" onClick={onOpen} bg="yellow.50" _hover={{ bg: 'green.200' }}>
+            <MdEditNote />
+          </Button>
+        </Box>
       </Flex>
+      <ModalEdit
+        isOpen={isOpen}
+        onClose={onClose}
+        onSubmit={handleSubmit}
+        text={text}
+        onChange={onChange}
+        initialRef={initialRef}
+      />
     </Box>
   )
 }

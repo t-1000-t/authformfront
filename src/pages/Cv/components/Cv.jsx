@@ -20,17 +20,20 @@ const Cv = () => {
   }, [])
 
   return (
-    <A4Container>
+    <>
       <SendData />
-      <Title />
-      <CardWrap>
-        <Contacts />
-        <Education />
-        <Competencies />
-        <PetInProgress />
-        <Skills />
-      </CardWrap>
-    </A4Container>
+
+      <A4Container>
+        <CardWrap>
+          <Title />
+          <Contacts />
+          <Education />
+          <Competencies />
+          <PetInProgress />
+          <Skills />
+        </CardWrap>
+      </A4Container>
+    </>
   )
 }
 

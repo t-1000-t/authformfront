@@ -1,20 +1,21 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useAuthStore from '../../store/useAuthStore'
-// import { handleAuthentication } from '../../services/auth'
 import { setAxiosInterceptors } from '../../utils/axios'
 import LoadingScreen from '../../services/LoadingScreen'
+import useLocalStorage from '../../utils/hooks/useLocalStorage'
 
 // eslint-disable-next-line react/prop-types
 const Auth = ({ children }) => {
   const navigate = useNavigate()
   const logout = useAuthStore((state) => state.logout)
   const accessToken = useAuthStore((state) => state.accessToken)
+  const [setStoreToken] = useLocalStorage('token', '')
 
   const [isLoading, setLoading] = useState(true)
 
   const restoreSession = useCallback(() => {
-    // handleAuthentication(accessToken)
+    setStoreToken(accessToken)
 
     try {
       setLoading(false)

@@ -86,8 +86,9 @@ const SignupForm = ({ avatar }) => {
       setError(msg)
 
       setIsLoading(false)
-    } finally {
       navigate('/')
+    } finally {
+      navigate('/login')
     }
 
     return null

@@ -1,6 +1,6 @@
 import { jwtDecode } from 'jwt-decode'
-import { useNavigate } from 'react-router-dom'
 import instance from '../utils/axios'
+import useLocalStorage from '../utils/hooks/useLocalStorage'
 
 const isValidToken = (accessToken) => {
   if (!accessToken) {
@@ -29,20 +29,15 @@ const setSession = (accessToken) => {
   }
 }
 
-export const useAuthHandler = () => {
-  const history = useNavigate()
+export const handleAuthentication = (accessToken) => {
+  const [storedValue, setStoredValue] = useLocalStorage('token', '')
+  if (isValidToken(storedValue)) {
+    setSession(accessToken)
 
-  const handleAuthentication = (accessToken) => {
-    if (isValidToken(accessToken)) {
-      setSession(accessToken)
-
-      if (accessToken) {
-        history.push('/')
-      }
+    if (accessToken) {
+      setStoredValue(accessToken)
     }
   }
-
-  return handleAuthentication
 }
 
 export const cvDataUp = (data) => {

@@ -9,6 +9,7 @@
     "@dnd-kit/modifiers": "^9.0.0",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
+    "@emotion/react": "^11.14.0",
     "axios": "1.8.2",
     "fetch": "^1.1.0",
     "framer-motion": "^12.4.7",

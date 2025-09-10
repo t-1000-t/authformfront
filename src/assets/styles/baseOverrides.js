@@ -1,4 +1,4 @@
-// ---------- Base theme OVERRIDES (plain object) ----------
+// theme/baseOverrides.js
 import colorConfig from './colorConfig'
 
 const baseOverrides = {
@@ -12,13 +12,36 @@ const baseOverrides = {
         bg: 'bg',
         color: 'fg',
       },
-      /* Hide scrollbar styles */
       scrollbarWidth: 'none', // Firefox
       msOverflowStyle: 'none', // IE + Edge
       'html::-webkit-scrollbar, body::-webkit-scrollbar': {
         display: 'none', // Chrome, Safari
       },
       'html, body, #root': { height: '100%' },
+    },
+  },
+  components: {
+    BoxIcon: {
+      baseStyle: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        p: 2,
+      },
+      variants: {
+        subtle: { bg: 'gray.50' },
+        success: { bg: 'green.100' },
+        error: { bg: 'red.100' },
+      },
+      sizes: {
+        sm: { boxSize: '48px', rounded: 'md' },
+        md: { boxSize: '64px', rounded: 'lg' },
+        lg: { boxSize: '80px', rounded: 'xl' },
+      },
+      defaultProps: {
+        variant: 'subtle',
+        size: 'md',
+      },
     },
   },
   fonts: {
@@ -47,11 +70,11 @@ const baseOverrides = {
     },
   },
   breakpoints: {
-    sm: '30em', // 480px
-    md: '48em', // 768px
-    lg: '62em', // 992px
-    xl: '80em', // 1280px
-    '2xl': '96em', // 1536px
+    sm: '30em',
+    md: '48em',
+    lg: '62em',
+    xl: '80em',
+    '2xl': '96em',
   },
 }
 

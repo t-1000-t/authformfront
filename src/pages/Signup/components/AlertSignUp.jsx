@@ -4,6 +4,7 @@ import Lottie from 'react-lottie-player'
 
 import sendLetter2 from '../../../animations/sendLetter2.json'
 import sendUnSuccess from '../../../animations/sendUnsuccess.json'
+import BoxIcon from './BoxIcon'
 
 // eslint-disable-next-line react/prop-types
 const AlertSignUp = ({ status }) => {
@@ -23,9 +24,9 @@ const AlertSignUp = ({ status }) => {
       right={5} // Positioned at the right of the viewport
     >
       <Flex>
-        <Box h={48} w={48} align="center">
+        <BoxIcon variant={status ? 'success' : 'error'}>
           <Lottie animationData={result} loop play />
-        </Box>
+        </BoxIcon>
       </Flex>
     </Box>
   )

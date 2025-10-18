@@ -115,6 +115,14 @@ const routesConfig = [
     component: lazy(() => import('./pages/FooAgent')),
     id: '0x04',
   },
+  {
+    exact: false,
+    path: '/qrc',
+    layout: GuestLayout,
+    guard: GuestGuard,
+    component: lazy(() => import('./pages/QRC')),
+    id: '0x05',
+  },
 ]
 
 export default routesConfig

@@ -2,6 +2,7 @@ import React from 'react'
 import { Stack, Icon, Text, useBreakpointValue, Box } from '@chakra-ui/react'
 import {
   FaHome,
+  FaQrcode,
   FaStickyNote,
   FaAddressCard,
   FaCheck,
@@ -32,6 +33,7 @@ const GuestFooter = ({ footerHeight }) => {
 
   const links = [
     { to: '/', label: 'Home', icon: FaHome },
+    { to: '/qrc', label: 'QR-Code', icon: FaQrcode },
     { to: '/notes', label: 'Notes', icon: FaStickyNote },
     { to: '/contact', label: 'Contact', icon: FaAddressCard },
     { to: '/p5', label: 'Game P5', icon: FaGamepad },

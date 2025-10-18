@@ -11,6 +11,7 @@ import {
   FaGamepad,
   FaDatabase,
   FaRobot,
+  FaFileDownload,
 } from 'react-icons/fa'
 import { motion } from 'framer-motion'
 import { TbFileCv } from 'react-icons/tb'
@@ -33,6 +34,7 @@ const GuestFooter = ({ footerHeight }) => {
 
   const links = [
     { to: '/', label: 'Home', icon: FaHome },
+    { to: '/download', label: 'Loader', icon: FaFileDownload },
     { to: '/qrc', label: 'QR-Code', icon: FaQrcode },
     { to: '/notes', label: 'Notes', icon: FaStickyNote },
     { to: '/contact', label: 'Contact', icon: FaAddressCard },

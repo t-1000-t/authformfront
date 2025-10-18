@@ -123,6 +123,14 @@ const routesConfig = [
     component: lazy(() => import('./pages/QRC')),
     id: '0x05',
   },
+  {
+    exact: false,
+    path: '/download',
+    layout: GuestLayout,
+    guard: GuestGuard,
+    component: lazy(() => import('./pages/DownLoadVideo')),
+    id: '0x06',
+  },
 ]
 
 export default routesConfig

@@ -13,9 +13,9 @@ import {
   FaRobot,
   FaFileDownload,
 } from 'react-icons/fa'
+import { GrPieChart, GrGamepad } from 'react-icons/gr'
 import { motion } from 'framer-motion'
 import { TbFileCv } from 'react-icons/tb'
-import { GrGamepad } from 'react-icons/gr'
 import Container from './Container'
 import useAuthStore from '../store/useAuthStore'
 import TextLink from './TextLink' // Import your reusable TextLink components
@@ -49,6 +49,7 @@ const GuestFooter = ({ footerHeight }) => {
     links.splice(-1, 0, { to: '/call', label: 'Call', icon: FaPhone })
     links.splice(1, 0, { to: '/cv', label: 'CV', icon: TbFileCv })
     links.splice(2, 0, { to: '/fooagent', label: 'FooAgent', icon: FaRobot })
+    links.splice(3, 0, { to: '/particles', label: 'Particles', icon: GrPieChart })
   }
 
   return (

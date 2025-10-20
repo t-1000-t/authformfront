@@ -131,6 +131,14 @@ const routesConfig = [
     component: lazy(() => import('./pages/DownLoadVideo')),
     id: '0x06',
   },
+  {
+    exact: false,
+    path: '/particles',
+    layout: GuestLayout,
+    guard: GuestGuard,
+    component: lazy(() => import('./pages/Particles')),
+    id: '0x07',
+  },
 ]
 
 export default routesConfig

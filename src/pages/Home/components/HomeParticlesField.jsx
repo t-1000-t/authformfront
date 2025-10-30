@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import { Box } from '@chakra-ui/react'
 
-const ParticlesField = ({ count = 600, linkRadius = 100, color = '#9fd', bgColor = '#05070a', ...boxProps }) => {
+const HomeParticlesField = ({ count = 600, linkRadius = 100, color = '#9fd', bgColor = '#05070a', ...boxProps }) => {
   const canvasRef = useRef(null)
 
   useEffect(() => {
@@ -157,4 +157,4 @@ const ParticlesField = ({ count = 600, linkRadius = 100, color = '#9fd', bgColor
   )
 }
 
-export default ParticlesField
+export default HomeParticlesField

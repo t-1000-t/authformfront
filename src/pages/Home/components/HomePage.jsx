@@ -19,7 +19,6 @@ import {
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
-// import Container from '../../../layouts/Container'
 import HighlightBox from '../../../utils/StylesBoxes/HighlightBox'
 import HomeParticlesField from './HomeParticlesField'
 
@@ -33,10 +32,19 @@ const HomePage = () => {
   const [bg, setBg] = useState('#03040a')
 
   return (
-    <Box w="100vw" h="100vh" position="relative" overflow="hidden">
-      <Stack direction={{ base: 'column-reverse', md: 'row' }} spacing={{ base: 8, md: 16 }} w="full" align="center">
+    <Box w="100vw" minH="calc(100vh - 200px)" position="relative">
+      <Box position="absolute" top={0} laft={0} w="100%" h="100%" zIndex={0}>
         <HomeParticlesField count={count} linkRadius={radius} color={color} bgColor={bg} />
-        <VStack align="stretch" spacing={3}>
+      </Box>
+      <Stack
+        position="relative"
+        zIndex={1}
+        direction={{ base: 'column-reverse', md: 'row' }}
+        spacing={{ base: 8, md: 16 }}
+        w="full"
+        align="center"
+      >
+        <VStack align="stretch" spacing={3} p={2}>
           <Text fontWeight="bold">Interactive Controls</Text>
 
           <Box>
@@ -136,7 +144,8 @@ const HomePage = () => {
             fullbackSrc="/images/typing_on_board_600x525.jpg"
             width="100%"
             height="100%"
-            maxH="450px"
+            // maxH="90%"
+            maxW="80%"
             loading="eager" // Prioritize loading
           />
         </Flex>

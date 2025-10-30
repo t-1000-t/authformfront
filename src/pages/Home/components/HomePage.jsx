@@ -1,25 +1,94 @@
-import React from 'react'
-import { Box, Button, Flex, Heading, Image, Stack, Text, useBreakpointValue } from '@chakra-ui/react'
+import React, { useState } from 'react'
+import {
+  Box,
+  Button,
+  Flex,
+  FormLabel,
+  Heading,
+  Image,
+  Input,
+  Slider,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderTrack,
+  Stack,
+  Text,
+  useBreakpointValue,
+  VStack,
+} from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
-import Container from '../../../layouts/Container'
+// import Container from '../../../layouts/Container'
 import HighlightBox from '../../../utils/StylesBoxes/HighlightBox'
+import HomeParticlesField from './HomeParticlesField'
 
 const MotionButton = motion(Button)
 
 const HomePage = () => {
   const isMobile = useBreakpointValue({ base: true, md: false })
+  const [count, setCount] = useState(200)
+  const [radius, setRadius] = useState(50)
+  const [color, setColor] = useState('#77f')
+  const [bg, setBg] = useState('#03040a')
 
   return (
-    <Container
-      mb={{ base: 36, md: 0 }}
-      minH="calc(100vh - 200px)" // Adjust based on your header/footer height
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-    >
+    <Box w="100vw" h="100vh" position="relative" overflow="hidden">
       <Stack direction={{ base: 'column-reverse', md: 'row' }} spacing={{ base: 8, md: 16 }} w="full" align="center">
+        <HomeParticlesField count={count} linkRadius={radius} color={color} bgColor={bg} />
+        <VStack align="stretch" spacing={3}>
+          <Text fontWeight="bold">Interactive Controls</Text>
+
+          <Box>
+            <FormLabel mb={1}>Count ({count})</FormLabel>
+            <Slider min={100} max={1500} value={count} onChange={(val) => setCount(val)} focusThumbOnChange={false}>
+              <SliderTrack>
+                <SliderFilledTrack bg="blue.400" />
+              </SliderTrack>
+              <SliderThumb />
+            </Slider>
+          </Box>
+
+          <Box>
+            <FormLabel mb={1}>Link Radius ({radius})</FormLabel>
+            <Slider min={40} max={200} value={radius} onChange={(val) => setRadius(val)} focusThumbOnChange={false}>
+              <SliderTrack>
+                <SliderFilledTrack bg="teal.400" />
+              </SliderTrack>
+              <SliderThumb />
+            </Slider>
+          </Box>
+
+          <Box>
+            <FormLabel mb={1}>Color</FormLabel>
+            <Input
+              type="color"
+              value={color}
+              onChange={(e) => setColor(e.target.value)}
+              p={0}
+              h="30px"
+              w="100%"
+              bg="transparent"
+              border="none"
+              cursor="pointer"
+            />
+          </Box>
+
+          <Box>
+            <FormLabel mb={1}>Background</FormLabel>
+            <Input
+              type="color"
+              value={bg}
+              onChange={(e) => setBg(e.target.value)}
+              p={0}
+              h="30px"
+              w="100%"
+              bg="transparent"
+              border="none"
+              cursor="pointer"
+            />
+          </Box>
+        </VStack>
         <Flex flex={1} p={{ base: 4, md: 8 }} pl={0} direction="column" justify="center" mt={16}>
           <Box mb={8}>
             <Heading
@@ -72,7 +141,7 @@ const HomePage = () => {
           />
         </Flex>
       </Stack>
-    </Container>
+    </Box>
   )
 }
 

@@ -136,6 +136,7 @@ const HomePage = () => {
         <Flex flex={1} justify="center" align="center" position="relative" overflow="hidden">
           <Image
             bg="accent.500"
+            mt={6}
             p={0.5}
             borderRadius="lg"
             alt="Login image"

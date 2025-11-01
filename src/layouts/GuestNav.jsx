@@ -7,7 +7,7 @@ import ThemeToggleButton from '../utils/ThemeToggleButton'
 
 const MotionButton = motion(Button)
 
-const GuestNav = () => {
+const GuestNav = ({ theme, toggleTheme }) => {
   const buttonSize = useBreakpointValue({ base: 'md', md: 'lg' })
 
   return (
@@ -24,6 +24,7 @@ const GuestNav = () => {
         borderRadius="lg"
         boxShadow="sm"
         flexWrap="wrap"
+        background={theme === 'dark' ? 'Switch to dark' : 'Switch to light'}
       >
         {/* Logo */}
         <Link to="/">
@@ -31,7 +32,7 @@ const GuestNav = () => {
             <Image src="/images/motherland.svg" h={{ base: 10, md: 16 }} alt="Logo" draggable={false} />
           </Flex>
         </Link>
-        <ThemeToggleButton />
+        <ThemeToggleButton theme={theme} toggleTheme={toggleTheme} />
         {/* Buttons */}
         <Stack direction="row" spacing={4} align="center" mt={{ base: 4, md: 0 }} flexWrap="wrap">
           <MotionButton

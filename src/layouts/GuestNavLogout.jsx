@@ -23,6 +23,7 @@ import { ChevronDown } from 'lucide-react'
 import useAuthStore from '../store/useAuthStore'
 import Container from './Container'
 import ThemeToggleButton from '../utils/ThemeToggleButton'
+import useSwapTheme from '../utils/hooks/useSwapTheme'
 // import useLocalStorage from '../utils/hooks/useLocalStorage'
 
 // const MotionButton = motion(Button)
@@ -31,6 +32,7 @@ const MotionBox = motion.div
 // eslint-disable-next-line react/prop-types
 const GuestNavLogout = ({ name, idUserName }) => {
   const { logout, user, loading, setGlobalLoading } = useAuthStore()
+  const { theme } = useSwapTheme()
   // const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
   const [openTooltip, setOpenTooltip] = useState(false)
@@ -72,6 +74,7 @@ const GuestNavLogout = ({ name, idUserName }) => {
         borderRadius="lg"
         boxShadow="sm"
         flexWrap="wrap"
+        background={theme === 'dark' ? 'Switch to dark' : 'Switch to light'}
       >
         {/* Logo */}
         <ChakraLink as={RouterLink} to="/">

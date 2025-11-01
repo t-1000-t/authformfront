@@ -1,10 +1,8 @@
 import React from 'react'
 import { IconButton, Tooltip } from '@chakra-ui/react'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
-import useSwapTheme from './hooks/useSwapTheme'
 
-const ThemeToggleButton = () => {
-  const { theme, toggleTheme } = useSwapTheme()
+const ThemeToggleButton = ({ theme, toggleTheme }) => {
   const label = theme === 'dark' ? 'Switch to light' : 'Switch to dark'
 
   return (
@@ -12,9 +10,10 @@ const ThemeToggleButton = () => {
       <IconButton
         aria-label={label}
         onClick={toggleTheme}
-        icon={theme === 'dark' ? <SunIcon /> : <MoonIcon />}
+        icon={theme === 'dark' ? <MoonIcon /> : <SunIcon />}
         variant="ghost"
         size="sm"
+        background={theme === 'dark' ? 'teal.200' : 'teal.500'}
       />
     </Tooltip>
   )

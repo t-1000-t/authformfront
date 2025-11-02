@@ -21,6 +21,16 @@ const baseOverrides = {
     },
   },
   components: {
+    Text: {
+      baseStyle: {
+        color: '#369999',
+      },
+    },
+    FormLabel: {
+      baseStyle: {
+        color: 'rgb(255, 107, 97)',
+      },
+    },
     BoxIcon: {
       baseStyle: {
         display: 'flex',

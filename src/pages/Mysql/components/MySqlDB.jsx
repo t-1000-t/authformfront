@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react'
+import instance from '../../../utils/axios'
 import Container from '../../../layouts/Container'
 
 const MySqlDB = () => {
@@ -10,13 +11,11 @@ const MySqlDB = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch('http://localhost:3005/api/users', {
-          method: 'GET',
-        })
-        if (!response.ok) {
+        const response = await instance.get('/api/rows')
+        const { statusText, data } = response
+        if (statusText !== 'OK') {
           throw new Error(`HTTP error! status: ${response.status}`)
         }
-        const data = await response.json()
         setUsers(data)
       } catch (err) {
         setError(err.message)

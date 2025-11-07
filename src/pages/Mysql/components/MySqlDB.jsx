@@ -67,7 +67,6 @@ const MySqlDB = () => {
   if (loading) return <Container>Loading...</Container>
   if (error) return <Container>Error: {error}</Container>
 
-  console.log('userInfo', userInfo)
   return (
     <Container>
       <Box mb={4} fontSize="xl" fontWeight="bold">
@@ -82,7 +81,7 @@ const MySqlDB = () => {
           <FormHelperText>We will never share your email.</FormHelperText>
         </FormControl>
         <Button mt={4} colorScheme="teal" type="submit">
-          Add the New user
+          Add new row
         </Button>
       </form>
 

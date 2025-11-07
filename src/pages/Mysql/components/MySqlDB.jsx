@@ -96,7 +96,7 @@ const MySqlDB = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {users.map((user) => (
+            {users.toReversed().map((user) => (
               <Tr key={user.id}>
                 <Td>{user.id}</Td>
                 <Td>{user.name}</Td>

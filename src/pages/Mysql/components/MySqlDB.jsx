@@ -1,10 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react'
+import {
+  Box,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  FormLabel,
+  Input,
+  FormHelperText,
+  FormControl,
+  Button,
+} from '@chakra-ui/react'
 import instance from '../../../utils/axios'
 import Container from '../../../layouts/Container'
 
 const MySqlDB = () => {
   const [users, setUsers] = useState([])
+  const [lastRow, setLastRow] = useState({ id: '', name: '', email: '' })
+  const [userInfo, setUserInfo] = useState({ name: '', email: '' })
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -25,16 +40,51 @@ const MySqlDB = () => {
     }
 
     fetchUsers().then()
-  }, [])
+  }, [lastRow])
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    try {
+      const response = await instance.post('/api/rows', userInfo)
+      const { statusText, data } = response
+      if (statusText !== 'Created') {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      setLastRow(data)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleChange = (e) => {
+    e.preventDefault()
+    setUserInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+  }
 
   if (loading) return <Container>Loading...</Container>
   if (error) return <Container>Error: {error}</Container>
 
+  console.log('userInfo', userInfo)
   return (
     <Container>
       <Box mb={4} fontSize="xl" fontWeight="bold">
         Users from MySQL Database
       </Box>
+      <form onSubmit={handleSubmit}>
+        <FormControl isRequired>
+          <FormLabel>Username</FormLabel>
+          <Input name="name" value={userInfo.name} onChange={handleChange} />
+          <FormLabel>Email address</FormLabel>
+          <Input name="email" value={userInfo.email} onChange={handleChange} />
+          <FormHelperText>We will never share your email.</FormHelperText>
+        </FormControl>
+        <Button mt={4} colorScheme="teal" type="submit">
+          Add the New user
+        </Button>
+      </form>
 
       {users.length > 0 ? (
         <Table variant="simple">

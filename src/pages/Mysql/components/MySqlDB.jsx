@@ -13,6 +13,7 @@ import {
   FormControl,
   Button,
 } from '@chakra-ui/react'
+import { TbHttpDelete } from 'react-icons/tb'
 import instance from '../../../utils/axios'
 import Container from '../../../layouts/Container'
 
@@ -64,6 +65,25 @@ const MySqlDB = () => {
     setUserInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
+  const handleDelete = async (id) => {
+    try {
+      setLoading(true)
+      console.log('id', id)
+      // const response = await instance.delete(`/api/rows/${id}`) // req.params
+      const response = await instance.delete('/api/rows', { data: { id } }) // req.body
+      console.log('response', response)
+      const { status } = response
+      if (status !== 200 && status !== 204) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      setLastRow({ id, name: '', email: '' })
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   if (loading) return <Container>Loading...</Container>
   if (error) return <Container>Error: {error}</Container>
 
@@ -102,6 +122,11 @@ const MySqlDB = () => {
                 <Td>{user.name}</Td>
                 <Td>{user.email}</Td>
                 <Td>{new Date(user.created_at).toLocaleString()}</Td>
+                <Td>
+                  <Button size="sm" variant="ghost" onClick={() => handleDelete(user.id)} title="Delete">
+                    <TbHttpDelete />
+                  </Button>
+                </Td>
               </Tr>
             ))}
           </Tbody>

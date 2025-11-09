@@ -53,6 +53,7 @@ const MySqlDB = () => {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
       setLastRow(data)
+      setUserInfo({ name: '', email: '' })
     } catch (err) {
       setError(err.message)
     } finally {
@@ -68,15 +69,13 @@ const MySqlDB = () => {
   const handleDelete = async (id) => {
     try {
       setLoading(true)
-      console.log('id', id)
       // const response = await instance.delete(`/api/rows/${id}`) // req.params
       const response = await instance.delete('/api/rows', { data: { id } }) // req.body
-      console.log('response', response)
-      const { status } = response
-      if (status !== 200 && status !== 204) {
+      const { rowId } = response.data
+      if (response.status !== 200 && response.status !== 204) {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
-      setLastRow({ id, name: '', email: '' })
+      setUsers((prev) => prev.filter((u) => u.id !== rowId))
     } catch (err) {
       setError(err.message)
     } finally {

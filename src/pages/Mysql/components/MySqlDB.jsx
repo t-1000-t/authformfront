@@ -21,6 +21,7 @@ const MySqlDB = () => {
   const [users, setUsers] = useState([])
   const [lastRow, setLastRow] = useState({ id: '', name: '', email: '' })
   const [userInfo, setUserInfo] = useState({ name: '', email: '' })
+  const [deletingId, setDeletingId] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -62,13 +63,12 @@ const MySqlDB = () => {
   }
 
   const handleChange = (e) => {
-    e.preventDefault()
     setUserInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
   const handleDelete = async (id) => {
     try {
-      setLoading(true)
+      setDeletingId(id)
       // const response = await instance.delete(`/api/rows/${id}`) // req.params
       const response = await instance.delete('/api/rows', { data: { id } }) // req.body
       const { rowId } = response.data
@@ -79,7 +79,7 @@ const MySqlDB = () => {
     } catch (err) {
       setError(err.message)
     } finally {
-      setLoading(false)
+      setDeletingId(null)
     }
   }
 
@@ -122,7 +122,13 @@ const MySqlDB = () => {
                 <Td>{user.email}</Td>
                 <Td>{new Date(user.created_at).toLocaleString()}</Td>
                 <Td>
-                  <Button size="sm" variant="ghost" onClick={() => handleDelete(user.id)} title="Delete">
+                  <Button
+                    isLoading={deletingId === user.id}
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => handleDelete(user.id)}
+                    title="Delete"
+                  >
                     <TbHttpDelete />
                   </Button>
                 </Td>

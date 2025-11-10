@@ -17,10 +17,9 @@ import {
   Alert,
   AlertIcon,
   Collapse,
-  Link as ChakraLink,
   Spinner,
 } from '@chakra-ui/react'
-import axios from '../../../utils/axios'
+import instance from '../../../utils/axios'
 
 const SUPPORTED = ['youtube', 'instagram', 'tiktok', 'facebook', 'threads']
 
@@ -54,25 +53,23 @@ function detectPlatform(url) {
 }
 
 async function fetchPreview(url) {
-  const res = await axios.post(`/api/oembed?url=${encodeURIComponent(url)}`)
-  if (!res.ok) return null
-  const data = await res.json()
+  const { data } = await instance.get('/api/vload/oembed', { params: { url } })
   return {
-    title: data.title,
-    authorName: data.author_name,
-    thumbnailUrl: data.thumbnail_url,
-    providerName: data.provider_name,
-    htmlEmbed: data.html,
+    title: data.title ?? null,
+    authorName: data.author_name ?? null,
+    thumbnailUrl: data.thumbnail_url ?? null,
+    providerName: data.provider_name ?? null,
+    htmlEmbed: data.html ?? null,
   }
 }
 
-async function submitJob(url, platform) {
-  const res = await fetch('/api/jobs', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ url, platform }),
+async function submitUrl(url, platform) {
+  const { data } = await instance.post('/api/vload/urls', {
+    url,
+    platform,
+    ownerConsent: true, // <-- when it’s your own/authorized content
   })
-  return res.json()
+  return data
 }
 
 const MultiPlatformDownloader = () => {
@@ -86,18 +83,13 @@ const MultiPlatformDownloader = () => {
   const canDownload = useMemo(() => detected.platform !== null, [detected.platform])
   const inputRef = useRef(null)
 
-  const onInputChange = useCallback((e) => setInput(e.target.value), [])
-
-  const handlePaste = useCallback(() => {
-    navigator.clipboard
-      .readText()
-      .then((t) => setInput(t))
-      .catch(() => setError('Clipboard access failed; paste manually.'))
+  const onInputChange = useCallback((e) => {
+    setSubmitRes(null) // clear only when user edits
+    setInput(e.target.value)
   }, [])
 
   useEffect(() => {
     setError(null)
-    setSubmitRes(null)
     setMeta(null)
     if (input.trim().length === 0) {
       setDetected({ platform: null })
@@ -137,7 +129,7 @@ const MultiPlatformDownloader = () => {
     }
     setStatus('submitting')
     try {
-      const res = await submitJob(input.trim(), detected.platform)
+      const res = await submitUrl(input.trim(), detected.platform)
       setSubmitRes(res)
       if (!res.ok) {
         setStatus('error')
@@ -150,6 +142,12 @@ const MultiPlatformDownloader = () => {
       setError('Network error')
     }
   }
+
+  // helper: sanitize file names a bit
+  // const safeFilename = (name) =>
+  //   `${String(name || 'video')
+  //     .replace(/[\\/:*?"<>|]+/g, '')
+  //     .slice(0, 120)}.mp4`
 
   const badge = (platform) => (
     <Badge variant="subtle" colorScheme={platform ? 'purple' : 'gray'}>
@@ -189,9 +187,6 @@ const MultiPlatformDownloader = () => {
                     autoCorrect="off"
                     spellCheck={false}
                   />
-                  <Button variant="outline" onClick={handlePaste} title="Paste from clipboard">
-                    Paste
-                  </Button>
                 </HStack>
                 <HStack spacing={2} mt={2}>
                   <Text fontSize="xs" color="gray.500">
@@ -259,6 +254,7 @@ const MultiPlatformDownloader = () => {
 
               <HStack>
                 <Button
+                  color="white"
                   type="submit"
                   colorScheme="blackAlpha"
                   isDisabled={!canDownload || status === 'submitting'}
@@ -267,15 +263,19 @@ const MultiPlatformDownloader = () => {
                   Download
                 </Button>
 
-                {submitRes && submitRes.downloadUrl && (
-                  <ChakraLink href={submitRes.downloadUrl} isExternal fontSize="sm" textDecoration="underline">
-                    Open file
-                  </ChakraLink>
+                {submitRes?.downloadUrl && (
+                  <Button
+                    onClick={() => {
+                      window.location.href = submitRes.downloadUrl
+                    }}
+                  >
+                    Save to device
+                  </Button>
                 )}
 
-                {submitRes && submitRes.jobId && !submitRes.downloadUrl && (
+                {!submitRes?.downloadUrl && submitRes?.ok && (
                   <Text fontSize="xs" color="gray.600">
-                    Job queued: {submitRes.jobId}
+                    Job queued: {submitRes.urlId}
                   </Text>
                 )}
               </HStack>

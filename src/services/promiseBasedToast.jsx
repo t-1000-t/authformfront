@@ -14,4 +14,12 @@ const promiseBasedToastDel = (toast, promise) => {
   })
 }
 
-export { promiseBasedToast, promiseBasedToastDel }
+const promiseBasedToastDelSQL = (toast, promise) => {
+  return toast.promise(promise, {
+    loading: { title: 'Deleting...', description: 'Please wait' },
+    success: { title: 'It has deleted!', description: 'Your data was saved successfully.' },
+    error: { title: 'Failed to delete', description: 'Something went wrong.' },
+  })
+}
+
+export { promiseBasedToast, promiseBasedToastDel, promiseBasedToastDelSQL }

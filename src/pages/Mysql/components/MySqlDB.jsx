@@ -12,10 +12,12 @@ import {
   FormHelperText,
   FormControl,
   Button,
+  useToast,
 } from '@chakra-ui/react'
 import { TbHttpDelete } from 'react-icons/tb'
 import instance from '../../../utils/axios'
 import Container from '../../../layouts/Container'
+import { promiseBasedToastDelSQL } from '../../../services/promiseBasedToast'
 
 const MySqlDB = () => {
   const [users, setUsers] = useState([])
@@ -24,6 +26,7 @@ const MySqlDB = () => {
   const [deletingId, setDeletingId] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const toast = useToast({ position: 'top-right' })
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -70,12 +73,18 @@ const MySqlDB = () => {
     try {
       setDeletingId(id)
       // const response = await instance.delete(`/api/rows/${id}`) // req.params
-      const response = await instance.delete('/api/rows', { data: { id } }) // req.body
-      const { rowId } = response.data
-      if (response.status !== 200 && response.status !== 204) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      setUsers((prev) => prev.filter((u) => u.id !== rowId))
+      const promise = instance.delete('/api/rows', { data: { id } })
+
+      promiseBasedToastDelSQL(toast, promise)
+
+      promise.then((response) => {
+        if (response.status !== 200 && response.status !== 204) {
+          return Promise.reject(new Error(`HTTP error! status: ${response.status}`))
+        }
+        const { rowId } = response.data
+        setUsers((prev) => prev.filter((u) => u.id !== rowId))
+        return response
+      }) // req.body
     } catch (err) {
       setError(err.message)
     } finally {

@@ -137,8 +137,9 @@ const MySqlDB = () => {
                     variant="ghost"
                     onClick={() => handleDelete(user.id)}
                     title="Delete"
+                    backgroundColor="red.300"
                   >
-                    <TbHttpDelete />
+                    <TbHttpDelete size="25" />
                   </Button>
                 </Td>
               </Tr>

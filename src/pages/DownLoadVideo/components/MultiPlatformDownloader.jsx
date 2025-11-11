@@ -18,6 +18,7 @@ import {
   AlertIcon,
   Collapse,
   Spinner,
+  useToast,
 } from '@chakra-ui/react'
 import instance from '../../../utils/axios'
 
@@ -28,6 +29,8 @@ const patterns = {
     /^https?:\/\/(www\.)?youtube\.com\/watch\?v=[\w-]{6,}(&[\w=&-]+)*$/i,
     /^https?:\/\/(youtu\.be)\/[\w-]{6,}$/i,
     /^https?:\/\/(www\.)?youtube\.com\/shorts\/[\w-]{6,}(\?.*)?$/i,
+    /^https?:\/\/(www\.)?studio\.youtube\.com\/video\/[\w-]{6,}$/i,
+    /^https?:\/\/(www\.)?studio\.youtube\.com\/video\/[\w-]{6,}(\/[a-z]+)?(\?.*)?$/i,
   ],
   instagram: [/^https?:\/\/(www\.)?instagram\.com\/(p|reel|reels|tv)\/[A-Za-z0-9_-]+\/?/i],
   tiktok: [
@@ -53,7 +56,7 @@ function detectPlatform(url) {
 }
 
 async function fetchPreview(url) {
-  const { data } = await instance.get('/api/vload/oembed', { params: { url } })
+  const { data } = await instance.get('/api/vdownload/oembed', { params: { url } })
   return {
     title: data.title ?? null,
     authorName: data.author_name ?? null,
@@ -64,29 +67,41 @@ async function fetchPreview(url) {
 }
 
 async function submitUrl(url, platform) {
-  const { data } = await instance.post('/api/vload/urls', {
+  const { data } = await instance.post('/api/vdownload/urls', {
     url,
     platform,
-    ownerConsent: true, // <-- when it’s your own/authorized content
+    ownerConsent: true,
   })
   return data
 }
 
 const MultiPlatformDownloader = () => {
   const [input, setInput] = useState('')
-  const [status, setStatus] = useState('idle') // 'idle' | 'validating' | 'fetching' | 'ready' | 'submitting' | 'error'
+  const [status, setStatus] = useState('idle')
   const [error, setError] = useState(null)
   const [detected, setDetected] = useState({ platform: null })
   const [meta, setMeta] = useState(null)
   const [submitRes, setSubmitRes] = useState(null)
 
-  const canDownload = useMemo(() => detected.platform !== null, [detected.platform])
+  const toast = useToast()
   const inputRef = useRef(null)
+  const canDownload = useMemo(() => detected.platform !== null, [detected.platform])
+
+  // guards for opening Studio
+  const studioOpenedRef = useRef(false) // run auto-open once per input
+  const studioWindowRef = useRef(null) // reuse named window/tab
+  const [showStudioButton, setShowStudioButton] = useState(false) // show button only if popup blocked
 
   const onInputChange = useCallback((e) => {
-    setSubmitRes(null) // clear only when user edits
+    setSubmitRes(null)
     setInput(e.target.value)
   }, [])
+
+  // reset the open guard and button visibility for each new input
+  useEffect(() => {
+    studioOpenedRef.current = false
+    setShowStudioButton(false)
+  }, [input])
 
   useEffect(() => {
     setError(null)
@@ -131,23 +146,51 @@ const MultiPlatformDownloader = () => {
     try {
       const res = await submitUrl(input.trim(), detected.platform)
       setSubmitRes(res)
-      if (!res.ok) {
-        setStatus('error')
-        setError(res.message || 'Request failed')
-      } else {
-        setStatus('ready')
+      setStatus(res.ok ? 'ready' : 'error')
+      if (!res.ok) setError(res.message || 'Request failed')
+
+      // Auto-open Studio in a single new tab (and never replace current tab)
+      if (res?.policy === 'studio-only' && res?.studioUrl && !studioOpenedRef.current) {
+        studioOpenedRef.current = true
+
+        // reuse existing named window if it exists
+        if (studioWindowRef.current && !studioWindowRef.current.closed) {
+          try {
+            studioWindowRef.current.location.replace(res.studioUrl)
+            studioWindowRef.current.focus()
+            return
+          } catch {
+            // cross-origin blocked — open fresh below
+          }
+        }
+
+        const win = window.open(res.studioUrl, 'YT_STUDIO_TAB', 'noopener,noreferrer')
+        if (win) {
+          studioWindowRef.current = win
+          toast({
+            title: 'Opening YouTube Studio…',
+            description: 'Use the official Download button in Studio for your upload.',
+            status: 'info',
+            duration: 2500,
+            isClosable: true,
+          })
+        } else {
+          // popup blocked: keep current tab; reveal manual button
+          setShowStudioButton(true)
+          toast({
+            title: 'Popup blocked',
+            description: 'Click the button to open YouTube Studio.',
+            status: 'warning',
+            duration: 3000,
+            isClosable: true,
+          })
+        }
       }
     } catch {
       setStatus('error')
       setError('Network error')
     }
   }
-
-  // helper: sanitize file names a bit
-  // const safeFilename = (name) =>
-  //   `${String(name || 'video')
-  //     .replace(/[\\/:*?"<>|]+/g, '')
-  //     .slice(0, 120)}.mp4`
 
   const badge = (platform) => (
     <Badge variant="subtle" colorScheme={platform ? 'purple' : 'gray'}>
@@ -243,7 +286,6 @@ const MultiPlatformDownloader = () => {
                           borderWidth="1px"
                           borderRadius="lg"
                           overflow="hidden"
-                          // Ensure your backend sanitizes this HTML.
                           dangerouslySetInnerHTML={{ __html: meta.htmlEmbed }}
                         />
                       )}
@@ -263,6 +305,23 @@ const MultiPlatformDownloader = () => {
                   Download
                 </Button>
 
+                {/* Manual fallback button appears only if popup got blocked */}
+                {submitRes?.studioUrl && showStudioButton && (
+                  <Button
+                    onClick={() => {
+                      const win = window.open(submitRes.studioUrl, 'YT_STUDIO_TAB', 'noopener,noreferrer')
+                      if (win) {
+                        studioWindowRef.current = win
+                        setShowStudioButton(false)
+                      }
+                    }}
+                    variant="solid"
+                    title="Open in YouTube Studio (official download)"
+                  >
+                    Open in YouTube Studio (Download)
+                  </Button>
+                )}
+
                 {submitRes?.downloadUrl && (
                   <Button
                     onClick={() => {
@@ -273,7 +332,7 @@ const MultiPlatformDownloader = () => {
                   </Button>
                 )}
 
-                {!submitRes?.downloadUrl && submitRes?.ok && (
+                {!submitRes?.downloadUrl && submitRes?.ok && !showStudioButton && (
                   <Text fontSize="xs" color="gray.600">
                     Job queued: {submitRes.urlId}
                   </Text>

@@ -87,17 +87,17 @@ const MultiPlatformDownloader = () => {
   const inputRef = useRef(null)
   const canDownload = useMemo(() => detected.platform !== null, [detected.platform])
 
-  // guards for opening Studio
+  // Guards for Studio open
   const studioOpenedRef = useRef(false) // run auto-open once per input
-  const studioWindowRef = useRef(null) // reuse named window/tab
-  const [showStudioButton, setShowStudioButton] = useState(false) // show button only if popup blocked
+  const studioWindowRef = useRef(null) // reuse the named window/tab
+  const [showStudioButton, setShowStudioButton] = useState(false) // show button if popup blocked
 
   const onInputChange = useCallback((e) => {
     setSubmitRes(null)
     setInput(e.target.value)
   }, [])
 
-  // reset the open guard and button visibility for each new input
+  // Reset guards per new input
   useEffect(() => {
     studioOpenedRef.current = false
     setShowStudioButton(false)
@@ -149,33 +149,47 @@ const MultiPlatformDownloader = () => {
       setStatus(res.ok ? 'ready' : 'error')
       if (!res.ok) setError(res.message || 'Request failed')
 
-      // Auto-open Studio in a single new tab (and never replace current tab)
+      // Open YouTube Studio in the background (no jump)
       if (res?.policy === 'studio-only' && res?.studioUrl && !studioOpenedRef.current) {
         studioOpenedRef.current = true
 
-        // reuse existing named window if it exists
-        if (studioWindowRef.current && !studioWindowRef.current.closed) {
-          try {
-            studioWindowRef.current.location.replace(res.studioUrl)
-            studioWindowRef.current.focus()
-            return
-          } catch {
-            // cross-origin blocked — open fresh below
-          }
+        // Open (or reuse) a named window WITHOUT noopener, so we can blur it
+        let win = studioWindowRef.current
+        if (!win || win.closed) {
+          win = window.open('about:blank', 'YT_STUDIO_TAB') // no noopener here intentionally
+          studioWindowRef.current = win
         }
 
-        const win = window.open(res.studioUrl, 'YT_STUDIO_TAB', 'noopener,noreferrer')
         if (win) {
-          studioWindowRef.current = win
+          // Keep focus on this tab
+          try {
+            win.blur()
+          } catch (err) {
+            throw new Error('blur', err)
+          }
+          try {
+            window.focus()
+          } catch (err) {
+            throw new Error('focus', err)
+          }
+          // Navigate the new tab after a tiny delay
+          setTimeout(() => {
+            try {
+              win.location.href = res.studioUrl
+            } catch (err) {
+              throw new Error('local ref', err)
+            }
+          }, 100)
+
           toast({
-            title: 'Opening YouTube Studio…',
-            description: 'Use the official Download button in Studio for your upload.',
+            title: 'YouTube Studio opened in a new tab',
+            description: 'You can switch to it whenever you like.',
             status: 'info',
             duration: 2500,
             isClosable: true,
           })
         } else {
-          // popup blocked: keep current tab; reveal manual button
+          // Popup blocked — keep current tab; show manual button
           setShowStudioButton(true)
           toast({
             title: 'Popup blocked',
@@ -185,6 +199,8 @@ const MultiPlatformDownloader = () => {
             isClosable: true,
           })
         }
+
+        return undefined
       }
     } catch {
       setStatus('error')
